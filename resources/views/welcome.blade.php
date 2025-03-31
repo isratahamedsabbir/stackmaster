@@ -19,7 +19,3 @@
     </div>
 </div>
 <!-- CONTAINER CLOSED -->
- sdfhsd
- sdnfjsd
- sdfnskjdb
-@endsection
