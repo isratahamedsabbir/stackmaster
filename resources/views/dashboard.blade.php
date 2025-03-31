@@ -14,8 +14,4 @@
             </div>
         </div>
     </div>
-
-
-
-    fr
 </x-app-layout> 
