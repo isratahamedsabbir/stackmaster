@@ -19,4 +19,3 @@
     </div>
 </div>
 <!-- CONTAINER CLOSED -->
-@endsection

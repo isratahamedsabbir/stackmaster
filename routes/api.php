@@ -48,3 +48,8 @@ Route::controller(NotificationController::class)->prefix('notify')->group(functi
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
 }); */
+
+
+Route::prefix('cms')->name('cms.')->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+});
