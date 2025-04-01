@@ -15,7 +15,7 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::post('/verify-email', [RegisterController::class, 'VerifyEmail']);
     Route::post('/resend-otp', [RegisterController::class, 'ResendOtp']);
     //login
-    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login')->middleware('emailVerify');
     //forgot password
     Route::post('/forget-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/verify-otp', [ResetPasswordController::class, 'VerifyOTP']);
@@ -27,7 +27,7 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::get('/page/home', [HomeController::class, 'index']);
 });
 
-Route::group(['middleware' => 'auth:api'], function ($router) {
+Route::group(['middleware' => 'auth:api | emailVerify'], function ($router) {
     Route::get('/refresh-token', [LoginController::class, 'refreshToken']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::get('/me', [UserController::class, 'me']);

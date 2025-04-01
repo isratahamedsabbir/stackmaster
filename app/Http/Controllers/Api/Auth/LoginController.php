@@ -41,10 +41,6 @@ class LoginController extends Controller
                 return Helper::jsonResponse(false, 'Invalid password', 401);
             }
 
-            //? Check if the email is verified before login is successful
-            if (!$user->email_verified_at) {
-                return Helper::jsonResponse(false, 'Email not verified. Please verify your email before logging in.', 403);
-            }
             //* Generate token if email is verified
             $token = auth('api')->login($user);
 
@@ -61,6 +57,7 @@ class LoginController extends Controller
         } catch (Exception $e) {
             return Helper::jsonResponse(false, 'An error occurred during login.', 500, ['error' => $e->getMessage()]);
         }
+        
     }
 
     public function refreshToken()
