@@ -37,8 +37,9 @@ class RegisterController extends Controller
                 'name'           => $request->input('name'),
                 'email'          => strtolower($request->input('email')),
                 'password'       => Hash::make($request->input('password')),
-                'email_verified_at' => now(),
                 'status'         => $status ?? 'active',
+                'otp'            => rand(1000, 9999),
+                'otp_expires_at' => Carbon::now()->addMinutes(60),
             ]);
 
             $user->assignRole($request->input('role'));
@@ -56,7 +57,6 @@ class RegisterController extends Controller
             }
             broadcast(new NewNotificationEvent($notiData))->toOthers(); */
             //notify to admin end
-            
             return response()->json([
                 'status'     => true,
                 'message'    => 'User register in successfully.',
@@ -80,7 +80,7 @@ class RegisterController extends Controller
             $user = User::where('email', $request->input('email'))->first();
 
             //! Check if email has already been verified
-            if (!empty($user->email_verified_at)) {
+            if (!empty($user->otp_verified_at)) {
                 return  Helper::jsonErrorResponse('Email already verified.', 409);
             }
 
@@ -94,11 +94,11 @@ class RegisterController extends Controller
             }
 
             //* Verify the email
-            $user->email_verified_at = now();
+            $user->otp_verified_at   = now();
             $user->otp               = null;
             $user->otp_expires_at    = null;
             $user->save();
-
+            
             return Helper::jsonResponse(true, 'Email verification successful.', 200);
         } catch (Exception $e) {
             return Helper::jsonErrorResponse($e->getMessage(), $e->getCode());
@@ -107,16 +107,19 @@ class RegisterController extends Controller
 
     public function ResendOtp(Request $request)
     {
+        
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);
+
         try {
             $user = User::where('email', $request->input('email'))->first();
+
             if (!$user) {
                 return Helper::jsonErrorResponse('User not found.', 404);
             }
 
-            if ($user->email_verified_at) {
+            if ($user->otp_verified_at) {
                 return Helper::jsonErrorResponse('Email already verified.', 409);
             }
 
@@ -131,7 +134,7 @@ class RegisterController extends Controller
 
             return Helper::jsonResponse(true, 'A new OTP has been sent to your email.', 200);
         } catch (Exception $e) {
-            return Helper::jsonErrorResponse($e->getMessage(), $e->getCode());
+            return Helper::jsonErrorResponse($e->getMessage(), 200);
         }
     }
 }

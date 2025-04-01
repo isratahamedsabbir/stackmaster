@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Helpers\Helper;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
@@ -40,6 +41,18 @@ class LoginController extends Controller
             if (!Hash::check($request->password, $user->password)) {
                 return Helper::jsonResponse(false, 'Invalid password', 401);
             }
+            
+            //? Check if the email is verified before login is successful
+            if (!$user->otp_verified_at) {
+                return Helper::jsonResponse(false, 'Email not verified. Please verify your email before logging in.', 403);
+            }else{
+                $user->update([
+                    'otp'            => null,
+                    'otp_expires_at' => null,
+                    'reset_password_token' => null,
+                    'reset_password_token_expire_at' => null
+                ]);
+            }
 
             //* Generate token if email is verified
             $token = auth('api')->login($user);
@@ -57,7 +70,6 @@ class LoginController extends Controller
         } catch (Exception $e) {
             return Helper::jsonResponse(false, 'An error occurred during login.', 500, ['error' => $e->getMessage()]);
         }
-        
     }
 
     public function refreshToken()

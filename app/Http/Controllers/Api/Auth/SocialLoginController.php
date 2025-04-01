@@ -58,7 +58,7 @@ class SocialLoginController extends Controller
                         'password'          => bcrypt($password),
                         'avatar'            => $socialUser->getAvatar(),
                         'status'            => $status ?? 'active',
-                        'email_verified_at' => now(),
+                        'otp_verified_at' => now(),
                     ]);
                     $user->assignRole($request->input('role'));
                     $isNewUser = true;

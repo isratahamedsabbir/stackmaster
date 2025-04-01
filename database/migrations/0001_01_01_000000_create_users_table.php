@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
+            $table->timestamp('otp_verified_at')->nullable();
+            $table->longText('reset_password_token')->nullable();
+            $table->timestamp('reset_password_token_expire_at')->nullable();
             $table->string('avatar')->nullable();
             $table->string('password');
             $table->enum('status', ['active', 'inactive'])->default('active');

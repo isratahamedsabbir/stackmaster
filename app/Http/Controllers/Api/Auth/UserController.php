@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function me()
-    {
+    {        
         return Helper::jsonResponse(true, 'User details fetched successfully', 200, auth('api')->user());
     }
 
@@ -70,4 +70,18 @@ class UserController extends Controller
         $user->delete();
         return Helper::jsonResponse(true, 'Profile deleted successfully', 200);
     }
+
+    public function accountSwitch(Request $request)
+    {
+        $request->validate([
+            'role' => 'required|in:user,trainer',
+        ]);
+        $user = User::findOrFail(auth('api')->id());
+        if ($user->hasRole($request->input('role'))) {
+            return Helper::jsonErrorResponse('You are already ' . ucfirst($request->input('role')) . '.', 409);
+        }
+        $user->assignRole($request->input('role'));
+        return Helper::jsonResponse(true, 'Account switched Successfully', 200);
+    }
+    
 }

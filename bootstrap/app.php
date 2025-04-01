@@ -23,8 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web', 'client'])->prefix('client')->name('client.')->group(base_path('routes/client.php'));
             Route::middleware(['web', 'retailer'])->prefix('retailer')->name('retailer.')->group(base_path('routes/retailer.php'));
             Route::middleware(['web', 'auth', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/developer.php'));
-            Route::middleware(['api', 'emailVerify', 'auth', 'user'])->prefix('user')->name('user.')->group(base_path('routes/user.php'));
-            Route::middleware(['api', 'emailVerify', 'auth', 'trainer'])->prefix('trainer')->name('trainer.')->group(base_path('routes/trainer.php'));
+            Route::middleware(['api', 'otp', 'auth', 'user'])->prefix('user')->name('user.')->group(base_path('routes/user.php'));
+            Route::middleware(['api', 'otp', 'auth', 'trainer'])->prefix('trainer')->name('trainer.')->group(base_path('routes/trainer.php'));
         }
     )
     ->withBroadcasting(
@@ -39,7 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'retailer' => App\Http\Middleware\RetailerMiddleware::class,
             'user' => App\Http\Middleware\UserMiddleware::class,
             'trainer' => App\Http\Middleware\TrainerMiddleware::class,
-            'emailVerify' => App\Http\Middleware\EmailVerifyMiddleware::class,
+            'otp' => App\Http\Middleware\OtpVerifiedMiddleware::class,
             'authCheck' => App\Http\Middleware\AuthCheckMiddleware::class,
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,

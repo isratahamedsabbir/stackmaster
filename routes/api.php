@@ -14,11 +14,12 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::post('register', [RegisterController::class, 'register']);
     Route::post('/verify-email', [RegisterController::class, 'VerifyEmail']);
     Route::post('/resend-otp', [RegisterController::class, 'ResendOtp']);
+    Route::post('/verify-otp', [RegisterController::class, 'VerifyEmail']);
     //login
-    Route::post('login', [LoginController::class, 'login'])->name('login')->middleware('emailVerify');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
     //forgot password
     Route::post('/forget-password', [ResetPasswordController::class, 'forgotPassword']);
-    Route::post('/verify-otp', [ResetPasswordController::class, 'VerifyOTP']);
+    Route::post('/otp-token', [ResetPasswordController::class, 'MakeOtpToken']);
     Route::post('/reset-password', [ResetPasswordController::class, 'ResetPassword']);
     //social login
     Route::post('/social-login', [SocialLoginController::class, 'SocialLogin']);
@@ -27,7 +28,7 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::get('/page/home', [HomeController::class, 'index']);
 });
 
-Route::group(['middleware' => 'auth:api | emailVerify'], function ($router) {
+Route::group(['middleware' => 'auth:api | otp'], function ($router) {
     Route::get('/refresh-token', [LoginController::class, 'refreshToken']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::get('/me', [UserController::class, 'me']);

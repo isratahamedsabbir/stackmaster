@@ -40,37 +40,37 @@ class UserSeeder extends Seeder
             'name' => 'developer',
             'email' => 'developer@developer.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ],
            [
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ],
            [
             'name' => 'client',
             'email' => 'client@client.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ],
            [
             'name' => 'Retailer',
             'email' => 'retailer@retailer.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ],
            [
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ],
            [
             'name' => 'Trainer',
             'email' => 'trainer@trainer.com',
             'password' => Hash::make('12345678'),
-            'email_verified_at' => now(),
+            'otp_verified_at' => now(),
            ]
         ]);
 
