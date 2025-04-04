@@ -23,8 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web', 'client'])->prefix('client')->name('client.')->group(base_path('routes/client.php'));
             Route::middleware(['web', 'retailer'])->prefix('retailer')->name('retailer.')->group(base_path('routes/retailer.php'));
             Route::middleware(['web', 'auth', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/developer.php'));
-            Route::middleware(['api', 'otp', 'auth', 'user'])->prefix('user')->name('user.')->group(base_path('routes/user.php'));
-            Route::middleware(['api', 'otp', 'auth', 'trainer'])->prefix('trainer')->name('trainer.')->group(base_path('routes/trainer.php'));
+            Route::middleware(['api', 'otp', 'auth', 'user'])->prefix('api/user')->name('api.user.')->group(base_path('routes/user.php'));
+            Route::middleware(['api', 'otp', 'auth', 'trainer'])->prefix('api/trainer')->name('api.trainer.')->group(base_path('routes/trainer.php'));
         }
     )
     ->withBroadcasting(
