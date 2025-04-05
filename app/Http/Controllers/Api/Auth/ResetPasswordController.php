@@ -17,6 +17,11 @@ use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
     public function forgotPassword(Request $request)
     {
         $request->validate([

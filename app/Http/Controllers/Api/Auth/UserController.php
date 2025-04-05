@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
+
     public function me()
-    {        
-        return Helper::jsonResponse(true, 'User details fetched successfully', 200, auth('api')->user());
+    {   
+        $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);     
+        return Helper::jsonResponse(true, 'User details fetched successfully', 200, $data);
     }
 
     public function updateProfile(Request $request)
@@ -44,7 +51,8 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return Helper::jsonResponse(true, 'Profile updated successfully', 200, $user);
+        $data = User::select($this->select)->with('roles')->find($user->id);
+        return Helper::jsonResponse(true, 'Profile updated successfully', 200, $data);
     }
 
     public function updateAvatar(Request $request)
@@ -58,7 +66,8 @@ class UserController extends Controller
         }
         $validatedData['avatar'] = Helper::fileUpload($request->file('avatar'), 'user/avatar', getFileName($request->file('avatar')));
         $user->update($validatedData);
-        return Helper::jsonResponse(true, 'Avatar updated successfully', 200, $user);
+        $data = User::select($this->select)->with('roles')->find($user->id);
+        return Helper::jsonResponse(true, 'Avatar updated successfully', 200, $data);
     }
 
     public function deleteProfile()
@@ -70,18 +79,19 @@ class UserController extends Controller
         $user->delete();
         return Helper::jsonResponse(true, 'Profile deleted successfully', 200);
     }
-
-    public function accountSwitch(Request $request)
+    
+    public function accountSwitch()
     {
-        $request->validate([
-            'role' => 'required|in:user,trainer',
-        ]);
-        $user = User::findOrFail(auth('api')->id());
-        if ($user->hasRole($request->input('role'))) {
-            return Helper::jsonErrorResponse('You are already ' . ucfirst($request->input('role')) . '.', 409);
-        }
-        $user->assignRole($request->input('role'));
-        return Helper::jsonResponse(true, 'Account switched Successfully', 200);
+        $user = auth('api')->user();
+
+        $newRole = $user->hasRole('owner') ? 'renter' : 'owner';
+        $oldRole = $user->hasRole('owner') ? 'owner' : 'renter';
+
+        $user->removeRole($oldRole);
+        $user->assignRole($newRole);
+
+        $data = User::select($this->select)->with('roles')->find($user->id);
+        return Helper::jsonResponse(true, 'Account switched successfully', 200, $data);
     }
     
 }

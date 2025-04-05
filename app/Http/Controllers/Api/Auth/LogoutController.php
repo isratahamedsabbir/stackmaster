@@ -9,6 +9,11 @@ use Exception;
 
 class LogoutController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
     public function logout()
     {
         try {

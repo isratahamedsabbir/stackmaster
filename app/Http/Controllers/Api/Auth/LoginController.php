@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
+
     public function Login(Request $request)
     {
         try {
@@ -57,6 +63,8 @@ class LoginController extends Controller
             //* Generate token if email is verified
             $token = auth('api')->login($user);
 
+            $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);
+
             return response()->json([
                 'status'     => true,
                 'message'    => 'Login successful',
@@ -64,7 +72,7 @@ class LoginController extends Controller
                 'token_type' => 'bearer',
                 'token'      => $token,
                 'expires_in' => auth('api')->factory()->getTTL() * 60,
-                'data'       => $user,
+                'data'       => $data,
             ], 200);
 
         } catch (Exception $e) {

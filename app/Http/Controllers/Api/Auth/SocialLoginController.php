@@ -14,6 +14,12 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
+
     public function RedirectToProvider($provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -73,6 +79,8 @@ class SocialLoginController extends Controller
                 Auth::login($user);
                 $token = auth('api')->login($user);
 
+                $data = User::select($this->select)->with('roles')->find($user->id);
+
                 return response()->json([
                     'status'     => true,
                     'message'    => 'User logged in successfully.',
@@ -80,7 +88,7 @@ class SocialLoginController extends Controller
                     'token_type' => 'bearer',
                     'token'      => $token,
                     'expires_in' => auth('api')->factory()->getTTL() * 60,
-                    'data' => $user
+                    'data'       => $data
                 ], 200);
             } else {
                 return Helper::jsonResponse(false, 'Unauthorized', 401);

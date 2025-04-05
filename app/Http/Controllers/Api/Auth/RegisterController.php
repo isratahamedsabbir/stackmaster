@@ -16,6 +16,11 @@ use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
+    public $select;
+    public function __construct()
+    {
+        $this->select = ['id', 'name', 'email', 'avatar'];   
+    }
 
     public function register(Request $request)
     {
@@ -23,11 +28,11 @@ class RegisterController extends Controller
             'name'       => 'required|string|max:100',
             'email'      => 'required|string|email|max:150|unique:users',
             'password'   => 'required|string|min:6|confirmed',
-            'role'       => 'required|in:user,trainer',
+            'role'       => 'required|in:owner,renter',
         ]);
         try {
 
-            /* if ($request->input('role') == 'trainer') {
+            /* if ($request->input('role') == 'renter') {
                 $status = 'inactive';
             } else {
                 $status = 'active';
@@ -57,15 +62,17 @@ class RegisterController extends Controller
             }
             broadcast(new NewNotificationEvent($notiData))->toOthers(); */
             //notify to admin end
+
+            $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);
+
             return response()->json([
                 'status'     => true,
                 'message'    => 'User register in successfully.',
                 'code'       => 200,
-                'token_type' => 'bearer',
-                'token'      => $token,
                 'expires_in' => auth('api')->factory()->getTTL() * 60,
-                'data' => auth('api')->user()
+                'data' => $data
             ], 200);
+
         } catch (Exception $e) {
             return Helper::jsonErrorResponse('User registration failed', 500, [$e->getMessage()]);
         }
