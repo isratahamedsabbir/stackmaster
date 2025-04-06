@@ -11,13 +11,13 @@ class RedirectMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::guard('web')->check()) {
-            if (Auth::user()->hasRole('developer')) {
+            if (Auth::guard('web')->user()->hasRole('developer')) {
                 return redirect()->intended(route('developer.dashboard', absolute: false));
-            }elseif (Auth::user()->hasRole('admin')) {
+            }elseif (Auth::guard('web')->user()->hasRole('admin')) {
                 return redirect()->intended(route('admin.dashboard', absolute: false));
-            } elseif (Auth::user()->hasRole('retailer')) {
+            } elseif (Auth::guard('web')->user()->hasRole('retailer')) {
                 return redirect()->intended(route('retailer.dashboard', absolute: false));
-            } elseif (Auth::user()->hasRole('client')) {
+            } elseif (Auth::guard('web')->user()->hasRole('client')) {
                 return redirect()->intended(route('client.dashboard', absolute: false));
             }else{
                 Auth::logout();

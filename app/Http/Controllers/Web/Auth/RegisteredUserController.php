@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()]
         ]);
 
-        if (env('RECAPTCHA_ENABLE') === 'true')
+        if (env('RECAPTCHA_ENABLE') === 'yes')
         {
             $request->validate([
                 'g-recaptcha-response' => ['required', 'recaptcha'],

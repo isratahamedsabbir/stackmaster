@@ -30,7 +30,7 @@ class LoginRequest extends FormRequest
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ];
-        if (env('RECAPTCHA_ENABLE') === 'true')
+        if (env('RECAPTCHA_ENABLE') === 'yes')
         {
             $data['g-recaptcha-response'] = ['required', 'recaptcha'];
         }

@@ -64,7 +64,7 @@
                     <p class="mb-0"><a href="{{ route('login') }}" class="text-primary ms-1">login here</a></p>
                 </div>
 
-                @if(env('RECAPTCHA_ENABLE') === 'true')
+                @if(env('RECAPTCHA_ENABLE') === 'yes')
                 <div class="bi-login-input-wrapper save mt-3 mb-1">
                     {!! htmlFormSnippet() !!}
                     @if ($errors->has('g-recaptcha-response'))

@@ -10,7 +10,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,12 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-            Route::middleware(['web', 'auth', 'admin'])->prefix('admin')->name('admin.')->group(base_path('routes/backend.php'));
+            Route::middleware(['web', 'admin'])->prefix('admin')->name('admin.')->group(base_path('routes/backend.php'));
             Route::middleware(['web', 'client'])->prefix('client')->name('client.')->group(base_path('routes/client.php'));
             Route::middleware(['web', 'retailer'])->prefix('retailer')->name('retailer.')->group(base_path('routes/retailer.php'));
-            Route::middleware(['web', 'auth', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/developer.php'));
-            Route::middleware(['api', 'otp', 'auth', 'user'])->prefix('api/user')->name('api.user.')->group(base_path('routes/user.php'));
-            Route::middleware(['api', 'otp', 'auth', 'trainer'])->prefix('api/trainer')->name('api.trainer.')->group(base_path('routes/trainer.php'));
+            Route::middleware(['web', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/developer.php'));
+            Route::middleware(['api', 'otp', 'user'])->prefix('api/user')->name('api.user.')->group(base_path('routes/user.php'));
+            Route::middleware(['api', 'otp', 'trainer'])->prefix('api/trainer')->name('api.trainer.')->group(base_path('routes/trainer.php'));
         }
     )
     ->withBroadcasting(
