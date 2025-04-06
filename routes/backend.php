@@ -24,6 +24,7 @@ use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
 use App\Http\Controllers\Web\Backend\ProjectController;
 use App\Http\Controllers\Web\Backend\Settings\CaptchaController;
+use App\Http\Controllers\Web\Backend\Settings\OtherController;
 use App\Http\Controllers\Web\Backend\SocialLinkController;
 use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
@@ -154,6 +155,13 @@ Route::controller(GoogleMapController::class)->group(function () {
 Route::controller(CaptchaController::class)->group(function () {
     Route::get('setting/captcha', 'index')->name('setting.captcha.index');
     Route::patch('setting/captcha', 'update')->name('setting.captcha.update');
+});
+
+Route::prefix('setting/other')->name('setting.other')->group(function () {
+    Route::get('/', [OtherController::class, 'index'])->name('.index');
+    Route::get('/mail', [OtherController::class, 'mail'])->name('.mail');
+    Route::get('/sms', [OtherController::class, 'sms'])->name('.sms');
+    Route::get('/recaptcha', [OtherController::class, 'recaptcha'])->name('.recaptcha');
 });
 
 //CMS
