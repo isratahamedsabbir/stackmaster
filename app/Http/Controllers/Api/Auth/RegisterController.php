@@ -28,11 +28,11 @@ class RegisterController extends Controller
             'name'       => 'required|string|max:100',
             'email'      => 'required|string|email|max:150|unique:users',
             'password'   => 'required|string|min:6|confirmed',
-            'role'       => 'required|in:owner,renter',
+            'role'       => 'required|in:trainer,user',
         ]);
         try {
 
-            /* if ($request->input('role') == 'renter') {
+            /* if ($request->input('role') == 'trainer') {
                 $status = 'inactive';
             } else {
                 $status = 'active';

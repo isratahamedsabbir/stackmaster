@@ -84,8 +84,8 @@ class UserController extends Controller
     {
         $user = auth('api')->user();
 
-        $newRole = $user->hasRole('owner') ? 'renter' : 'owner';
-        $oldRole = $user->hasRole('owner') ? 'owner' : 'renter';
+        $newRole = $user->hasRole('trainer') ? 'user' : 'trainer';
+        $oldRole = $user->hasRole('trainer') ? 'trainer' : 'user';
 
         $user->removeRole($oldRole);
         $user->assignRole($newRole);
