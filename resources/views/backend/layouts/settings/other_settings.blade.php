@@ -24,33 +24,69 @@
 
 
             <div class="row">
-                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                <div class="col-12">
                     <div class="card box-shadow-0">
                         <div class="card-body">
-                            
-                            <div class="row mb-4 align-items-center">
-                                <label for="mail" class="col-md-3 col-form-label fw-bold">MAIL Send</label>
-                                <div class="col-md-9">
-                                    <div class="form-check form-switch ps-0 d-flex align-items-center">
-                                        <input class="form-check-input me-2 @error('mail') is-invalid @enderror" type="checkbox" id="mail" name="mail" {{ $settings['mail'] == 'on' ? 'checked' : '' }} data-url="{{ route('admin.setting.other.mail') }}" />
+
+                            {{-- MAIL SEND --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="mail" class="col-form-label fw-bold mb-0">MAIL Send</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('mail') is-invalid @enderror"
+                                            type="checkbox" id="mail" name="mail"
+                                            {{ $settings['mail'] === 'on' ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.mail') }}" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row mb-4 align-items-center">
-                                <label for="sms" class="col-md-3 col-form-label fw-bold">SMS Send</label>
-                                <div class="col-md-9">
-                                    <div class="form-check form-switch ps-0 d-flex align-items-center">
-                                        <input class="form-check-input me-2 @error('sms') is-invalid @enderror" type="checkbox" id="sms" name="sms" {{ $settings['sms'] == 'on' ? 'checked' : '' }} data-url="{{ route('admin.setting.other.sms') }}" />
+                            {{-- SMS SEND --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="sms" class="col-form-label fw-bold mb-0">SMS Send</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('sms') is-invalid @enderror"
+                                            type="checkbox" id="sms" name="sms"
+                                            {{ $settings['sms'] === 'on' ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.sms') }}" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="row mb-4 align-items-center">
-                                <label for="recaptcha" class="col-md-3 col-form-label fw-bold">RECAPTCHA Enabel</label>
-                                <div class="col-md-9">
-                                    <div class="form-check form-switch ps-0 d-flex align-items-center">
-                                        <input class="form-check-input me-2 @error('recaptcha') is-invalid @enderror" type="checkbox" id="recaptcha" name="recaptcha" {{ $settings['mail'] == 'yes' ? 'checked' : '' }} data-url="{{ route('admin.setting.other.recaptcha') }}" />
+                            {{-- RECAPTCHA --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="recaptcha" class="col-form-label fw-bold mb-0">RECAPTCHA Enable</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('recaptcha') is-invalid @enderror"
+                                            type="checkbox" id="recaptcha" name="recaptcha"
+                                            {{ $settings['recaptcha'] === 'yes' ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.recaptcha') }}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- PAGINATION --}}
+                            <div class="row mb-3">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="pagination" class="col-form-label fw-bold mb-0">Pagination</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center" style="padding-left: 0px;">
+                                    <div class="d-flex align-items-center" style="height: 38px;">
+                                        <input type="number"
+                                            class="form-control @error('pagination') is-invalid @enderror"
+                                            id="pagination" name="pagination"
+                                            min="1" max="100"
+                                            value="{{ $settings['pagination'] }}"
+                                            data-url="{{ route('admin.setting.other.pagination') }}"
+                                            style="max-width: 100px; height: 100%; padding-top: 0.25rem; padding-bottom: 0.25rem;">
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +107,8 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        function jsonUpdate(e) {
+
+        function jsonUpdateByGet(e) {
             NProgress.start();
             $.ajax({
                 url: $(e).data('url'),
@@ -87,17 +124,41 @@
             });
         }
 
+        function jsonUpdateWithGetData(e) {
+            NProgress.start();
+            $.ajax({
+                url: $(e).data('url'),
+                type: "GET",
+                data: {
+                    "value": $(e).val() ? $(e).val() : 1
+                },
+                success: function(response) {
+                    NProgress.done();
+                    if (response.status === 't-success') {
+                        toastr.success(response.message);
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        }
+
         $("#mail").on("change", function() {
-            jsonUpdate(this);
+            jsonUpdateByGet(this);
         });
 
         $("#sms").on("change", function() {
-            jsonUpdate(this);
+            jsonUpdateByGet(this);
         });
 
         $("#recaptcha").on("change", function() {
-            jsonUpdate(this);
+            jsonUpdateByGet(this);
         });
+
+        $("#pagination").on("keyup", function() {
+            jsonUpdateWithGetData(this);
+        });
+
     });
 </script>
 @endpush

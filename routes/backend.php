@@ -162,6 +162,7 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/mail', [OtherController::class, 'mail'])->name('.mail');
     Route::get('/sms', [OtherController::class, 'sms'])->name('.sms');
     Route::get('/recaptcha', [OtherController::class, 'recaptcha'])->name('.recaptcha');
+    Route::get('/pagination', [OtherController::class, 'pagination'])->name('.pagination');
 });
 
 //CMS

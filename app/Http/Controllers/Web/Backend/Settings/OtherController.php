@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Backend\Settings;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class OtherController extends Controller
 {
@@ -11,6 +12,7 @@ class OtherController extends Controller
             'mail'       => env('MAIL', ''),
             'sms'        => env('SMS', ''),
             'recaptcha'  => env('RECAPTCHA_ENABLE', ''),
+            'pagination' => env('PAGINATION', '')
         ];
         return view('backend.layouts.settings.other_settings', compact('settings'));
     }
@@ -53,6 +55,17 @@ class OtherController extends Controller
             $envContent = str_replace('RECAPTCHA_ENABLE=yes', 'RECAPTCHA_ENABLE=no', file_get_contents(base_path('.env')));
             file_put_contents(base_path('.env'), $envContent);
         }
+
+        return response()->json([
+            'status' => 't-success',
+            'message' => 'Your action was successful!'
+        ]);
+    }
+
+    public function pagination(Request $request){
+        $value = $request->input('value');
+        $envContent = str_replace('PAGINATION='.env('PAGINATION'), 'PAGINATION='.$value, file_get_contents(base_path('.env')));
+        file_put_contents(base_path('.env'), $envContent);
 
         return response()->json([
             'status' => 't-success',
