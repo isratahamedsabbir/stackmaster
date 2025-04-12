@@ -2,24 +2,27 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Helpers\Helper;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use App\Events\RegistrationNotificationEvent;
+use Exception;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Mail\OtpMail;
-use Exception;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
+use App\Notifications\RegistrationNotification;
 
 class RegisterController extends Controller
 {
     public $select;
     public function __construct()
     {
-        $this->select = ['id', 'name', 'email', 'avatar'];   
+        $this->select = ['id', 'name', 'email', 'otp', 'avatar'];
     }
 
     public function register(Request $request)
@@ -28,11 +31,11 @@ class RegisterController extends Controller
             'name'       => 'required|string|max:100',
             'email'      => 'required|string|email|max:150|unique:users',
             'password'   => 'required|string|min:6|confirmed',
-            'role'       => 'required|in:trainer,user',
+            'role'       => 'required|in:owner,renter',
         ]);
         try {
 
-            /* if ($request->input('role') == 'trainer') {
+            /* if ($request->input('role') == 'renter') {
                 $status = 'inactive';
             } else {
                 $status = 'active';
@@ -52,15 +55,16 @@ class RegisterController extends Controller
             $token = auth('api')->login($user);
 
             //notify to admin start
-            /* $users = User::where('role', 'admin')->get();
             $notiData = [
                 'user_id' => $user->id,
                 'message' => 'User register in successfully.'
             ];
-            foreach($users as $user){
-                $user->notify(new UserRegistrationNotification($notiData));
+
+            $admins = User::role('admin', 'web')->get();
+            foreach($admins as $admin){
+                $admin->notify(new RegistrationNotification($notiData));
+                broadcast(new RegistrationNotificationEvent($notiData, $admin->id))->toOthers();
             }
-            broadcast(new NewNotificationEvent($notiData))->toOthers(); */
             //notify to admin end
 
             $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);
@@ -72,7 +76,6 @@ class RegisterController extends Controller
                 'expires_in' => auth('api')->factory()->getTTL() * 60,
                 'data' => $data
             ], 200);
-
         } catch (Exception $e) {
             return Helper::jsonErrorResponse('User registration failed', 500, [$e->getMessage()]);
         }
@@ -105,7 +108,7 @@ class RegisterController extends Controller
             $user->otp               = null;
             $user->otp_expires_at    = null;
             $user->save();
-            
+
             return Helper::jsonResponse(true, 'Email verification successful.', 200);
         } catch (Exception $e) {
             return Helper::jsonErrorResponse($e->getMessage(), $e->getCode());
@@ -114,7 +117,7 @@ class RegisterController extends Controller
 
     public function ResendOtp(Request $request)
     {
-        
+
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);

@@ -2,50 +2,42 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class UserRegistrationNotification extends Notification  implements ShouldQueue
+class RegistrationNotification extends Notification  implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
     public $data;
     public function __construct($data)
-    {
+    {       
         $this->data = $data;
+        $user = User::find($data['user_id']);
+        $this->data['name'] = $user->name;
+        $this->data['email'] = $user->email;
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @return array<int, string>
-     */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
+            ->greeting('Hello Admin')
+            ->line('New user has been registered.')
+            ->line('User ID: ' . $this->data['user_id'])
+            ->line('Email: ' . $this->data['email'])
+            ->line('Name: ' . $this->data['name'])
             ->line('Thank you for using our application!');
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(object $notifiable): array
     {
         return [
@@ -53,4 +45,5 @@ class UserRegistrationNotification extends Notification  implements ShouldQueue
             'message' => $this->data['message'],
         ];
     }
+
 }
