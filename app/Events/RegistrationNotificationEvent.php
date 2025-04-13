@@ -16,8 +16,8 @@ class RegistrationNotificationEvent implements ShouldBroadcastNow
     
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user_id;
     public $data;
+    public $user_id;
     public $admin_id;
 
     public function __construct($data, $admin_id)
