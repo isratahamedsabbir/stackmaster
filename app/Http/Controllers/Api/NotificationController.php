@@ -16,17 +16,19 @@ class NotificationController extends Controller
     public function test(){
 
         $user = auth('api')->user();
-        
+        $admin = User::role('admin', 'web')->first();
+
         $notiData = [
             'user_id' => $user->id,
-            'admin_id' => 2,
-            'title' => 'Confirm Schedule',
-            'body' => 'Your Test Notification',
+            'title' => 'Test Notification Title.',
+            'body' => 'Your Test Notification Body.',
             'icon'  => env('APP_LOGO')
         ];
 
-        User::find($user->id)->notify(new TestNotification($notiData));
-        broadcast(new TestNotificationEvent($notiData))->toOthers();
+        $admin->notify(new TestNotification($notiData, $admin->id));
+        if(env('REVERB' === 'on')){
+            broadcast(new TestNotificationEvent($notiData, $admin->id))->toOthers();
+        }
 
         return true;
     }

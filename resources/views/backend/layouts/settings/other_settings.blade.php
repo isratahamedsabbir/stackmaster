@@ -91,6 +91,21 @@
                                 </div>
                             </div>
 
+                            {{-- SMS SEND --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="reverb" class="col-form-label fw-bold mb-0">Reverb</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('reverb') is-invalid @enderror"
+                                            type="checkbox" id="reverb" name="reverb"
+                                            {{ $settings['reverb'] === 'on' ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.reverb') }}" />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -152,6 +167,10 @@
         });
 
         $("#recaptcha").on("change", function() {
+            jsonUpdateByGet(this);
+        });
+
+        $("#reverb").on("change", function() {
             jsonUpdateByGet(this);
         });
 

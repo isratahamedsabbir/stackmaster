@@ -55,7 +55,7 @@ class RegisterController extends Controller
             $token = auth('api')->login($user);
 
             //notify to admin start
-            /* $notiData = [
+            $notiData = [
                 'user_id' => $user->id,
                 'title' => 'User register in successfully.',
                 'body' => 'User register in successfully.'
@@ -64,8 +64,10 @@ class RegisterController extends Controller
             $admins = User::role('admin', 'web')->get();
             foreach($admins as $admin){
                 $admin->notify(new RegistrationNotification($notiData));
-                broadcast(new RegistrationNotificationEvent($notiData, $admin->id))->toOthers();
-            } */
+                if(env('REVERB' === 'on')){
+                    broadcast(new RegistrationNotificationEvent($notiData, $admin->id))->toOthers();
+                }
+            }
             //notify to admin end
 
             $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);

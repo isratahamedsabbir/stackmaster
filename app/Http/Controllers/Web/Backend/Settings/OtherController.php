@@ -12,7 +12,8 @@ class OtherController extends Controller
             'mail'       => env('MAIL', ''),
             'sms'        => env('SMS', ''),
             'recaptcha'  => env('RECAPTCHA_ENABLE', ''),
-            'pagination' => env('PAGINATION', '')
+            'pagination' => env('PAGINATION', ''),
+            'reverb'     => env('REVERB', ''),
         ];
         return view('backend.layouts.settings.other_settings', compact('settings'));
     }
@@ -38,6 +39,21 @@ class OtherController extends Controller
             file_put_contents(base_path('.env'), $envContent);
         }else{
             $envContent = str_replace('SMS=on', 'SMS=off', file_get_contents(base_path('.env')));
+            file_put_contents(base_path('.env'), $envContent);
+        }
+
+        return response()->json([
+            'status' => 't-success',
+            'message' => 'Your action was successful!'
+        ]);
+    }
+
+    public function reverb(){
+        if(env('REVERB') === 'off'){
+            $envContent = str_replace('REVERB=off', 'REVERB=on', file_get_contents(base_path('.env')));
+            file_put_contents(base_path('.env'), $envContent);
+        }else{
+            $envContent = str_replace('REVERB=on', 'REVERB=off', file_get_contents(base_path('.env')));
             file_put_contents(base_path('.env'), $envContent);
         }
 
