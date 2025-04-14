@@ -39,10 +39,12 @@ Route::group(['middleware' => 'auth:api | otp'], function ($router) {
 });
 
 /* // Firebase Token Module
-Route::get("firebase/test", [FirebaseTokenController::class, "test"]);
-Route::post("firebase/token/add", [FirebaseTokenController::class, "store"]);
-Route::post("firebase/token/get", [FirebaseTokenController::class, "getToken"]);
-Route::post("firebase/token/delete", [FirebaseTokenController::class, "deleteToken"]);
+Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
+    Route::get("test", "test");
+    Route::post("token/add", "store");
+    Route::post("token/get", "getToken");
+    Route::post("token/delete", "deleteToken");
+});
 
 //Notification
 Route::controller(NotificationController::class)->prefix('notify')->group(function () {

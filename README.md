@@ -15,6 +15,11 @@ php artisan reverb:start --debug
 php artisan queue:work
 
 ## Account
+Email:- admin@admin.com
+Pass:- 12345678
+Roll:- admin
+Guard:- web
+
 Email:- developer@developer.com
 Pass:- 12345678
 Roll:- developer

@@ -54,7 +54,7 @@ class ScheduleConfirmNotification extends Notification  implements ShouldQueue
             $notifyData = [
                 'title' => $this->data['title'],
                 'body'  => $this->data['message'],
-                'icon'  => env('APP_ICON')
+                'icon'  => env('APP_LOGO')
             ];
             foreach ($user->firebaseTokens as $firebaseToken) {
                 Helper::sendNotifyMobile($firebaseToken->token, $notifyData);
@@ -66,7 +66,7 @@ class ScheduleConfirmNotification extends Notification  implements ShouldQueue
             'title'       => $this->data['title'],
             'message'     => $this->data['message'],
             'id'          => $this->data['id'] ?? 0,
-            'icon'        => env('APP_ICON')
+            'icon'        => env('APP_LOGO')
         ];
     }
 }

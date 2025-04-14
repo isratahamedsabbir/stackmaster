@@ -9,9 +9,8 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RegistrationNotification extends Notification  implements ShouldQueue
+class TestNotification extends Notification
 {
-    use Queueable;
 
     public $data;
     public function __construct($data)
@@ -41,9 +40,8 @@ class RegistrationNotification extends Notification  implements ShouldQueue
     public function toArray(object $notifiable): array
     {
         return [
-            'user_id' => $this->data['user_id'],
             'title' => $this->data['title'],
-            'body' => $this->data['body']
+            'body' => $this->data['body'],
         ];
     }
 

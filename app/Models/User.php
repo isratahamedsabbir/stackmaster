@@ -77,4 +77,10 @@ class User extends Authenticatable implements JWTSubject
         // Return only the path for web requests
         return $value;
     }
+
+    public function firebaseTokens()
+    {
+        return $this->hasMany(FirebaseTokens::class);
+    }
+    
 }

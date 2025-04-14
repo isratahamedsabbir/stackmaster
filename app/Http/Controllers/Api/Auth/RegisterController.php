@@ -57,7 +57,8 @@ class RegisterController extends Controller
             //notify to admin start
             $notiData = [
                 'user_id' => $user->id,
-                'message' => 'User register in successfully.'
+                'title' => 'User register in successfully.',
+                'body' => 'User register in successfully.'
             ];
 
             $admins = User::role('admin', 'web')->get();

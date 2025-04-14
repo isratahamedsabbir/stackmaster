@@ -53,7 +53,7 @@ class MobileNotification extends Notification  implements ShouldQueue
             'title'   => $this->data['title'],
             'message' => $this->data['message'],
             'id'      => $this->data['id'] ?? 0,
-            'icon'    => env('APP_ICON')
+            'icon'    => env('APP_LOGO')
         ];
     }
 }
