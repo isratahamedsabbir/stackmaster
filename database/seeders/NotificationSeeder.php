@@ -25,7 +25,8 @@ class NotificationSeeder extends Seeder
                 'notifiable_type' => 'App\Models\User', // Change this if needed
                 'notifiable_id' => rand(1, 3), // Users 1, 2, 3
                 'data' => json_encode([
-                    'message' => 'Sample Notification ' . ($i + 1),
+                    'title' => 'Sample Notification Title ' . ($i + 1),
+                    'body' => 'Sample Notification Body ' . ($i + 1),
                     'id' => 0
                 ]),
                 'read_at' => rand(0, 1) ? Carbon::now() : null, // Randomly mark some notifications as read

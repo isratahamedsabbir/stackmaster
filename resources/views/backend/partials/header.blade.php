@@ -222,7 +222,7 @@
                                         </div>
                                     </div>
                                     <div class="notifications-menu ps3 overflow-scroll" id="notification">
-                                        <!-- <a class="dropdown-item" href="chat.html">
+                                        <a class="dropdown-item" href="chat.html">
                                             <div class="notification-each d-flex">
                                                 <div class="me-3 notifyimg  bg-primary brround">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
@@ -239,7 +239,7 @@
                                                         ago</span>
                                                 </div>
                                             </div>
-                                        </a> -->
+                                        </a>
                                     </div>
                                     <div class="dropdown-divider m-0"></div>
                                     <!-- <div class="text-center p-3">

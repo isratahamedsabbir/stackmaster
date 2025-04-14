@@ -13,12 +13,14 @@ class TestNotification extends Notification
 {
 
     public $data;
-    public function __construct($data)
+    public $admin_id;
+    public function __construct($data, $admin_id)
     {       
         $this->data = $data;
         $user = User::find($data['user_id']);
         $this->data['name'] = $user->name;
         $this->data['email'] = $user->email;
+        $this->admin_id = $admin_id;
     }
 
     public function via(object $notifiable): array
