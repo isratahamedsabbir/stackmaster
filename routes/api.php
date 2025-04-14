@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\Auth\SocialLoginController;
+use App\Http\Controllers\Api\FirebaseTokenController;
 use App\Http\Controllers\Api\Frontend\HomeController;
+use App\Http\Controllers\Api\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'guest:api'], function ($router) {
@@ -38,7 +40,7 @@ Route::group(['middleware' => 'auth:api | otp'], function ($router) {
     Route::delete('/delete-profile', [UserController::class, 'deleteProfile']);
 });
 
-/* // Firebase Token Module
+// Firebase Token Module
 Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
     Route::get("test", "test");
     Route::post("token/add", "store");
@@ -48,11 +50,11 @@ Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(fun
 
 //Notification
 Route::controller(NotificationController::class)->prefix('notify')->group(function () {
+    Route::get('test', 'test');
     Route::get('/', 'index');
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
-}); */
-
+});
 
 Route::prefix('cms')->name('cms.')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');

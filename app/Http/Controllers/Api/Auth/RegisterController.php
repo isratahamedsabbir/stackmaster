@@ -52,8 +52,6 @@ class RegisterController extends Controller
 
             $user->assignRole($request->input('role'));
 
-            $token = auth('api')->login($user);
-
             //notify to admin start
             $notiData = [
                 'user_id' => $user->id,
@@ -64,13 +62,13 @@ class RegisterController extends Controller
             $admins = User::role('admin', 'web')->get();
             foreach($admins as $admin){
                 $admin->notify(new RegistrationNotification($notiData));
-                if(env('REVERB' === 'on')){
+                if(env('REVERB')  === 'on'){
                     broadcast(new RegistrationNotificationEvent($notiData, $admin->id))->toOthers();
                 }
             }
             //notify to admin end
 
-            $data = User::select($this->select)->with('roles')->find(auth('api')->user()->id);
+            $data = User::select($this->select)->with('roles')->find($user->id);
 
             return response()->json([
                 'status'     => true,
@@ -79,6 +77,7 @@ class RegisterController extends Controller
                 'expires_in' => auth('api')->factory()->getTTL() * 60,
                 'data' => $data
             ], 200);
+            
         } catch (Exception $e) {
             return Helper::jsonErrorResponse('User registration failed', 500, [$e->getMessage()]);
         }

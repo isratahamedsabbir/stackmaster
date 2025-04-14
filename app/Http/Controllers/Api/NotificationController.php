@@ -26,7 +26,8 @@ class NotificationController extends Controller
         ];
 
         $admin->notify(new TestNotification($notiData, $admin->id));
-        if(env('REVERB' === 'on')){
+        
+        if(env('REVERB') == 'on'){
             broadcast(new TestNotificationEvent($notiData, $admin->id))->toOthers();
         }
 
