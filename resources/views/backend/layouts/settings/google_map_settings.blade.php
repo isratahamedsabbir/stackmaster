@@ -88,7 +88,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('settings.google-map') }}&callback=initMap" async defer></script>
 <script>
     function initMap() {
         var location = {

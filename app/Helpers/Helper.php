@@ -106,7 +106,7 @@ class Helper
     public static function sendNotifyMobile($token, $notifyData): void
     {
         try {
-            $factory = (new Factory)->withServiceAccount(storage_path(env('FIREBASE_CREDENTIALS')));
+            $factory = (new Factory)->withServiceAccount(storage_path(config('firebase.credentials')));
             $messaging = $factory->createMessaging();
             $notification = Notification::create($notifyData['title'], Str::limit($notifyData['body'], 100), $notifyData['icon']);
             $message = CloudMessage::withTarget('token', $token)->withNotification($notification);

@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="card-body">
                                     <iframe 
-                                        src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ $schedule->latitude }},{{ $schedule->longitude }}" 
+                                        src="https://www.google.com/maps/embed/v1/place?key={{ config('settings.google-map') }}&q={{ $schedule->latitude }},{{ $schedule->longitude }}" 
                                         width="100%" 
                                         height="100%" 
                                         frameborder="0" 
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="card-body">
                                     <iframe 
-                                        src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ $schedule->service->latitude }},{{ $schedule->service->longitude }}" 
+                                        src="https://www.google.com/maps/embed/v1/place?key={{ config('settings.google-map') }}&q={{ $schedule->service->latitude }},{{ $schedule->service->longitude }}" 
                                         width="100%" 
                                         height="100%" 
                                         frameborder="0" 

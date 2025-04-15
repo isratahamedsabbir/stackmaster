@@ -62,7 +62,7 @@ class RegisterController extends Controller
             $admins = User::role('admin', 'web')->get();
             foreach($admins as $admin){
                 $admin->notify(new RegistrationNotification($notiData));
-                if(env('REVERB')  === 'on'){
+                if(config('settings.reverb')  === 'on'){
                     broadcast(new RegistrationNotificationEvent($notiData, $admin->id))->toOthers();
                 }
             }

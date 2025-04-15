@@ -18,7 +18,7 @@ class FirebaseTokenController extends Controller
     {
         $user = User::find(auth('api')->user()->id);
         if ($user && $user->firebaseTokens) {
-            $notifyData = ['title' => "Payment Failed", 'body'  => "test body", 'icon'  => env('APP_LOGO')];
+            $notifyData = ['title' => "Payment Failed", 'body'  => "test body", 'icon'  => config('settings.logo')];
             foreach ($user->firebaseTokens as $firebaseToken) {
                 Helper::sendNotifyMobile($firebaseToken->token, $notifyData);
             }
