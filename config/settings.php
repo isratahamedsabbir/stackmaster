@@ -4,6 +4,8 @@ return [
     'logo' => env('APP_LOGO', 'default/logo.png'),
     'sms' => env('SMS', 'off'),
     'mail' => env('MAIL', 'on'),
+
+    //on||off
     'reverb' => env('REVERB', 'off'),
 
     //yes||no
