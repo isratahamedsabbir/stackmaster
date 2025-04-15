@@ -8,7 +8,6 @@ use App\Http\Controllers\Web\Backend\CMS\Web\AuthPageController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeBannerController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeHeroController;
 use App\Http\Controllers\Web\Backend\ContactController;
-use App\Http\Controllers\Web\Backend\NotificationController;
 use App\Http\Controllers\Web\Backend\Settings\FirebaseController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
@@ -194,13 +193,6 @@ Route::prefix('cms')->name('cms.')->group(function () {
         Route::put('/content', 'content')->name('content');
     });
     
-});
-
-
-Route::controller(NotificationController::class)->prefix('notification')->name('notification.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::post('read/single/{id}', 'readSingle')->name('read.single');
-    Route::POST('read/all', 'readAll')->name('read.all');
 });
 
 
