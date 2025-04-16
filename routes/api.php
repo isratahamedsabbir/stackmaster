@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:api | otp'], function ($router) {
 });
 
 // Firebase Token Module
-Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
+Route::middleware(['authApi'])->controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
     Route::get("test", "test");
     Route::post("token/add", "store");
     Route::post("token/get", "getToken");
@@ -49,7 +49,7 @@ Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(fun
 })->middleware('auth:api');
 
 //Notification
-Route::controller(NotificationController::class)->prefix('notify')->group(function () {
+Route::middleware(['authApi'])->controller(NotificationController::class)->prefix('notify')->group(function () {
     Route::get('test', 'test');
     Route::get('/', 'index');
     Route::get('status/read/all', 'readAll');

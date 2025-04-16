@@ -1,6 +1,15 @@
 <?php
 
 use App\Helpers\Helper;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AuthApiCheckMiddleware;
+use App\Http\Middleware\AuthCheckMiddleware;
+use App\Http\Middleware\CustomerMiddleware;
+use App\Http\Middleware\DeveloperMiddleware;
+use App\Http\Middleware\OtpVerifiedMiddleware;
+use App\Http\Middleware\RetailerMiddleware;
+use App\Http\Middleware\TrainerMiddleware;
+use App\Http\Middleware\UserMiddleware;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,6 +19,9 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -33,17 +45,18 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'developer' => App\Http\Middleware\DeveloperMiddleware::class,
-            'admin' => App\Http\Middleware\AdminMiddleware::class,
-            'client' => App\Http\Middleware\CustomerMiddleware::class,
-            'retailer' => App\Http\Middleware\RetailerMiddleware::class,
-            'user' => App\Http\Middleware\UserMiddleware::class,
-            'trainer' => App\Http\Middleware\TrainerMiddleware::class,
-            'otp' => App\Http\Middleware\OtpVerifiedMiddleware::class,
-            'authCheck' => App\Http\Middleware\AuthCheckMiddleware::class,
-            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class
+            'developer' => DeveloperMiddleware::class,
+            'admin' => AdminMiddleware::class,
+            'client' => CustomerMiddleware::class,
+            'retailer' => RetailerMiddleware::class,
+            'user' => UserMiddleware::class,
+            'trainer' => TrainerMiddleware::class,
+            'otp' => OtpVerifiedMiddleware::class,
+            'authCheck' => AuthCheckMiddleware::class,
+            'authApi' => AuthApiCheckMiddleware::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class
         ]);
         /* $middleware->validateCsrfTokens(except: [
             'payment/stripe-webhook',
