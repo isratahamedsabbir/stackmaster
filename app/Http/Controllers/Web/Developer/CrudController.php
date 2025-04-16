@@ -1,33 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Web\Backend;
+namespace App\Http\Controllers\Web\Developer;
 
-use App\Models\Category;
-use App\Models\Subcategory;
+use App\Helpers\Helper;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubCategoryRequest;
-use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
+use App\Models\Category;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 
-class SubcategoryController extends Controller
+class CrudController extends Controller
 {
-
-    private $subCategoryRepository;
-
-    public function __construct(SubCategoryRepositoryInterface $subCategoryRepository)
-    {
-        $this->subCategoryRepository = $subCategoryRepository;
-    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->subCategoryRepository->all();
+            $data = Post::all();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function ($data) {
@@ -61,6 +53,10 @@ class SubcategoryController extends Controller
                                     <i class="fe fe-edit"></i>
                                 </a>
 
+                                <a href="#" type="button" onclick="goToOpen(' . $data->id . ')" class="btn btn-success fs-14 text-white delete-icn" title="Delete">
+                                    <i class="fe fe-eye"></i>
+                                </a>
+
                                 <a href="#" type="button" onclick="showDeleteConfirm(' . $data->id . ')" class="btn btn-danger fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-trash"></i>
                                 </a>
@@ -69,7 +65,7 @@ class SubcategoryController extends Controller
                 ->rawColumns(['category', 'image' ,'status', 'action'])
                 ->make();
         }
-        return view("backend.layouts.subcategory.index");
+        return view("backend.layouts.post.index");
     }
 
     /**
@@ -78,61 +74,82 @@ class SubcategoryController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.subcategory.create', compact('categories'));
+        return view('backend.layouts.post.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(SubCategoryRequest $request)
+    public function store(Request $request)
     {
-        $validatedData = $request->validated();
+        $validate = $request->validate([
+            'title' => 'required|max:250',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
         try {
-            $this->subCategoryRepository->create($validatedData);
-            session()->put('t-success', 'Sub Category created successfully');
-           
+            if ($request->hasFile('image')) {
+                $validate['image'] = Helper::fileUpload($request->file('image'), 'post', time() . '_' . getFileName($request->file('image')));
+            }
+            $validate['slug'] = Helper::makeSlug(Post::class, $validate['title']);
+            Post::create($validate);
+            session()->put('t-success', 'post created successfully');
         } catch (Exception $e) {
             session()->put('t-error', $e->getMessage());
         }
-
-        return redirect()->route('admin.subcategory.index')->with('t-success', 'Subcategory created successfully');
+        return redirect()->route('post.index')->with('t-success', 'post created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Subcategory $subcategory, $id)
+    public function show(post $post, $id)
     {
-        $subcategory = $this->subCategoryRepository->find($id);
-        return view('backend.layouts.subcategory.edit', compact('subcategory'));
+        $post = Post::findOrFail($id);
+        return view('backend.layouts.post.edit', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, $id)
+    public function edit(post $post, $id)
     {
-        $subcategory = $this->subCategoryRepository->find($id);
+        $post = Post::findOrFail($id);
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.subcategory.edit', compact('subcategory', 'categories'));
+        return view('backend.layouts.post.edit', compact('post', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(SubCategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $validatedData = $request->validated();
+        $validate = $request->validate([
+            'title' => 'required|max:250',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
+        ]);
 
         try {
-            $this->subCategoryRepository->update($id, $validatedData);
-            session()->put('t-success', 'Category updated successfully');
+            $post = Post::findOrFail($id);
+
+            if ($request->hasFile('image')) {
+                if ($post->image && file_exists(public_path($post->image))) {
+                    Helper::fileDelete(public_path($post->image));
+                }
+                $validate['image'] = Helper::fileUpload($request->file('image'), 'post', time() . '_' . getFileName($request->file('image')));
+            }
+
+            $post->update($validate);
+            session()->put('t-success', 'post updated successfully');
         } catch (Exception $e) {
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.subcategory.index');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -141,33 +158,38 @@ class SubcategoryController extends Controller
     public function destroy(string $id)
     {
         try {
-            $this->subCategoryRepository->delete($id);
+            $data = Post::findOrFail($id);
+            if ($data->image && file_exists(public_path($data->image))) {
+                Helper::fileDelete(public_path($data->image));
+            }
+            $data->delete();
             return response()->json([
                 'status' => 't-success',
                 'message' => 'Your action was successful!'
             ]);
+            
         } catch (Exception $e) {
             return response()->json([
                 'status' => 't-error',
-                'message' => $e->getMessage(),
+                'message' => 'Your action was successful!'
             ]);
         }
     }
 
     public function status(int $id): JsonResponse
     {
-        try {
-            $this->subCategoryRepository->status($id);
-            return response()->json([
-                'status' => 't-success',
-                'message' => 'Your action was successful!',
-            ]);
-        } catch (Exception $e) {
+        $data = Post::findOrFail($id);
+        if (!$data) {
             return response()->json([
                 'status' => 't-error',
-                'message' => $e->getMessage(),
+                'message' => 'Item not found.',
             ]);
-        } 
+        }
+        $data->status = $data->status === 'active' ? 'inactive' : 'active';
+        $data->save();
+        return response()->json([
+            'status' => 't-success',
+            'message' => 'Your action was successful!',
+        ]);
     }
-
 }

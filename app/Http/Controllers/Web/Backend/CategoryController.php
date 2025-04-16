@@ -16,9 +16,9 @@ class CategoryController extends Controller
 
     private $categoryRepository;
 
-    public function __construct(CategoryRepositoryInterface $productRepository)
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
-        $this->categoryRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
@@ -107,7 +107,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category, $id)
+    public function edit(Request $request, $id)
     {
         $category = $this->categoryRepository->find($id);
         return view('backend.layouts.category.edit', compact('category'));
