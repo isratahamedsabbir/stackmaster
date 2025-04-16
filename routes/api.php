@@ -46,7 +46,7 @@ Route::controller(FirebaseTokenController::class)->prefix('firebase')->group(fun
     Route::post("token/add", "store");
     Route::post("token/get", "getToken");
     Route::post("token/delete", "deleteToken");
-});
+})->middleware('auth:api');
 
 //Notification
 Route::controller(NotificationController::class)->prefix('notify')->group(function () {
@@ -54,7 +54,7 @@ Route::controller(NotificationController::class)->prefix('notify')->group(functi
     Route::get('/', 'index');
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
-});
+})->middleware('auth:api');
 
 Route::prefix('cms')->name('cms.')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
