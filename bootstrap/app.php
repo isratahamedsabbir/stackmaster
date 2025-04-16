@@ -53,7 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'trainer' => TrainerMiddleware::class,
             'otp' => OtpVerifiedMiddleware::class,
             'authCheck' => AuthCheckMiddleware::class,
-            'authApi' => AuthApiCheckMiddleware::class,
+            'authApiAll' => AuthApiAllCheckMiddleware::class,
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class
