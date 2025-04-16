@@ -22,12 +22,12 @@ class NotificationController extends Controller
             'user_id' => $user->id,
             'title' => 'Test Notification Title.',
             'body' => 'Your Test Notification Body.',
-            'icon'  => env('APP_LOGO')
+            'icon'  => config('settings.logo')
         ];
 
         $admin->notify(new TestNotification($notiData, $admin->id));
         
-        if(env('REVERB') == 'on'){
+        if(config('settings.reverb') == 'on'){
             broadcast(new TestNotificationEvent($notiData, $admin->id))->toOthers();
         }
 
