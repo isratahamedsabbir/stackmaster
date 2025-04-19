@@ -135,7 +135,7 @@
 
     userList();
 
-    function userSearch(){
+    function userSearch() {
         NProgress.start();
         $('#userList').empty();
         let keyword = $('#keyword').val();
@@ -176,9 +176,12 @@
                 NProgress.done();
                 $('#ChatContent').empty();
                 $('#ReceiverId').val(receiver_id);
+                window.sessionStorage.setItem('receiver_id', receiver_id);
                 $('#ReceiverName').text(response.data.receiver.name);
                 $('#ReceiverRoll').text(response.data.receiver.role);
                 $('#RoomId').val(response.data.room.id);
+                window.sessionStorage.removeItem('room_id');
+                window.sessionStorage.setItem('room_id', response.data.room.id);
                 $('#ChatBox').removeClass('d-none');
 
                 if ($('#selectUser' + receiver_id).length) {
@@ -281,16 +284,25 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const checkGroupId = setInterval(() => {
-            let room_id = document.getElementById('RoomId').value;
+            //let room_id = document.getElementById('RoomId').value;
+            let room_id = window.sessionStorage.getItem('room_id');
+            alert(room_id);
             if (room_id) {
                 clearInterval(checkGroupId);
                 Echo.private(`chat-room.${room_id}`).listen('MessageSendEvent', function(e) {
                     userChat(document.getElementById('ReceiverId').value);
+                    toastr.success(room_id);
                     userList();
                 });
             }
         }, 100);
     });
-    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        Echo.private(`chat-receiver.{{auth('web')->user()->id}}`).listen('MessageSendEvent', function(e) {
+            toastr.success(e.data.text ?? "File Sent");
+            userList();
+        });
+    });
 </script>
 @endpush
