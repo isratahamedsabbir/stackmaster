@@ -235,7 +235,9 @@
         let file = $('#File')[0].files[0] || null;
         if (text !== null || file !== null) {
             let formData = new FormData();
-            formData.append('text', text);
+            if (text !== null) {
+                formData.append('text', text);
+            }
             if (file !== null) {
                 formData.append('file', file);
             }
