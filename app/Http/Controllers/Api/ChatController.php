@@ -23,7 +23,7 @@ class ChatController extends Controller
         $authUser = Auth::guard('api')->user();
         
         // Fetch users who are connected as senders or receivers with the authenticated user
-        $users = User::select('id', 'name', 'avatar', 'referral_code')
+        $users = User::select('id', 'name', 'avatar')
             ->whereHas('senders', function ($query) use ($authUser) {
                 $query->where('receiver_id', $authUser->id);
             })
@@ -72,7 +72,7 @@ class ChatController extends Controller
         $user_id = Auth::guard('api')->id();
 
         $search = $request->get('search');
-        $users = User::select('id', 'name', 'avatar', 'referral_code')->where('id', '!=', $user_id)->where(function ($query) use ($search) {
+        $users = User::select('id', 'name', 'avatar')->where('id', '!=', $user_id)->where(function ($query) use ($search) {
             $query->where('name', 'LIKE', "%{$search}%")->orWhere('email', 'LIKE', "%{$search}%");
         })->get();
 
@@ -106,8 +106,8 @@ class ChatController extends Controller
                 $query->where('sender_id', $receiver_id)->where('receiver_id', $sender_id);
             })
             ->with([
-                'sender:id,name,avatar,referral_code,coin',
-                'receiver:id,name,avatar,referral_code,coin',
+                'sender:id,name,avatar,last_activity_at',
+                'receiver:id,name,avatar,last_activity_at',
             ])
             ->orderBy('created_at')
             ->paginate(50);
@@ -119,8 +119,8 @@ class ChatController extends Controller
             })->first();
 
         $data = [
-            'receiver' => User::select('id', 'name', 'avatar', 'referral_code')->where('id', $receiver_id)->first(),
-            'sender' => User::select('id', 'name', 'avatar', 'referral_code')->where('id', $sender_id)->first(),
+            'receiver' => User::select('id', 'name', 'avatar', 'last_activity_at')->where('id', $receiver_id)->first(),
+            'sender' => User::select('id', 'name', 'avatar', 'last_activity_at')->where('id', $sender_id)->first(),
             'room' => $room,
             'chat' => $chat
         ];
@@ -186,7 +186,7 @@ class ChatController extends Controller
         ]);
 
         //* Load the sender's information
-        $chat->load(['sender:id,name,avatar,referral_code,coin', 'receiver:id,name,avatar,referral_code,coin']);
+        $chat->load(['sender:id,name,avatar,last_activity_at', 'receiver:id,name,avatar,last_activity_at']);
 
         broadcast(new MessageSendEvent($chat))->toOthers();
 
