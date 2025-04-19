@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('reset_password_token_expire_at')->nullable();
             $table->string('avatar')->nullable();
             $table->string('password');
+            $table->timestamp('last_activity_at')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->rememberToken();
             $table->softDeletes();

@@ -50,6 +50,11 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
+    protected $appends = [
+        'role',
+        'is_online'
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -78,9 +83,27 @@ class User extends Authenticatable implements JWTSubject
         return $value;
     }
 
+    public function getIsOnlineAttribute()
+    {
+        return $this->last_activity_at > now()->subMinutes(5);
+    }
+
+    public function getRoleAttribute()
+    {
+        return  $this->getRoleNames()->first();
+    }
+
     public function firebaseTokens()
     {
         return $this->hasMany(FirebaseTokens::class);
+    }
+
+    public function senders() {
+        return $this->hasMany(Chat::class, 'sender_id');
+    }
+
+    public function receivers() {
+        return $this->hasMany(Chat::class, 'receiver_id');
     }
     
 }

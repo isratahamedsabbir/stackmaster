@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\Auth\SocialLoginController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\FirebaseTokenController;
 use App\Http\Controllers\Api\Frontend\HomeController;
 use App\Http\Controllers\Api\NotificationController;
@@ -41,7 +42,7 @@ Route::group(['middleware' => 'auth:api | otp'], function ($router) {
 });
 
 // Firebase Token Module
-Route::middleware(['authApi'])->controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
+Route::middleware(['authApiBoth'])->controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
     Route::get("test", "test");
     Route::post("token/add", "store");
     Route::post("token/get", "getToken");
@@ -49,13 +50,25 @@ Route::middleware(['authApi'])->controller(FirebaseTokenController::class)->pref
 })->middleware('auth:api');
 
 //Notification
-Route::middleware(['authApi'])->controller(NotificationController::class)->prefix('notify')->group(function () {
+Route::middleware(['authApiBoth'])->controller(NotificationController::class)->prefix('notify')->group(function () {
     Route::get('test', 'test');
     Route::get('/', 'index');
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
 })->middleware('auth:api');
 
+//chat
+Route::middleware(['authApiBoth'])->controller(ChatController::class)->prefix('both/chat')->group(function () {
+    Route::get('/list', 'list');
+    Route::post('/send/{receiver_id}', 'send');
+    Route::get('/conversation/{receiver_id}', 'conversation');
+    Route::get('/room/{receiver_id}', 'room');
+    Route::get('/search', 'search');
+    Route::get('/seen/all/{receiver_id}', 'seenAll');
+    Route::get('/seen/single/{chat_id}', 'seenSingle');
+});
+
+//CMS
 Route::prefix('cms')->name('cms.')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
 });

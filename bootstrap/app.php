@@ -2,7 +2,7 @@
 
 use App\Helpers\Helper;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\AuthApiCheckMiddleware;
+use App\Http\Middleware\AuthApiBothCheckMiddleware;
 use App\Http\Middleware\AuthCheckMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\DeveloperMiddleware;
@@ -53,7 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'trainer' => TrainerMiddleware::class,
             'otp' => OtpVerifiedMiddleware::class,
             'authCheck' => AuthCheckMiddleware::class,
-            'authApiAll' => AuthApiAllCheckMiddleware::class,
+            'authApiBoth' => AuthApiBothCheckMiddleware::class,
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'role_or_permission' => RoleOrPermissionMiddleware::class

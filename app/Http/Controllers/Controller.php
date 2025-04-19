@@ -12,5 +12,14 @@ abstract class Controller
         $locale = session()->get('locale') ?? "en";
         Session::put('locale', $locale);
         App::setLocale($locale);
+
+        if (auth('web')->check()) {
+            auth('web')->user()->update(['last_activity_at' => now()]);
+        }
+
+        if (auth('api')->check()) {
+            auth('api')->user()->update(['last_activity_at' => now()]);
+        }
+        
     }
 }

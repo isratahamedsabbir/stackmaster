@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Backend\Access\PermissionController;
 use App\Http\Controllers\Web\Backend\Access\RoleController;
 use App\Http\Controllers\Web\Backend\Access\UserController;
 use App\Http\Controllers\Web\Backend\CategoryController;
+use App\Http\Controllers\Web\Backend\ChatController;
 use App\Http\Controllers\Web\Backend\CMS\Web\AuthPageController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeBannerController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeHeroController;
@@ -16,8 +17,6 @@ use App\Http\Controllers\Web\Backend\Settings\SocialController;
 use App\Http\Controllers\Web\Backend\Settings\StripeController;
 use App\Http\Controllers\Web\Backend\Settings\GoogleMapController;
 use Illuminate\Support\Facades\Route;
-
-
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
@@ -27,7 +26,6 @@ use App\Http\Controllers\Web\Backend\Settings\OtherController;
 use App\Http\Controllers\Web\Backend\SocialLinkController;
 use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
-use App\Models\Subscriber;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
 
@@ -165,9 +163,19 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/reverb', [OtherController::class, 'reverb'])->name('.reverb');
 });
 
+//chat
+Route::controller(ChatController::class)->prefix('chat')->name('chat.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/list', 'list')->name('list');
+    Route::post('/send/{receiver_id}', 'send')->name('send');
+    Route::get('/conversation/{receiver_id}', 'conversation')->name('conversation');
+    Route::get('/room/{receiver_id}', 'room');
+    Route::get('/search', 'search')->name('search');
+    Route::get('/seen/all/{receiver_id}', 'seenAll');
+    Route::get('/seen/single/{chat_id}', 'seenSingle');
+});
+
 //CMS
-
-
 Route::prefix('cms')->name('cms.')->group(function () {
 
     Route::prefix('page/auth')->name('page.auth.')->controller(AuthPageController::class)->group(function () {
