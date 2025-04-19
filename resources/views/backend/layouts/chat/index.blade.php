@@ -64,10 +64,9 @@
                                 <div class="main-chat-header pt-3 d-block d-sm-flex">
                                     <div class="main-img-user online" id="ReceiverImage"></div>
                                     <div class="main-chat-msg-name mt-2">
-                                        <p class="mb-0" id="ReceiverName"></p>
-                                        <small class="me-3" id="ReceiverRoll"></small>
+                                        <p class="mb-0" id="ReceiverName" onclick="userChat($('#ReceiverId').val());" style="cursor: pointer;">User</p>
+                                        <small class="me-3" id="ReceiverRoll">Roll</small>
                                     </div>
-                                    <button type="button" class="btn btn-primary brround float-end" onclick="userChat($('#ReceiverId').val());"><i class="bi bi-arrow-clockwise"></i></button>
                                 </div>
                                 <!-- main-chat-header -->
                                 <div class="main-chat-body flex-2" id="ChatBody">
@@ -80,6 +79,7 @@
                                     <input type="text" hidden id="ReceiverId" />
                                     <input type="text" hidden id="RoomId" />
                                     <button type="button" class="btn btn-icon btn-primary brround" onclick="sendMessage($('#ReceiverId').val())"><i class="bi bi-send"></i></button>
+                                    <button type="button" class="btn btn-icon btn-primary brround" style="margin-left:10px" onclick="formClear()"><i class="bi bi-arrow-clockwise"></i></button>
                                 </div>
                             </div>
 
@@ -228,6 +228,15 @@
         };
         reader.readAsDataURL(file);
     });
+
+    function formClear() {
+        NProgress.start();
+        $('#FileLabel').html(`<i class="bi bi-image"></i>`);
+        $('#File').val('');
+        $('#Text').val('');
+        NProgress.done();
+        toastr.success('Form Clear');
+    }
 
     function sendMessage(receiver_id) {
         NProgress.start();
