@@ -33,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['web'])->prefix('ajax')->name('ajax.')->group(base_path('routes/ajax.php'));
             Route::middleware(['web', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/developer.php'));
             Route::middleware(['web', 'admin'])->prefix('admin')->name('admin.')->group(base_path('routes/backend.php'));
+            Route::middleware(['api'])->prefix('api/')->name('api.')->group(base_path('routes/api/stripe.php'));
             Route::middleware(['api', 'retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/retailer.php'));
             Route::middleware(['api', 'otp', 'customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/customer.php'));
         }
@@ -55,7 +56,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission'    => RoleOrPermissionMiddleware::class
         ]);
         /* $middleware->validateCsrfTokens(except: [
-            'payment/stripe-webhook',
+            'payment/stripe/webhook',
         ]); */
         $middleware->api([
             StartSession::class,

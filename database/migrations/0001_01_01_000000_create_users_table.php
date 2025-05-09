@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('password');
             $table->timestamp('last_activity_at')->nullable();
+            $table->string('stripe_customer_id')->nullable();
+            $table->string('stripe_account_id')->nullable();
+            $table->string('stripe_subscription_id')->nullable();
+            $table->unsignedBigInteger('plan_id')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->rememberToken();
             $table->softDeletes();

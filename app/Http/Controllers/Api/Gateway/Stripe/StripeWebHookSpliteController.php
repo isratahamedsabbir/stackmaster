@@ -17,7 +17,7 @@ use UnexpectedValueException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class StripeWebHookController extends Controller
+class StripeWebHookSplitController extends Controller
 {
     public function intent(Request $request): JsonResponse
     {
@@ -30,44 +30,47 @@ class StripeWebHookController extends Controller
         }
 
         try {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe::setApiKey(config('services.stripe.secret'));
+
             $data = $validator->validated();
+
+            $stripe_account_id = auth('api')->user()->stripe_account_id;
+            $total_price = $data['price'];
+            $admin_price = $total_price * (10 / 100);
+            $owner_price = $total_price - $admin_price;
             $uid = Str::uuid();
 
             $paymentIntent = PaymentIntent::create([
-                'amount'   => $data['price'] * 100,
+                'amount'   => $owner_price * 100,
                 'currency' => 'usd',
                 'metadata' => [
                     'order_id' => $uid,
                     'user_id' => auth('api')->user()->id
                 ],
+                'transfer_data' => [
+                    'destination' => $stripe_account_id
+                ],
+                'application_fee_amount' => $admin_price * 100
             ]);
-
             $data = [
                 'client_secret' => $paymentIntent->client_secret
             ];
-
             return Helper::jsonResponse(true, 'Payment intent created successfully', 200, $data);
-
         } catch (ApiErrorException $e) {
-
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
-
         } catch (Exception $e) {
-
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
-
         }
     }
 
 
     public function webhook(Request $request): JsonResponse
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         $payload        = $request->getContent();
         $sigHeader      = $request->header('Stripe-Signature');
-        $endpointSecret = env('STRIPE_WEBHOOK_SECRET');
+        $endpointSecret = config('services.stripe.webhook_secret');
 
         try {
             $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
@@ -107,12 +110,11 @@ class StripeWebHookController extends Controller
             'status'    => 'success',
             'metadata'  => json_encode($paymentIntent->metadata)
         ]);
-
     }
 
     protected function failure($paymentIntent): void
     {
-        //? Handle payment failure    
+        //? Handle payment failure
     }
-    
+
 }
