@@ -200,6 +200,7 @@ class PostController extends Controller
             $post->subcategory_id = $data['subcategory_id'];
             $post->save();
 
+            //image insert
             $image_count = Image::where('post_id', $post->id)->count();
             $new_images_count = $request->has('images') ? count($request['images']) : 0;
 
