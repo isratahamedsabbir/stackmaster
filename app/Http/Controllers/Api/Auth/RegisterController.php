@@ -9,22 +9,18 @@ use App\Models\User;
 use App\Mail\OtpMail;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
 use App\Notifications\RegistrationNotification;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
     public $select;
     public function __construct()
     {
-        $this->select = ['id', 'name', 'email', 'otp', 'avatar'];
+        $this->select = ['id', 'name', 'email', 'otp', 'avatar', 'otp_verified_at'];
     }
 
     public function register(Request $request)

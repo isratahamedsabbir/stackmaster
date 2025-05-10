@@ -92,7 +92,7 @@ Route::middleware(['auth:api'])->controller(FirebaseTokenController::class)->pre
     Route::post("token/add", "store");
     Route::post("token/get", "getToken");
     Route::post("token/delete", "deleteToken");
-})->middleware('auth:api');
+});
 
 /*
 # In App Notification Route
@@ -103,7 +103,7 @@ Route::middleware(['auth:api'])->controller(NotificationController::class)->pref
     Route::get('/', 'index');
     Route::get('status/read/all', 'readAll');
     Route::get('status/read/{id}', 'readSingle');
-})->middleware('auth:api');
+});
 
 /*
 # Chat Route
