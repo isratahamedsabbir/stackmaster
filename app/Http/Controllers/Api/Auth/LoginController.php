@@ -16,7 +16,8 @@ class LoginController extends Controller
     public $select;
     public function __construct()
     {
-        $this->select = ['id', 'name', 'email', 'avatar', 'otp_verified_at'];   
+        parent::__construct();
+        $this->select = ['id', 'name', 'email', 'avatar', 'otp_verified_at', 'last_activity_at'];   
     }
 
     public function Login(Request $request)
@@ -59,6 +60,10 @@ class LoginController extends Controller
                     'reset_password_token_expire_at' => null
                 ]);
             }
+
+            $user->update([
+                'last_activity_at' => now(),
+            ]);
 
             //* Generate token if email is verified
             $token = auth('api')->login($user);

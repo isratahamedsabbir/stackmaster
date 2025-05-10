@@ -20,7 +20,8 @@ class RegisterController extends Controller
     public $select;
     public function __construct()
     {
-        $this->select = ['id', 'name', 'email', 'otp', 'avatar', 'otp_verified_at'];
+        parent::__construct();
+        $this->select = ['id', 'name', 'email', 'otp', 'avatar', 'otp_verified_at', 'last_activity_at'];
     }
 
     public function register(Request $request)
@@ -34,11 +35,13 @@ class RegisterController extends Controller
         try {
 
             $user = User::create([
-                'name'           => $request->input('name'),
-                'email'          => strtolower($request->input('email')),
-                'password'       => Hash::make($request->input('password')),
-                'otp'            => rand(1000, 9999),
-                'otp_expires_at' => Carbon::now()->addMinutes(60),
+                'name'               => $request->input('name'),
+                'email'              => strtolower($request->input('email')),
+                'password'           => Hash::make($request->input('password')),
+                'otp'                => rand(1000, 9999),
+                'otp_expires_at'     => Carbon::now()->addMinutes(60),
+                'status'             => 'active',
+                'last_activity_at'   => Carbon::now()
             ]);
 
             DB::table('model_has_roles')->insert([

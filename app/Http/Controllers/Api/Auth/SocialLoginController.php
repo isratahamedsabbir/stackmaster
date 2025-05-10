@@ -17,6 +17,7 @@ class SocialLoginController extends Controller
     public $select;
     public function __construct()
     {
+        parent::__construct();
         $this->select = ['id', 'name', 'email', 'avatar'];   
     }
 
