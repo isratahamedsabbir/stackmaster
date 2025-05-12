@@ -1,4 +1,4 @@
-@extends('backend.app', ['title' => 'Cteate Users'])
+@extends('backend.app', ['title' => 'Create Users'])
 
 @section('content')
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Gateway\Stripe;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -101,6 +102,8 @@ class StripeWebHookSplitController extends Controller
 
     protected function success($paymentIntent): void
     {
+        $admin      = User::role('admin', 'web')->first();
+
         Transaction::create([
             'user_id'   => $paymentIntent->metadata->user_id,
             'amount'    => $paymentIntent->amount / 100,
