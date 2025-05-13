@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 use Stripe\Exception\ApiErrorException;
@@ -15,12 +16,20 @@ use Illuminate\Support\Str;
 
 class StripeCallBackController extends Controller
 {
+    public $redirectFail;
+    public $redirectSuccess;
+
     public function __construct()
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $this->redirectFail = env("APP_URL") . "/fail";
+        $this->redirectSuccess = env("APP_URL") . "/success";
     }
+
     public function checkout(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'price' => 'required|numeric',
         ]);
@@ -34,7 +43,7 @@ class StripeCallBackController extends Controller
             $data = $validator->validated();
             $uid = Str::uuid();
 
-            $redirectUrl = route('api.payment.stripe.success') . '?token={CHECKOUT_SESSION_ID}';
+            $successUrl = route('api.payment.stripe.success') . '?token={CHECKOUT_SESSION_ID}';
             $cancelUrl = route('api.payment.stripe.cancel');
 
             $session = Session::create([
@@ -54,17 +63,23 @@ class StripeCallBackController extends Controller
                     'order_id' => $uid,
                     'user_id' => auth('api')->user()->id
                 ],
-                'success_url' => $redirectUrl,
+                'success_url' => $successUrl,
                 'cancel_url' => $cancelUrl,
             ]);
 
-            return Helper::jsonResponse(true, 'Checkout session created successfully', 200, $session->url);
+            $data = [
+                'checkout_url' => $session->url
+            ];
+
+            return Helper::jsonResponse(true, 'Checkout session created successfully', 200, $data);
         } catch (ModelNotFoundException $e) {
 
-            return redirect()->to(env("APP_URL") . "/fail");
+            Log::error($e->getMessage());
+            return redirect()->to($this->redirectFail);
         } catch (ApiErrorException $e) {
 
-            return redirect()->to(env("APP_URL") . "/fail");
+            Log::error($e->getMessage());
+            return redirect()->to($this->redirectFail);
         }
     }
 
@@ -89,26 +104,28 @@ class StripeCallBackController extends Controller
                     'metadata'  => json_encode($session->metadata)
                 ]);
 
-                return redirect()->to(env("APP_URL") . "/success");
+                return redirect()->to($this->redirectSuccess);
             }
 
             if ($session->payment_status === 'unpaid' || $session->payment_status === 'no_payment_required') {
-                return redirect()->to(env("APP_URL") . "/fail");
+                return redirect()->to($this->redirectFail);
             }
 
-            return redirect()->to(env("APP_URL") . "/fail");
+            return redirect()->to($this->redirectFail);
         } catch (ApiErrorException $e) {
 
-            return redirect()->to(env("APP_URL") . "/fail");
+            Log::error($e->getMessage());
+            return redirect()->to($this->redirectFail);
         } catch (ModelNotFoundException $e) {
 
-            return redirect()->to(env("APP_URL") . "/fail");
+            Log::error($e->getMessage());
+            return redirect()->to($this->redirectFail);
         }
     }
 
 
     public function failure(Request $request)
     {
-        return redirect()->to(env("APP_URL") . "/fail");
+        return redirect()->to($this->redirectFail);
     }
 }

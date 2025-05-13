@@ -42,31 +42,32 @@ class StripeOnBoardingController extends Controller
                             'interval' => 'daily', // daily, weekly, monthly
                         ],
                     ],
-                ],
+                ]
             ]);
 
             $link = AccountLink::create([
-                'account' => $account->id,
-                'refresh_url' => route('api.payment.stripe.account.connect.refresh', ['account_id' => $account->id]),
-                'return_url' => route('api.payment.stripe.account.connect.success', ['account_id' => $account->id]),
-                'type' => 'account_onboarding',
+                'account'       => $account->id,
+                'refresh_url'   => route('api.payment.stripe.account.connect.refresh', ['account_id' => $account->id]),
+                'return_url'    => route('api.payment.stripe.account.connect.success', ['account_id' => $account->id]),
+                'type'          => 'account_onboarding'
             ]);
 
             $data = [
                 'url' => $link->url
             ];
 
-            return response()->json(['status' => 'success', 'data' => $data, 'message' => 'Redirecting to Stripe Express Dashboard..',], 200);
+            return response()->json(['status' => 'success', 'data' => $data, 'message' => 'Redirecting to Stripe Express Dashboard..'], 200);
         } catch (ApiErrorException $e) {
-            return response()->json(['status' => 'error', 'message' => 'Stripe API error: ' . $e->getMessage(),], 500);
+            return response()->json(['status' => 'error', 'message' => 'Stripe API error: ' . $e->getMessage()], 500);
         } catch (Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Error: ' . $e->getMessage(),], 500);
+            return response()->json(['status' => 'error', 'message' => 'Error: ' . $e->getMessage()], 500);
         }
     }
 
     public function accountSuccess($account_id)
     {
         try {
+
             $account = Account::retrieve($account_id);
             $user = User::where('email', $account->email)->first();
             if (!$user) {
@@ -79,11 +80,8 @@ class StripeOnBoardingController extends Controller
             $loginLink = Account::createLoginLink($user->stripe_account_id);
             return redirect()->away($loginLink->url);
         } catch (Exception $e) {
-            Log::info($e->getMessage());
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Error processing onboarding success: ' . $e->getMessage(),
-            ], 500);
+
+            return response()->json(['status' => 'error', 'message' => 'Error processing onboarding success: ' . $e->getMessage()], 500);
         }
     }
 
@@ -92,15 +90,18 @@ class StripeOnBoardingController extends Controller
         try {
 
             $link = AccountLink::create([
-                'account' => $account_id,
-                'refresh_url' => route('api.payment.stripe.account.connect.refresh', ['account_id' => $account_id]),
-                'return_url' => route('api.payment.stripe.account.connect.success', ['account_id' => $account_id]),
-                'type' => 'account_onboarding',
+                'account'       => $account_id,
+                'refresh_url'   => route('api.payment.stripe.account.connect.refresh', ['account_id' => $account_id]),
+                'return_url'    => route('api.payment.stripe.account.connect.success', ['account_id' => $account_id]),
+                'type'          => 'account_onboarding'
             ]);
 
             return redirect()->away($link->url);
+
         } catch (Exception $e) {
+
             return response()->json(['status' => 'error', 'message' => 'Error generating refresh link: ' . $e->getMessage()], 500);
+
         }
     }
 
@@ -115,9 +116,8 @@ class StripeOnBoardingController extends Controller
                 $data = [
                     'url' => $loginLink->url
                 ];
-                return response()->json(['status' => 'success', 'data' => $data, 'message' => 'Redirecting to Stripe Express Dashboard..',], 200);
+                return response()->json(['status' => 'success', 'data' => $data, 'message' => 'Redirecting to Stripe Express Dashboard..'], 200);
             } catch (Exception $e) {
-                Log::info($e->getMessage());
                 return response()->json(['status' => 'error', 'message' => 'Error generating Stripe login link: ' . $e->getMessage(),], 500);
             }
         }

@@ -12,6 +12,7 @@ class StripeCustomerController extends Controller
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
     }
+    
     public function createCustomer()
     {
         $user = auth('api')->user();
