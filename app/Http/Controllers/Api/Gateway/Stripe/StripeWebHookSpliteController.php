@@ -20,6 +20,10 @@ use Illuminate\Support\Str;
 
 class StripeWebHookSplitController extends Controller
 {
+    public function __construct()
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
     public function intent(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -31,7 +35,6 @@ class StripeWebHookSplitController extends Controller
         }
 
         try {
-            Stripe::setApiKey(config('services.stripe.secret'));
 
             $data = $validator->validated();
 
@@ -67,7 +70,6 @@ class StripeWebHookSplitController extends Controller
 
     public function webhook(Request $request): JsonResponse
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
 
         $payload        = $request->getContent();
         $sigHeader      = $request->header('Stripe-Signature');
@@ -119,5 +121,4 @@ class StripeWebHookSplitController extends Controller
     {
         //? Handle payment failure
     }
-
 }

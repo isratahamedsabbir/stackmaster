@@ -19,13 +19,16 @@ use Stripe\Payout;
 
 class StripeOnBoardingController extends Controller
 {
-    
+    public function __construct()
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
+
     public function accountConnect()
     {
         $user = auth('api')->user();
 
         try {
-            Stripe::setApiKey(config('services.stripe.secret'));
             $account = Account::create([
                 'type' => 'express',
                 'email' => $user->email,
@@ -64,7 +67,6 @@ class StripeOnBoardingController extends Controller
     public function accountSuccess($account_id)
     {
         try {
-            Stripe::setApiKey(config('services.stripe.secret'));
             $account = Account::retrieve($account_id);
             $user = User::where('email', $account->email)->first();
             if (!$user) {
@@ -76,7 +78,6 @@ class StripeOnBoardingController extends Controller
             ]);
             $loginLink = Account::createLoginLink($user->stripe_account_id);
             return redirect()->away($loginLink->url);
-
         } catch (Exception $e) {
             Log::info($e->getMessage());
             return response()->json([
@@ -89,7 +90,6 @@ class StripeOnBoardingController extends Controller
     public function accountRefresh($account_id)
     {
         try {
-            Stripe::setApiKey(config('services.stripe.secret'));
 
             $link = AccountLink::create([
                 'account' => $account_id,
@@ -100,7 +100,7 @@ class StripeOnBoardingController extends Controller
 
             return redirect()->away($link->url);
         } catch (Exception $e) {
-            return response()->json([ 'status' => 'error', 'message' => 'Error generating refresh link: ' . $e->getMessage() ], 500);
+            return response()->json(['status' => 'error', 'message' => 'Error generating refresh link: ' . $e->getMessage()], 500);
         }
     }
 
@@ -110,7 +110,6 @@ class StripeOnBoardingController extends Controller
 
         if ($user->stripe_account_id) {
             try {
-                Stripe::setApiKey(config('services.stripe.secret'));
                 $loginLink = Account::createLoginLink($user->stripe_account_id);
 
                 $data = [
@@ -130,7 +129,6 @@ class StripeOnBoardingController extends Controller
 
         if ($user->stripe_account_id) {
             try {
-                Stripe::setApiKey(config('services.stripe.secret'));
                 $account = Account::retrieve($user->stripe_account_id);
                 /* $balance = Balance::retrieve([], [
                     'stripe_account' => $user->stripe_account_id,
@@ -163,9 +161,8 @@ class StripeOnBoardingController extends Controller
         if ($validator->fails()) {
             return Helper::jsonResponse(false, 'Validation failed', 422, $validator->errors());
         }
-        
+
         try {
-            Stripe::setApiKey(config('services.stripe.secret'));
             $$data = $validator->validated();
             $user = auth('api')->user();
 
@@ -197,16 +194,12 @@ class StripeOnBoardingController extends Controller
             ], ['stripe_account' => $auth->stripe_account_id]);
 
             return Helper::jsonResponse(true, 'Withdrawal request sent successfully.', 200);
-
         } catch (ApiErrorException $e) {
 
             return Helper::jsonResponse(false, $e->getMessage(), 400);
-
         } catch (Exception $e) {
-            
-            return Helper::jsonResponse(false, $e->getMessage(), 400);
 
+            return Helper::jsonResponse(false, $e->getMessage(), 400);
         }
     }
-
 }

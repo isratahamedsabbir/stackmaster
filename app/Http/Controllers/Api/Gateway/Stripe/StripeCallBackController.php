@@ -15,6 +15,10 @@ use Illuminate\Support\Str;
 
 class StripeCallBackController extends Controller
 {
+    public function __construct()
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
     public function checkout(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -26,10 +30,9 @@ class StripeCallBackController extends Controller
         }
 
         try {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
-            
+
             $data = $validator->validated();
-            $uid = Str::uuid(); 
+            $uid = Str::uuid();
 
             $redirectUrl = route('api.payment.stripe.success') . '?token={CHECKOUT_SESSION_ID}';
             $cancelUrl = route('api.payment.stripe.cancel');
@@ -55,27 +58,23 @@ class StripeCallBackController extends Controller
                 'cancel_url' => $cancelUrl,
             ]);
 
-            return Helper::jsonResponse(true, 'Checkout session created successfully', 200, $session->url); 
-
+            return Helper::jsonResponse(true, 'Checkout session created successfully', 200, $session->url);
         } catch (ModelNotFoundException $e) {
 
-            return redirect()->to(env("APP_URL")."/fail");
-
+            return redirect()->to(env("APP_URL") . "/fail");
         } catch (ApiErrorException $e) {
 
-            return redirect()->to(env("APP_URL")."/fail");
-
+            return redirect()->to(env("APP_URL") . "/fail");
         }
     }
 
     public function success(Request $request)
-    { 
+    {
         $validatedData = $request->validate([
             'token' => ['required', 'string']
         ]);
 
         try {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
 
             $session = Session::retrieve($validatedData['token']);
             if ($session->payment_status === 'paid') {
@@ -90,31 +89,26 @@ class StripeCallBackController extends Controller
                     'metadata'  => json_encode($session->metadata)
                 ]);
 
-                return redirect()->to(env("APP_URL")."/success");
+                return redirect()->to(env("APP_URL") . "/success");
             }
 
             if ($session->payment_status === 'unpaid' || $session->payment_status === 'no_payment_required') {
-                return redirect()->to(env("APP_URL")."/fail");
+                return redirect()->to(env("APP_URL") . "/fail");
             }
 
-            return redirect()->to(env("APP_URL")."/fail");
-
+            return redirect()->to(env("APP_URL") . "/fail");
         } catch (ApiErrorException $e) {
 
-            return redirect()->to(env("APP_URL")."/fail");
-
+            return redirect()->to(env("APP_URL") . "/fail");
         } catch (ModelNotFoundException $e) {
 
-            return redirect()->to(env("APP_URL")."/fail");
-
+            return redirect()->to(env("APP_URL") . "/fail");
         }
     }
 
 
     public function failure(Request $request)
     {
-        return redirect()->to(env("APP_URL")."/fail");
+        return redirect()->to(env("APP_URL") . "/fail");
     }
-        
-
 }

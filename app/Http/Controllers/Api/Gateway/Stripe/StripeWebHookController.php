@@ -19,6 +19,10 @@ use Illuminate\Support\Str;
 
 class StripeWebHookController extends Controller
 {
+    public function __construct()
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+    }
     public function intent(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -30,7 +34,6 @@ class StripeWebHookController extends Controller
         }
 
         try {
-            Stripe::setApiKey(env('STRIPE_SECRET'));
             $data = $validator->validated();
             $uid = Str::uuid();
 
@@ -48,22 +51,18 @@ class StripeWebHookController extends Controller
             ];
 
             return Helper::jsonResponse(true, 'Payment intent created successfully', 200, $data);
-
         } catch (ApiErrorException $e) {
 
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
-
         } catch (Exception $e) {
 
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
-
         }
     }
 
 
     public function webhook(Request $request): JsonResponse
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $payload        = $request->getContent();
         $sigHeader      = $request->header('Stripe-Signature');
@@ -107,12 +106,10 @@ class StripeWebHookController extends Controller
             'status'    => 'success',
             'metadata'  => json_encode($paymentIntent->metadata)
         ]);
-
     }
 
     protected function failure($paymentIntent): void
     {
         //? Handle payment failure    
     }
-    
 }
