@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('amount')->default(0);
             $table->string('currency')->default('USD');
             $table->enum('type', ['increment', 'decrement']);
+            $table->enum('gateway', ['stripe', 'paypal', 'manual']);
             $table->json('metadata')->nullable();
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
             $table->timestamps();

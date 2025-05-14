@@ -25,6 +25,7 @@ use App\Http\Controllers\Web\Backend\Settings\OtherController;
 use App\Http\Controllers\Web\Backend\SocialLinkController;
 use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
+use App\Http\Controllers\Web\Backend\TransactionController;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
 
@@ -107,6 +108,15 @@ Route::get('subscriber', [SubscriberController::class, 'index'])->name('subscrib
 Route::controller(ContactController::class)->prefix('contact')->name('contact.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/status/{id}', 'status')->name('status');
+});
+
+/*
+* Transaction
+*/
+
+Route::controller(TransactionController::class)->prefix('transaction')->name('transaction.')->group(function () {
+    Route::get('/{user_id?}', 'index')->name('index');
+    Route::get('/show/{id}', 'show')->name('show');
 });
 
 

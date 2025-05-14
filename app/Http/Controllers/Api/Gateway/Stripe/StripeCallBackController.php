@@ -43,8 +43,8 @@ class StripeCallBackController extends Controller
             $data = $validator->validated();
             $uid = Str::uuid();
 
-            $successUrl = route('api.payment.stripe.success') . '?token={CHECKOUT_SESSION_ID}';
-            $cancelUrl = route('api.payment.stripe.cancel');
+            $successUrl = route('payment.stripe.success') . '?token={CHECKOUT_SESSION_ID}';
+            $cancelUrl = route('payment.stripe.cancel');
 
             $session = Session::create([
                 'payment_method_types' => ['card'],
