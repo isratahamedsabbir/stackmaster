@@ -48,6 +48,12 @@
                         <span class="side-menu__label">Post</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.project.*') ? 'has-link active' : '' }}" href="{{ route('admin.project.index') }}">
+                        <i class="fa-solid fa-file side-menu__icon"></i>
+                        <span class="side-menu__label">Project</span>
+                    </a>
+                </li>
                 <li>
                     <h3>Components</h3>
                 </li>
