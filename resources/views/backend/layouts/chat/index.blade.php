@@ -288,14 +288,17 @@
         });
     }); */
 
-    document.addEventListener('DOMContentLoaded', function() {
-        Echo.private(`chat-receiver.{{auth('web')->user()->id}}`).listen('MessageSendEvent', function(e) {
-            toastr.success(e.data.text ?? "File Sent");
-            let receiver_id = document.getElementById('ReceiverId').value;
-            userChat(receiver_id);
-            userList();
+    var user_id = `{{ auth('web')->check() ? auth('web')->user()->id : null }}`;
+
+    if (user_id) {
+        document.addEventListener('DOMContentLoaded', function() {
+            Echo.private(`chat-receiver.${user_id}`).listen('MessageSendEvent', function(e) {
+                toastr.success(e.data.text ?? "File Sent");
+                let receiver_id = document.getElementById('ReceiverId').value;
+                userChat(receiver_id);
+                userList();
+            });
         });
-    });
-    
+    }
 </script>
 @endpush
