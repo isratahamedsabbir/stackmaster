@@ -54,6 +54,12 @@
                         <span class="side-menu__label">Project</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.transaction.*') ? 'has-link active' : '' }}" href="{{ route('admin.transaction.index') }}">
+                        <i class="fa-solid fa-money-bill-transfer side-menu__icon"></i>
+                        <span class="side-menu__label">Transaction</span>
+                    </a>
+                </li>
                 <li>
                     <h3>Components</h3>
                 </li>

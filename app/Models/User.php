@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -53,7 +54,8 @@ class User extends Authenticatable implements JWTSubject
 
     protected $appends = [
         'role',
-        'is_online'
+        'is_online',
+        'balance'
     ];
 
     /**
@@ -87,6 +89,13 @@ class User extends Authenticatable implements JWTSubject
     public function getIsOnlineAttribute()
     {
         return $this->last_activity_at > now()->subMinutes(5);
+    }
+
+    public function getBalanceAttribute()
+    {
+        $increment = $this->transactions()->where('type', 'increment')->sum('amount');
+        $decrement = $this->transactions()->where('type', 'decrement')->sum('amount');
+        return $increment - $decrement;
     }
 
     public function getRoleAttribute()

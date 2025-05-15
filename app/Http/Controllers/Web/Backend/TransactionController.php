@@ -44,7 +44,7 @@ class TransactionController extends Controller
                 ->make();
         }
 
-        $user = User::find($user_id);
+        $user = User::find($user_id);      
 
         return view("backend.layouts.transaction.index", compact('user'));
     }
