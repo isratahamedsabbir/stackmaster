@@ -15,7 +15,7 @@ class TransactionSeeder extends Seeder
     {
         DB::table('transactions')->insert([
             [
-                "user_id" => 1,
+                "user_id" => 2,
                 "trx_id" => "trx-123",
                 "type" => "increment",
                 "title" => "Deposit",
@@ -26,7 +26,7 @@ class TransactionSeeder extends Seeder
                 "created_at" => now()->subDays(1),
             ],
             [
-                "user_id" => 1,
+                "user_id" => 2,
                 "trx_id" => "trx-456",
                 "type" => "decrement",
                 "title" => "Withdraw",
@@ -37,7 +37,7 @@ class TransactionSeeder extends Seeder
                 "created_at" => now()->subDays(1),
             ],
             [
-                "user_id" => 1,
+                "user_id" => 2,
                 "trx_id" => "trx-789",
                 "type" => "increment",
                 "title" => "Deposit",
@@ -48,7 +48,7 @@ class TransactionSeeder extends Seeder
                 "created_at" => now()->subDays(1),
             ],
             [
-                "user_id" => 1,
+                "user_id" => 2,
                 "trx_id" => "trx-1011",
                 "type" => "increment",
                 "title" => "Withdraw",

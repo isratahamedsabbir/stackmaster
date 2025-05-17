@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('uid')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->float('price');
-            $table->string('currency')->default('USD');
-            $table->enum('gateway', ['stripe', 'paypal', 'manual']);
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
+            $table->enum('status', ['pending', 'accept', 'reject'])->default('pending');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('orders');
     }
 };

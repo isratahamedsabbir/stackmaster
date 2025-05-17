@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Backend\Access\PermissionController;
 use App\Http\Controllers\Web\Backend\Access\RoleController;
 use App\Http\Controllers\Web\Backend\Access\UserController;
+use App\Http\Controllers\Web\Backend\BookingController;
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\ChatController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeBannerController;
@@ -18,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\FaqController;
 use App\Http\Controllers\Web\Backend\ImageController;
+use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
+use App\Http\Controllers\Web\Backend\ProductController;
 use App\Http\Controllers\Web\Backend\ProjectController;
 use App\Http\Controllers\Web\Backend\Settings\CaptchaController;
 use App\Http\Controllers\Web\Backend\Settings\OtherController;
@@ -55,6 +58,28 @@ Route::controller(SubcategoryController::class)->prefix('subcategory')->name('su
     Route::post('/update/{id}', 'update')->name('update');
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
+});
+
+Route::controller(ProductController::class)->prefix('product')->name('product.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::get('/status/{id}', 'status')->name('status');
+});
+
+Route::controller(OrderController::class)->prefix('order')->name('order.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/status/{id}', 'status')->name('status');
+});
+
+Route::controller(BookingController::class)->prefix('booking')->name('booking.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/show/{id}', 'show')->name('show');
 });
 
 Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {

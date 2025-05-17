@@ -55,6 +55,24 @@
                     </a>
                 </li>
                 <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.product.*') ? 'has-link active' : '' }}" href="{{ route('admin.product.index') }}">
+                        <i class="fa-solid fa-shop side-menu__icon"></i>
+                        <span class="side-menu__label">Product</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.order.*') ? 'has-link active' : '' }}" href="{{ route('admin.order.index') }}">
+                        <i class="fa-solid fa-truck side-menu__icon"></i>
+                        <span class="side-menu__label">Order</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.booking.*') ? 'has-link active' : '' }}" href="{{ route('admin.booking.index') }}">
+                        <i class="fa-solid fa-book side-menu__icon"></i>
+                        <span class="side-menu__label">Booking</span>
+                    </a>
+                </li>
+                <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.transaction.*') ? 'has-link active' : '' }}" href="{{ route('admin.transaction.index') }}">
                         <i class="fa-solid fa-money-bill-transfer side-menu__icon"></i>
                         <span class="side-menu__label">Transaction</span>
