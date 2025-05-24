@@ -127,6 +127,65 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <div class="card box-shadow-0">
+                        <div class="card-body">
+                            <h2>Send Email</h2>
+                            <hr class="mb-4"/>
+                            <form method="post" action="{{ route('admin.setting.mail.send') }}" enctype="multipart/form-data">
+                                @csrf
+                                @method('POST')
+
+                                <div class="row mb-4">
+                                    <label for="receiver" class="col-md-3 form-label">Receiver</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control @error('receiver') is-invalid @enderror" id="receiver"
+                                            name="receiver" placeholder="Enter Receiver mail" type="email"
+                                            value="{{ old('receiver') ?? '' }}">
+                                        @error('receiver')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <label for="subject" class="col-md-3 form-label">Subject</label>
+                                    <div class="col-md-9">
+                                        <input class="form-control @error('subject') is-invalid @enderror" id="subject"
+                                            name="subject" placeholder="Enter Your Subject" type="text"
+                                            value="{{ old('subject') ?? '' }}">
+                                        @error('subject')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <label for="content" class="col-md-3 form-label">Content</label>
+                                    <div class="col-md-9">
+                                        <textarea class="form-control @error('content') is-invalid @enderror" id="content"
+                                            name="content" placeholder="Enter Your Content">{{ old('content') ?? '' }}</textarea>
+                                        @error('content')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-9">
+                                        <div>
+                                            <button class="btn btn-primary" type="submit">Send Mail</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

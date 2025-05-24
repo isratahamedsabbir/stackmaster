@@ -226,6 +226,8 @@ Route::controller(ProfileController::class)->group(function () {
 Route::controller(MailSettingController::class)->group(function () {
     Route::get('setting/mail', 'index')->name('setting.mail.index');
     Route::patch('setting/mail', 'update')->name('setting.mail.update');
+
+    Route::post('setting/send', 'send')->name('setting.mail.send');
 });
 
 //! Route for Stripe Settings

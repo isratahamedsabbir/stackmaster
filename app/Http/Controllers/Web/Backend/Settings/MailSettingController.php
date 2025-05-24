@@ -8,6 +8,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
 
 class MailSettingController extends Controller {
     /**
@@ -74,4 +77,37 @@ class MailSettingController extends Controller {
             return back()->with('t-error', 'Failed to update');
         }
     }
+
+    public function send(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'receiver'  => 'required|email|max:100',
+            'subject'   => 'required|string|max:100',
+            'content'   => 'required|string|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try{
+
+        $data = $validator->validated();
+
+        $receiver = $data['receiver'];
+        $subject = $data['subject'];
+        $content = $data['content'];
+
+        Mail::to($receiver)->send(new TestMail($subject, $content));
+
+        return back()->with('t-success', 'Mail sent successfully');
+
+        }catch(Exception $e){
+
+            return back()->with('t-error', $e->getMessage());
+
+        }
+ 
+    }
+
 }
