@@ -155,6 +155,9 @@
                                     <h3 class="card-title mb-0">Metadata</h3>
                                 </div>
                                 <div class="card-body" style="overflow-x: auto;">
+                                    @if($project->thumbnail && file_exists(public_path($project->thumbnail)))
+                                    <img class="img-fluid" src="{{ asset($project->thumbnail) }}" alt="" width="100%">
+                                    @endif
                                     <table class="table table-bordered table-striped metadata-table">
                                         @foreach (json_decode($project->metadata, true) as $key => $value)
                                         <tr>

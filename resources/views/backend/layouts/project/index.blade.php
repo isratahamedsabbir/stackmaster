@@ -1,7 +1,7 @@
 @extends('backend.app', ['title' => 'Project'])
 
 @push('styles')
-<link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />  
+<link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />
 @endpush
 
 
@@ -46,7 +46,7 @@
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Type</th>
-                                            <th class="bg-transparent border-bottom-0">Image</th>
+                                            <th class="bg-transparent border-bottom-0">Icon</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
                                         </tr>
@@ -122,8 +122,8 @@
                         searchable: true
                     },
                     {
-                        data: 'image',
-                        name: 'image',
+                        data: 'icon',
+                        name: 'icon',
                         orderable: false,
                         searchable: false,
                         className: 'dt-center text-center'

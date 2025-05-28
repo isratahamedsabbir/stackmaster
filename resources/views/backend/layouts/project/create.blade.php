@@ -49,7 +49,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label for="name" class="form-label">Name:</label>
                                                 <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Name" id="name" value="{{ old('name') ?? '' }}" required>
@@ -61,14 +61,26 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="image" class="form-label">Image:</label>
-                                                        <input type="file" data-default-file="{{ url('default/logo.png') }}" class="dropify form-control @error('image') is-invalid @enderror" name="image" id="image" required>
-                                                        @error('image')
+                                                        <label for="icon" class="form-label">Icon:</label>
+                                                        <input type="file" data-default-file="{{ url('default/logo.png') }}" class="dropify form-control @error('icon') is-invalid @enderror" name="icon" id="icon" required>
+                                                        @error('icon')
                                                         <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="thumbnail" class="form-label">Thumbnail:</label>
+                                                        <input type="file" data-default-file="{{ url('default/logo.png') }}" class="dropify form-control @error('thumbnail') is-invalid @enderror" name="thumbnail" id="thumbnail">
+                                                        @error('thumbnail')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="file" class="form-label">File:</label>
                                                         <input type="file" data-default-file="{{ url('default/logo.png') }}" class="dropify form-control @error('file') is-invalid @enderror" name="file" id="file">

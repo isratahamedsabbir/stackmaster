@@ -22,22 +22,22 @@ class ProjectController extends Controller
             $data = Project::orderBy('created_at', 'desc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('image', function ($data) {
-                    $url = asset($data->image && file_exists(public_path($data->image)) ? $data->image : 'default/logo.svg');
+                ->addColumn('icon', function ($data) {
+                    $url = asset($data->icon && file_exists(public_path($data->icon)) ? $data->icon : 'default/logo.svg');
                     return '<img src="' . $url . '" alt="image" style="width: 50px; max-height: 100px; margin-left: 20px;">';
                 })
                 ->addColumn('status', function ($data) {
                     $backgroundColor = $data->status == "active" ? '#4CAF50' : '#ccc';
                     $sliderTranslateX = $data->status == "active" ? '26px' : '2px';
-                    
+
                     $status = '<div class="d-flex justify-content-center align-items-center">';
                     $status .= '<div class="form-check form-switch" style="position: relative; width: 50px; height: 24px; background-color: ' . $backgroundColor . '; border-radius: 12px; transition: background-color 0.3s ease; cursor: pointer;">';
                     $status .= '<input onclick="showStatusChangeAlert(' . $data->id . ')" type="checkbox" class="form-check-input" id="customSwitch' . $data->id . '" getAreaid="' . $data->id . '" name="status" style="position: absolute; width: 100%; height: 100%; opacity: 0; z-index: 2; cursor: pointer;">';
-                    $status .= '<span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; transform: translateX('.$sliderTranslateX.');"></span>';
+                    $status .= '<span style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; transform: translateX(' . $sliderTranslateX . ');"></span>';
                     $status .= '<label for="customSwitch' . $data->id . '" class="form-check-label" style="margin-left: 10px;"></label>';
                     $status .= '</div>';
                     $status .= '</div>';
-                
+
                     return $status;
                 })
                 ->addColumn('action', function ($data) {
@@ -56,7 +56,7 @@ class ProjectController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns(['image' ,'status', 'action'])
+                ->rawColumns(['icon', 'status', 'action'])
                 ->make();
         }
         return view("backend.layouts.project.index");
@@ -78,7 +78,8 @@ class ProjectController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
             'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',
             'description'   => 'nullable|string',
             'credintials'   => 'nullable|string',
@@ -101,13 +102,17 @@ class ProjectController extends Controller
 
         try {
             $data = $validate->validated();
-            
-            if ($request->hasFile('image')) {
-                $data['image'] = Helper::fileUpload($request->file('image'), 'project', time() . '_' . getFileName($request->file('image')));
+
+            if ($request->hasFile('icon')) {
+                $data['icon'] = Helper::fileUpload($request->file('icon'), 'project', time() . '_' . getFileName($request->file('icon')));
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                $data['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'project', time() . '_' . getFileName($request->file('thumbnail')));
             }
 
             if ($request->hasFile('file')) {
-                $data['file'] = Helper::fileUpload($request->file('image'), 'project', time() . '_' . getFileName($request->file('file')));
+                $data['file'] = Helper::fileUpload($request->file('file'), 'project', time() . '_' . getFileName($request->file('file')));
             }
 
             $data['slug'] = Helper::makeSlug(Project::class, $data['name']);
@@ -126,7 +131,6 @@ class ProjectController extends Controller
                     $metadata[$key] = $values[$index];
                 }
                 $data['metadata'] = json_encode($metadata);
-
             }
 
             unset($data['key'], $data['value']);
@@ -134,7 +138,6 @@ class ProjectController extends Controller
             Project::create($data);
 
             session()->put('t-success', 'Project created successfully');
-           
         } catch (Exception $e) {
             session()->put('t-error', $e->getMessage());
         }
@@ -168,7 +171,8 @@ class ProjectController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
             'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',
             'description'   => 'nullable|string',
             'technologies'  => 'nullable|string',
@@ -194,11 +198,18 @@ class ProjectController extends Controller
             $data = $validate->validated();
             $project = Project::findOrFail($id);
 
-            if ($request->hasFile('image')) {
+            if ($request->hasFile('icon')) {
                 if ($project->image && file_exists(public_path($project->image))) {
                     Helper::fileDelete(public_path($project->image));
                 }
-                $data['image'] = Helper::fileUpload($request->file('image'), 'project', time() . '_' . getFileName($request->file('image')));
+                $data['icon'] = Helper::fileUpload($request->file('icon'), 'project', time() . '_' . getFileName($request->file('icon')));
+            }
+
+            if ($request->hasFile('thumbnail')) {
+                if ($project->thumbnail && file_exists(public_path($project->thumbnail))) {
+                    Helper::fileDelete(public_path($project->thumbnail));
+                }
+                $data['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'project', time() . '_' . getFileName($request->file('thumbnail')));
             }
 
             if ($request->hasFile('file')) {
@@ -241,15 +252,24 @@ class ProjectController extends Controller
     {
         try {
             $data = Project::findOrFail($id);
-            if ($data->image && file_exists(public_path($data->image))) {
-                Helper::fileDelete(public_path($data->image));
+
+            if ($data->icon && file_exists(public_path($data->icon))) {
+                Helper::fileDelete(public_path($data->icon));
             }
+
+            if ($data->thumbnail && file_exists(public_path($data->thumbnail))) {
+                Helper::fileDelete(public_path($data->thumbnail));
+            }
+
+            if ($data->file && file_exists(public_path($data->file))) {
+                Helper::fileDelete(public_path($data->file));
+            }
+
             $data->delete();
             return response()->json([
                 'status' => 't-success',
                 'message' => 'Your action was successful!'
             ]);
-            
         } catch (Exception $e) {
             return response()->json([
                 'status' => 't-error',
@@ -274,5 +294,4 @@ class ProjectController extends Controller
             'message' => 'Your action was successful!',
         ]);
     }
-
 }
