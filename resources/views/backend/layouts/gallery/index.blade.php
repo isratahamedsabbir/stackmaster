@@ -134,6 +134,7 @@
             },
             success: function(resp) {
                 NProgress.done();
+                $('#images').val('');
                 imagesLoad();
                 toastr.success(resp.message);
             },
