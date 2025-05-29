@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class OtherController extends Controller
 {
@@ -87,6 +88,24 @@ class OtherController extends Controller
             'status' => 't-success',
             'message' => 'Your action was successful!'
         ]);
+    }
+
+    public function debug()
+    {
+        if(env('APP_DEBUG') === true) {
+            $envContent = str_replace('APP_DEBUG=true', 'APP_DEBUG=false', file_get_contents(base_path('.env')));
+        } else {
+            $envContent = str_replace('APP_DEBUG=false', 'APP_DEBUG=true', file_get_contents(base_path('.env')));
+        }
+
+        file_put_contents(base_path('.env'), $envContent);
+
+        Artisan::call('config:clear');
+
+        return response()->json([
+            'status' => 't-success',
+            'message' => 'Your action was successful!'
+        ], 200);
     }
 
 }

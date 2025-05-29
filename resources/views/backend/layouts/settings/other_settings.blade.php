@@ -106,6 +106,24 @@
                                 </div>
                             </div>
 
+                            {{-- DEBUG --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="debug" class="col-form-label fw-bold mb-0">Debug</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('debug') is-invalid @enderror"
+                                            type="checkbox"
+                                            value="{{ env('APP_DEBUG') }}"
+                                            id="debug"
+                                            name="debug"
+                                            {{ env('APP_DEBUG') === true ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.debug') }}" />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -176,6 +194,10 @@
 
         $("#pagination").on("keyup", function() {
             jsonUpdateWithGetData(this);
+        });
+
+        $("#debug").on("change", function() {
+            jsonUpdateByGet(this);
         });
 
     });

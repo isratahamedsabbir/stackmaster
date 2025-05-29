@@ -286,4 +286,5 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/recaptcha', [OtherController::class, 'recaptcha'])->name('.recaptcha');
     Route::get('/pagination', [OtherController::class, 'pagination'])->name('.pagination');
     Route::get('/reverb', [OtherController::class, 'reverb'])->name('.reverb');
+    Route::get('/debug', [OtherController::class, 'debug'])->name('.debug');
 });
