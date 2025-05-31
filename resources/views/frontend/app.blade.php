@@ -1,17 +1,13 @@
-@php
-$systemSetting = App\Models\Setting::first();
-@endphp
-
 <!DOCTYPE html>
 <html lang="en-US">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>{{ $title ?? '' }} | {{ $systemSetting->system_name ?? config('app.name') }}</title>
-  <meta name="description" content="{!! strip_tags($description ?? $systemSetting->description ?? '') !!}">
-  <meta name="keywords" content="{!! strip_tags($keywords ?? $systemSetting->keywords ?? '') !!}">
-  <meta name="author" content="{{$author ?? $systemSetting->system_name ?? config('app.name') }}">
+  <title>{{ $title ?? '' }} | {{ settings()->name ?? config('app.name') }}</title>
+  <meta name="description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}">
+  <meta name="keywords" content="{!! strip_tags($keywords ?? settings()->keywords ?? '') !!}">
+  <meta name="author" content="{{$author ?? settings()->system_name ?? config('app.name') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
   @include('frontend.partials.style')

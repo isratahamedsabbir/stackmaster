@@ -2,6 +2,7 @@
 use App\Models\CMS;
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
+use App\Models\Setting;
 use App\Models\User;
 
 function getFileName($file): string
@@ -64,6 +65,14 @@ if (!function_exists('is_url')) {
         return filter_var($url, FILTER_VALIDATE_URL) !== false;
     }
 }
+
+if (!function_exists('settings')) {
+    function settings()
+    {
+        return $settings = Setting::first();
+    }
+}
+
 
 
 

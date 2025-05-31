@@ -14,15 +14,15 @@ use Yajra\DataTables\DataTables;
 use App\Http\Requests\CmsRequest;
 use App\Services\CmsService;
 
-class HomeBannerController extends Controller
+class HomeExampleController extends Controller
 {
     protected $cmsService;
 
     public $name = "home";
-    public $section = "banner";
+    public $section = "example";
     public $page = PageEnum::HOME;
-    public $item = SectionEnum::HOME_BANNER;
-    public $items = SectionEnum::HOME_BANNERS;
+    public $item = SectionEnum::HOME_EXAMPLE;
+    public $items = SectionEnum::HOME_EXAMPLES;
     public $count = 4;
 
     public function __construct(CmsService $cmsService)

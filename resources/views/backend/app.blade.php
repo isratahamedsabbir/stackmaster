@@ -1,6 +1,3 @@
-@php
-$settings = \App\Models\Setting::first();
-@endphp
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
@@ -10,15 +7,15 @@ $settings = \App\Models\Setting::first();
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="{!! strip_tags($settings->description ?? '') !!}">
-    <meta name="author" content="{{ $settings->author ?? '' }}">
-    <meta name="keywords" content="{!! strip_tags($settings->keywords ?? '') !!}">
+    <meta name="description" content="{!! strip_tags(settings()->description ?? '') !!}">
+    <meta name="author" content="{{ settings()->author ?? '' }}">
+    <meta name="keywords" content="{!! strip_tags(settings()->keywords ?? '') !!}">
 
     <!-- FAVICON -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset($settings->favicon ?? 'default/logo.svg') }}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset(settings()->favicon ?? 'default/logo.svg') }}" />
 
     <!-- TITLE -->
-    <title>{{ config('app.name') }} - {{ $title ?? $settings->title ?? '' }}</title>
+    <title>{{ config('app.name') }} - {{ $title ?? settings()->title ?? '' }}</title>
     <!-- Scripts -->
 
     @vite(['resources/js/app.js'])

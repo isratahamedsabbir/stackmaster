@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum PageEnum: string
 {
-    const AUTH  = 'login';
-    case HOME   = 'home';
+    const AUTH  = 'login page';
+    case HOME   = 'home page';
     case COMMON = 'common';
 }

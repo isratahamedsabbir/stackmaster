@@ -7,24 +7,11 @@
                 <span></span>
             </button>
         </div>
-        <!-- logo image -->
-        <div class="site-logo">
-            <a href="index.html">
-                <img src="images/logo.svg" alt="Bolby" />
-            </a>
-        </div>
     </div>
 </header>
 
 <!-- desktop header -->
 <header class="desktop-header-1 d-flex align-items-start flex-column">
-
-    <!-- logo image -->
-    <div class="site-logo">
-        <a href="{{ url('/') }}">
-            <img src="{{ asset('default')}}/logo.svg" alt="Bolby" style="width: 100px; height: 100px; margin: 0 auto; display: block" />
-        </a>
-    </div>
 
     <!-- main menu -->
     <nav>
@@ -42,7 +29,7 @@
     <!-- site footer -->
     <div class="footer">
         <!-- copyright text -->
-        <span class="copyright">© 2020 Bolby Template.</span>
+        <span class="copyright">{{ settings()->copyright ?? date('Y') }}</span>
     </div>
 
 </header>

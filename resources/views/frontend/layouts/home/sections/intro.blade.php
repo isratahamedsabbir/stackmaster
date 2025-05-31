@@ -5,24 +5,24 @@
         <!-- intro -->
         <div class="intro">
             <!-- avatar image -->
-            <img src="{{ asset('default')}}/profile.jpg" alt="Bolby" class="mb-4" style="width: 108px; height: 108px" />
+            <img src="{{ asset($cms_intro->image && file_exists(public_path($cms_intro->image)) ? $cms_intro->image : 'default/logo.svg') }}" alt="Bolby" class="mb-4" style="width: 108px; height: 108px" />
 
             <!-- info -->
-            <h1 class="mb-2 mt-0">Bolby Doe</h1>
-            <span>I'm a <span class="text-rotating">UI/UX designer, Front-End developer, Photography
-                    lover</span></span>
+            <h1 class="mb-2 mt-0">{{ settings()->author }}</h1>
+            <span>I'm a <span class="text-rotating">UI/UX designer, Front-End developer, Photography lover</span></span>
 
             <!-- social icons -->
             <ul class="social-icons light list-inline mb-0 mt-4">
-                <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-behance"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                @forelse($socials as $social)
+                <li class="list-inline-item"><a href="{{ $social->url }}"><i class="fab fa-{{ $social->name }}"></i></a></li>
+                @empty
+                <li class="list-inline-item">No social links available</li>
+                @endforelse
             </ul>
 
             <!-- buttons -->
             <div class="mt-4">
+                <a href="{{ route('login') }}" class="btn btn-primary">{{ Auth::check() ? 'Dashboard' : 'login' }}</a>
                 <a href="#contact" class="btn btn-default">Hire me</a>
             </div>
         </div>

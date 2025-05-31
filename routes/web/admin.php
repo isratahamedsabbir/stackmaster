@@ -6,7 +6,8 @@ use App\Http\Controllers\Web\Backend\Access\UserController;
 use App\Http\Controllers\Web\Backend\BookingController;
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\ChatController;
-use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeBannerController;
+use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeExampleController;
+use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeIntroController;
 use App\Http\Controllers\Web\Backend\ContactController;
 use App\Http\Controllers\Web\Backend\Settings\FirebaseController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
@@ -165,8 +166,8 @@ Route::controller(TransactionController::class)->prefix('transaction')->name('tr
 
 Route::prefix('cms')->name('cms.')->group(function () {
 
-    //Home Banner
-    Route::prefix('home/banner')->name('home.banner.')->controller(HomeBannerController::class)->group(function () {
+    //Home Example
+    Route::prefix('home/example')->name('home.example.')->controller(HomeExampleController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
@@ -176,6 +177,12 @@ Route::prefix('cms')->name('cms.')->group(function () {
         Route::delete('/{id}', 'destroy')->name('destroy');
         Route::get('/{id}/status', 'status')->name('status');
 
+        Route::put('/content', 'content')->name('content');
+    });
+
+    //Home Intro
+    Route::prefix('home/intro')->name('home.intro.')->controller(HomeIntroController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
         Route::put('/content', 'content')->name('content');
     });
     

@@ -2,8 +2,9 @@
 use \Illuminate\Support\Str;
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
-$cms_banner = $cms['home']->firstWhere('section', SectionEnum::HOME_BANNER);
-$cms_banners = $cms['home']->where('section', SectionEnum::HOME_BANNERS)->values();
+$cms_example    = $cms['home']->firstWhere('section', SectionEnum::HOME_EXAMPLE);
+$cms_examples   = $cms['home']->where('section', SectionEnum::HOME_EXAMPLES)->values();
+$cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
 @endphp
 
 @extends('frontend.app', ['title' => 'landing page'])
@@ -12,7 +13,7 @@ $cms_banners = $cms['home']->where('section', SectionEnum::HOME_BANNERS)->values
 <main class="content">
 
     <!-- section intro -->
-    @include('frontend.layouts.home.sections.intro')
+    @include('frontend.layouts.home.sections.intro', ['cms_intro' => $cms_intro])
 
     <!-- section about -->
     @include('frontend.layouts.home.sections.about')

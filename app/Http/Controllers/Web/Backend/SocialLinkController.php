@@ -75,10 +75,10 @@ class SocialLinkController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'sn' => 'required|unique:social_links,sn',
-            'name' => 'required|string|max:50',
-            'url' => 'required|string|max:255',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'sn'    => 'required|unique:social_links,sn',
+            'name'  => 'required|string|max:50',
+            'url'   => 'required|string|max:255',
+            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         try {
@@ -121,14 +121,18 @@ class SocialLinkController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            'sn' => 'required|unique:social_links,sn',
-            'name' => 'required|string|max:50',
-            'url' => 'required|string|max:255',
-            'icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'sn'    => 'required',
+            'name'  => 'required|string|max:50',
+            'url'   => 'required|string|max:255',
+            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         try {
             $social = SocialLink::findOrFail($id);
+
+            if ($social->sn != $request->sn) {
+                $request->validate(['sn' => 'unique:social_links,sn']);
+            }
 
             if ($request->hasFile('icon')) {
                 if ($social->icon && file_exists(public_path($social->icon))) {

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->integer('sn')->unique();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

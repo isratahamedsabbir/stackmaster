@@ -4,7 +4,7 @@
     <div class="app-sidebar" style="overflow: scroll">
         <div class="side-header">
             <a class="header-brand1" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" id="header-brand-logo" alt="logo" width="{{ $settings->logo_width ?? 100 }}" height="{{ $settings->logo_height ?? 100 }}">
+                <img src="{{ asset(settings()->logo ?? 'default/logo.svg') }}" id="header-brand-logo" alt="logo" width="{{ settings()->logo_width ?? 100 }}" height="{{ settings()->logo_height ?? 100 }}">
             </a>
         </div>
         <div class="main-sidemenu">
@@ -167,7 +167,8 @@
                     </a>
 
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.cms.home.banner.index') }}" class="slide-item">Banner Section</a></li>
+                        <li><a href="{{ route('admin.cms.home.example.index') }}" class="slide-item">Example Section</a></li>
+                        <li><a href="{{ route('admin.cms.home.intro.index') }}" class="slide-item">Intro Section</a></li>
                     </ul>
                 </li>
             </ul>

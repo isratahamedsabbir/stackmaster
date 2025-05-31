@@ -18,11 +18,11 @@ class HomeController extends Controller
         $cmsItems = CMS::query()
                     ->where('page', PageEnum::HOME)
                     ->where('status', 'active')
-                    ->whereIn('section', [SectionEnum::HOME_BANNER, SectionEnum::HOME_BANNERS])
+                    ->whereIn('section', [SectionEnum::HOME_EXAMPLE, SectionEnum::HOME_EXAMPLES])
                     ->get();
 
-        $data['home_banner']    = $cmsItems->where('section', SectionEnum::HOME_BANNER)->first();
-        $data['home_banners']   = $cmsItems->where('section', SectionEnum::HOME_BANNERS)->values();
+        $data['home_example']    = $cmsItems->where('section', SectionEnum::HOME_EXAMPLE)->first();
+        $data['home_examples']   = $cmsItems->where('section', SectionEnum::HOME_EXAMPLES)->values();
         $data['common']         = CMS::where('page', PageEnum::COMMON)->where('status', 'active')->get();
         $data['settings']       = Setting::first();
 

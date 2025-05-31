@@ -6,14 +6,14 @@ enum SectionEnum: string
 {
     const BG = 'bg_image';
 
-    case HOME_BANNER = 'home_banner';
-    case HOME_BANNERS = 'home_banners';
-    
-    case HERO = 'hero';
-    case HEROS = 'heros';
+    case HOME_EXAMPLE = 'home example section';
+    case HOME_EXAMPLES = 'home example sections';
 
-    //Footer
-    case FOOTER = 'footer';
-    case SOLUTION = "solution";
+    case HOME_INTRO = 'home intro section';
+    case HOME_INTROS = 'home intro sections';
+
+    //common sections
+    case FOOTER = 'footer section';
+    case HEADER = 'header section';
     
 }
