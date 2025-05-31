@@ -60,6 +60,11 @@
                                             @endif
                                         </a>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <th>Affiliate</th>
+                                    <td><a href="{{ url('affiliate/' . $user->slug) }}">{{ $user->slug }}</a></td>
+                                </tr>
                                 <tr>
                                     <th>Created At</th>
                                     <td>{{ $user->created_at ? $user->created_at : 'N/A' }}</td>

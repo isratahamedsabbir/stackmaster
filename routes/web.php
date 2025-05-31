@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\SocialLoginController;
+use App\Http\Controllers\Web\Frontend\AffiliateController;
 use App\Http\Controllers\Web\Frontend\ContactController;
 use App\Http\Controllers\Web\Frontend\HomeController;
 use App\Http\Controllers\Web\Frontend\SubscriberController;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
+
+Route::get('/affiliate/{slug}',[AffiliateController::class, 'store'])->name('store');
 
 Route::get('/post',[HomeController::class, 'index'])->name('post.index');
 Route::get('/post/show/{slug}',[HomeController::class, 'post'])->name('post.show');
