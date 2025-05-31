@@ -21,7 +21,7 @@ class HomeController extends Controller
         
         $posts = Post::where('status', 'active')->paginate(9);
 
-        return view('frontend.layouts.index', compact('cms', 'posts'));
+        return view('frontend.layouts.home.index', compact('cms', 'posts'));
     }
 
     public function post($slug){

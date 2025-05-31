@@ -43,7 +43,7 @@
                                 <table class="table table-bordered text-nowrap border-bottom" id="datatable">
                                     <thead>
                                         <tr>
-                                            <th class="bg-transparent border-bottom-0 wp-15">ID</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">SN</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0">Image</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
