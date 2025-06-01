@@ -2,12 +2,12 @@
 
     <div class="container">
 
+        <h2 class="section-title wow fadeInUp">Education & Experience</h2>
+        <div class="spacer" data-height="60"></div>
+
         <div class="row">
 
             <div class="col-md-6">
-
-                <h2 class="section-title wow fadeInUp">Education</h2>
-                <div class="spacer" data-height="60"></div>
 
                 <!-- timeline wrapper -->
                 <div class="timeline edu bg-white rounded shadow-dark padding-30 overflow-hidden">
@@ -48,9 +48,6 @@
             </div>
 
             <div class="col-md-6">
-
-                <h2 class="section-title wow fadeInUp">Experience</h2>
-                <div class="spacer" data-height="60"></div>
 
                 <!-- timeline wrapper -->
                 <div class="timeline exp bg-white rounded shadow-dark padding-30 overflow-hidden">

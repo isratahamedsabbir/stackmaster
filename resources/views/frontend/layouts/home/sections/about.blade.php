@@ -96,6 +96,7 @@
                 <!-- fact item -->
                 <div class="fact-item">
                     <div class="details">
+                        <i class="fa-solid fa-sheet-plastic" style="font-size: 30px;"></i>
                         <h3 class="mb-0 mt-0 number"><em class="count">30</em></h3>
                         <p class="mb-0">Projects completed</p>
                     </div>
@@ -107,6 +108,7 @@
                 <!-- fact item -->
                 <div class="fact-item">
                     <div class="details">
+                        <i class="fa-solid fa-person" style="font-size: 30px;"></i>
                         <h3 class="mb-0 mt-0 number"><em class="count">15</em></h3>
                         <p class="mb-0">Satisfied clients</p>
                     </div>
