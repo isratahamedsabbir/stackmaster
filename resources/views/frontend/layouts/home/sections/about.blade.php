@@ -23,14 +23,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <!-- about text -->
-                            <p>I am a passionate and driven software developer with a strong ability to
-                                quickly learn and adapt to new technologies. I am seeking a dynamic and
-                                collaborative team where I can leverage my software development experience,
-                                problem-solving skills, and analytical mindset to make impactful contributions.
-                                I am highly self-motivated, able to work independently or as part of a team,
-                                and always eager to embrace new challenges and expand my skill set. My goal
-                                is to continuously grow and deliver value to both the organization and my
-                                career</p>
+                            <p>I am a passionate and driven software developer with a strong ability to quickly learn and adapt to new technologies. I am seeking a dynamic and collaborative team where I can leverage my software development experience, problem-solving skills, and analytical mindset to make impactful contributions. I am highly self-motivated, able to work independently or as part of a team, and always eager to embrace new challenges and expand my skill set. My goal is to continuously grow and deliver value to both the organization and my career.</p>
                             <div class="mt-3">
                                 <a href="#" class="btn btn-default">Download CV</a>
                             </div>
