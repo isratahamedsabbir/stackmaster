@@ -23,9 +23,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <!-- about text -->
-                            <p>I am Bolby Doe, web developer from London, United Kingdom. I have rich experience
-                                in web site design and building and customization, also I am good at WordPress.
-                            </p>
+                            <p>I am a passionate and driven software developer with a strong ability to
+                                quickly learn and adapt to new technologies. I am seeking a dynamic and
+                                collaborative team where I can leverage my software development experience,
+                                problem-solving skills, and analytical mindset to make impactful contributions.
+                                I am highly self-motivated, able to work independently or as part of a team,
+                                and always eager to embrace new challenges and expand my skill set. My goal
+                                is to continuously grow and deliver value to both the organization and my
+                                career</p>
                             <div class="mt-3">
                                 <a href="#" class="btn btn-default">Download CV</a>
                             </div>
@@ -35,7 +40,7 @@
                             <!-- skill item -->
                             <div class="skill-item">
                                 <div class="skill-info clearfix">
-                                    <h4 class="float-left mb-3 mt-0">Development</h4>
+                                    <h4 class="float-left mb-3 mt-0">Web Design</h4>
                                     <span class="float-right">85%</span>
                                 </div>
                                 <div class="progress">
@@ -50,7 +55,7 @@
                             <!-- skill item -->
                             <div class="skill-item">
                                 <div class="skill-info clearfix">
-                                    <h4 class="float-left mb-3 mt-0">UI/UX design</h4>
+                                    <h4 class="float-left mb-3 mt-0">Web Development</h4>
                                     <span class="float-right">95%</span>
                                 </div>
                                 <div class="progress">
@@ -65,7 +70,7 @@
                             <!-- skill item -->
                             <div class="skill-item">
                                 <div class="skill-info clearfix">
-                                    <h4 class="float-left mb-3 mt-0">Photography</h4>
+                                    <h4 class="float-left mb-3 mt-0">Deployment</h4>
                                     <span class="float-right">70%</span>
                                 </div>
                                 <div class="progress">

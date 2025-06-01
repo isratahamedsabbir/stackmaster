@@ -37,9 +37,15 @@ $url = 'admin.cms.'.$name.'.'.$section;
             <!-- ROW-4 -->
             <div class="row">
 
-
                 <div class="col-md-5">
                     <div class="card">
+                        <div class="card-header d-flex justify-content-between border-bottom">
+                            <h3 class="card-title">Content Edit</h3>
+                            <!-- Add New Page Button -->
+                            <a href="{{route($url.'.show', $data->id)}}" class="btn btn-primary">
+                                <i class="bx bx-plus me-sm-1 "></i> Show Section
+                            </a>
+                        </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route($url.'.content') }}" enctype="multipart/form-data">
                                 @csrf

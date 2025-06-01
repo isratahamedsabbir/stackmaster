@@ -65,6 +65,10 @@ class HomeExampleController extends Controller
                                     <i class="fe fe-edit"></i>
                                 </a>
 
+                                <a href="#" onClick="goToShow(' . $data->id . ')" type="button" class="btn btn-info fs-14 text-white edit-icn" title="View">
+                                    <i class="fe fe-eye"></i>
+                                </a>
+
                                 <a href="#" type="button" onclick="showDeleteConfirm(' . $data->id . ')" class="btn btn-danger fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-trash"></i>
                                 </a>
@@ -129,10 +133,10 @@ class HomeExampleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.{$this->name}.{$this->section}.update", ["data" => $data, "name" => $this->name, "section" => $this->section]);
+        $data = CMS::where('id', $id)->first();
+        return view("backend.layouts.cms.{$this->name}.{$this->section}.show", ["data" => $data, "name" => $this->name, "section" => $this->section]);
     }
 
     /**
