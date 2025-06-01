@@ -8,8 +8,8 @@
             <img src="{{ asset(!empty($cms_intro->image) && file_exists(public_path($cms_intro->image)) ? $cms_intro->image : 'default/logo.svg') }}" alt="Bolby" class="mb-4" style="width: 108px; height: 108px" />
 
             <!-- info -->
-            <h1 class="mb-2 mt-0">{{ settings()->author }}</h1>
-            <span>I'm a <span class="text-rotating">UI/UX designer, Front-End developer, Photography lover</span></span>
+            <h1 class="mb-2 mt-0">{{ settings()->author ?? "Israt Ahamed Sabbir" }}</h1>
+            <span>I'm a <span class="text-rotating">Web Designer, Front-End developer, Back-End developer, Deployer</span></span>
 
             <!-- social icons -->
             <ul class="social-icons light list-inline mb-0 mt-4">
