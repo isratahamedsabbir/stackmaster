@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Gateway\Stripe;
+namespace App\Http\Controllers\Web\Gateway\Stripe;
 
 use Exception;
 use Stripe\Stripe;

@@ -18,7 +18,7 @@ use UnexpectedValueException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class StripeWebHookSplitController extends Controller
+class StripeWebHookSpliteController extends Controller
 {
     public function __construct()
     {

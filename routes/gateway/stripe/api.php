@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\Gateway\Stripe\StripeOnBoardingController;
 use App\Http\Controllers\Api\Gateway\Stripe\StripeSubscriptionsController;
 use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookController;
 use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookHoldController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookSplitController;
+use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookSpliteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +24,7 @@ Route::controller(StripeWebHookController::class)->prefix('payment/stripe')->nam
 });
 
 //stripe split webhook
-Route::controller(StripeWebHookSplitController::class)->prefix('payment/stripe/split')->name('payment.stripe.split.')->group(function () {
+Route::controller(StripeWebHookSpliteController::class)->prefix('payment/stripe/split')->name('payment.stripe.split.')->group(function () {
     Route::get('/intent/{booking_id}', 'intent')->name('intent');
     Route::post('/webhook', 'webhook')->name('webhook');
 });
