@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Frontend\categoryController;
 use App\Http\Controllers\Api\Frontend\FaqController;
 use App\Http\Controllers\Api\Frontend\HomeController;
 use App\Http\Controllers\Api\Frontend\ImageController;
+use App\Http\Controllers\Api\Frontend\PageController;
 use App\Http\Controllers\Api\Frontend\PostController;
 use App\Http\Controllers\Api\Frontend\SubcategoryController;
 use App\Http\Controllers\Api\NotificationController;
@@ -52,6 +53,9 @@ Route::middleware(['auth:api'])->controller(ImageController::class)->prefix('aut
     Route::post('/store', 'store');
     Route::get('/delete/{id}', 'destroy');
 });
+
+Route::get('dynamic/page', [PageController::class, 'index']);
+Route::get('dynamic/page/show/{slug}', [PageController::class, 'show']);
 
 /*
 # Auth Route
