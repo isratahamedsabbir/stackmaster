@@ -6,11 +6,8 @@ use App\Enums\PageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\CMS;
 use App\Models\Post;
-use App\Models\Project;
 use App\Models\SocialLink;
-use Illuminate\Support\Str;
-
-use function Symfony\Component\String\b;
+use Modules\Portfolio\Models\Project;
 
 class HomeController extends Controller
 {

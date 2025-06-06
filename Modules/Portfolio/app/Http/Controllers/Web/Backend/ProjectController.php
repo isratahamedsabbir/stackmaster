@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Web\Backend;
+namespace Modules\Portfolio\Http\Controllers\Web\Backend;
 
 use App\Helpers\Helper;
-use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Modules\Portfolio\Models\Project;
 
 class ProjectController extends Controller
 {
@@ -59,7 +59,7 @@ class ProjectController extends Controller
                 ->rawColumns(['icon', 'status', 'action'])
                 ->make();
         }
-        return view("backend.layouts.project.index");
+        return view('portfolio::backend.layouts.project.index');
     }
 
     /**
@@ -68,7 +68,7 @@ class ProjectController extends Controller
     public function create()
     {
         $categories = Project::where('status', 'active')->get();
-        return view('backend.layouts.project.create', compact('categories'));
+        return view('portfolio::backend.layouts.project.create', compact('categories'));
     }
 
     /**
@@ -152,7 +152,7 @@ class ProjectController extends Controller
     public function show(Project $project, $id)
     {
         $project = Project::findOrFail($id);
-        return view('backend.layouts.project.show', compact('project'));
+        return view('portfolio::backend.layouts.project.show', compact('project'));
     }
 
     /**
@@ -162,7 +162,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $categories = Project::where('status', 'active')->get();
-        return view('backend.layouts.project.edit', compact('project', 'categories'));
+        return view('portfolio::backend.layouts.project.edit', compact('project', 'categories'));
     }
 
     /**

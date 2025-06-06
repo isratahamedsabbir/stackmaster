@@ -24,7 +24,6 @@ use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
 use App\Http\Controllers\Web\Backend\ProductController;
-use App\Http\Controllers\Web\Backend\ProjectController;
 use App\Http\Controllers\Web\Backend\Settings\CaptchaController;
 use App\Http\Controllers\Web\Backend\Settings\LogoController;
 use App\Http\Controllers\Web\Backend\Settings\OtherController;
@@ -83,17 +82,6 @@ Route::controller(OrderController::class)->prefix('order')->name('order.')->grou
 Route::controller(BookingController::class)->prefix('booking')->name('booking.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/show/{id}', 'show')->name('show');
-});
-
-Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/show/{id}', 'show')->name('show');
-    Route::get('/edit/{id}', 'edit')->name('edit');
-    Route::post('/update/{id}', 'update')->name('update');
-    Route::delete('/delete/{id}', 'destroy')->name('destroy');
-    Route::get('/status/{id}', 'status')->name('status');
 });
 
 Route::controller(PostController::class)->prefix('post')->name('post.')->group(function () {

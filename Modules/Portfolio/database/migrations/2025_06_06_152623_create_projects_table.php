@@ -13,7 +13,25 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            
+            $table->string('name');
+            $table->string('title')->nullable();
+            $table->string('slug');
+            $table->string('icon')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->string('file')->nullable();
+            $table->longText('description')->nullable();
+            $table->longText('credintials')->nullable();
+            $table->longText('technologies')->nullable();
+            $table->longText('features')->nullable();
+            $table->longText('note')->nullable();
+            $table->string('frontend')->nullable();
+            $table->string('backend')->nullable();
+            $table->string('github')->nullable();
+            $table->json('metadata')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->enum('type', ['personal', 'company', 'academic'])->default('personal');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
