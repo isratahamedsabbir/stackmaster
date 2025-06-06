@@ -111,6 +111,10 @@
                                             <td>{{ $project->name ?? '' }}</td>
                                         </tr>
                                         <tr>
+                                            <th>Title</th>
+                                            <td>{{ $project->title ?? '' }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Type</th>
                                             <td>{{ $project->type ?? '' }}</td>
                                         </tr>

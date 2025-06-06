@@ -54,6 +54,14 @@
                                                 @enderror
                                             </div>
 
+                                            <div class="form-group">
+                                                <label for="title" class="form-label">Title:</label>
+                                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Title" id="title" value="{{ $project->title ?? '' }}" >
+                                                @error('title')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">

@@ -78,6 +78,7 @@ class ProjectController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
+            'title'         => 'nullable|max:255',
             'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
             'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',
@@ -171,6 +172,7 @@ class ProjectController extends Controller
     {
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
+            'title'         => 'nullable|max:255',
             'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
             'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',

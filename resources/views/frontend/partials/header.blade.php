@@ -7,11 +7,24 @@
                 <span></span>
             </button>
         </div>
+        <!-- logo image -->
+        <div class="site-logo">
+            <a href="index.html">
+                <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" alt="Bolby" />
+            </a>
+        </div>
     </div>
 </header>
 
 <!-- desktop header -->
 <header class="desktop-header-1 d-flex align-items-start flex-column">
+
+    <!-- logo image -->
+    <div class="site-logo">
+        <a href="{{ route('home') }}">
+            <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" alt="Bolby" />
+        </a>
+    </div>
 
     <!-- main menu -->
     <nav>

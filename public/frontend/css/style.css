@@ -353,6 +353,9 @@ header.desktop-header-1 {
   /* === Vertical Menu === */
   /* === Submenu === */
 }
+.desktop-header-1::-webkit-scrollbar {
+  display: none;
+}
 header.desktop-header-1.open {
   -webkit-transform: translateX(0);
   -moz-transform: translateX(0);

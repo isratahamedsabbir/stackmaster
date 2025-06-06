@@ -6,6 +6,7 @@ use App\Enums\PageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\CMS;
 use App\Models\Post;
+use App\Models\Project;
 use App\Models\SocialLink;
 use Illuminate\Support\Str;
 
@@ -24,7 +25,9 @@ class HomeController extends Controller
         
         $posts = Post::where('status', 'active')->paginate(9);
 
-        return view('frontend.layouts.home.index', compact('cms', 'posts', 'socials'));
+        $projects = Project::where('status', 'active')->get();
+
+        return view('frontend.layouts.home.index', compact('cms', 'posts', 'projects', 'socials'));
     }
 
     public function post($slug){
