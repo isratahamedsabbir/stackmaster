@@ -42,12 +42,6 @@
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.project.*') ? 'has-link active' : '' }}" href="{{ route('admin.project.index') }}">
-                        <i class="fa-solid fa-file side-menu__icon"></i>
-                        <span class="side-menu__label">Project</span>
-                    </a>
-                </li>
-                <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.product.*') ? 'has-link active' : '' }}" href="{{ route('admin.product.index') }}">
                         <i class="fa-solid fa-shop side-menu__icon"></i>
                         <span class="side-menu__label">Product</span>
@@ -71,10 +65,19 @@
                         <span class="side-menu__label">Transaction</span>
                     </a>
                 </li>
+                <li>
+                    <h3>Portfolio</h3>
+                </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  Request::routeIs('ajax.gallery.*') ? 'has-link active' : '' }}" href="{{ route('ajax.gallery.index') }}">
-                        <i class="fa-solid fa-image side-menu__icon"></i>
-                        <span class="side-menu__label">Image Gallery</span>
+                    <a class="side-menu__item {{  request()->routeIs('admin.type.*') ? 'has-link active' : '' }}" href="{{ route('admin.type.index') }}">
+                        <i class="fa-solid fa-list side-menu__icon"></i>
+                        <span class="side-menu__label">Type</span>
+                    </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.project.*') ? 'has-link active' : '' }}" href="{{ route('admin.project.index') }}">
+                        <i class="fa-solid fa-file side-menu__icon"></i>
+                        <span class="side-menu__label">Project</span>
                     </a>
                 </li>
                 <li>
@@ -170,6 +173,12 @@
                         <li><a href="{{ route('admin.cms.home.example.index') }}" class="slide-item">Example Section</a></li>
                         <li><a href="{{ route('admin.cms.home.intro.index') }}" class="slide-item">Intro Section</a></li>
                     </ul>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  Request::routeIs('ajax.gallery.*') ? 'has-link active' : '' }}" href="{{ route('ajax.gallery.index') }}">
+                        <i class="fa-solid fa-image side-menu__icon"></i>
+                        <span class="side-menu__label">Image Gallery</span>
+                    </a>
                 </li>
             </ul>
             <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg"

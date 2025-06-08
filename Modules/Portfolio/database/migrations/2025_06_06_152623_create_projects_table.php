@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('type_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('title')->nullable();
             $table->string('slug');
@@ -30,7 +31,6 @@ return new class extends Migration
             $table->json('metadata')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->enum('type', ['personal', 'company', 'academic'])->default('personal');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

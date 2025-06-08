@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Modules\Portfolio\Models\Project;
+use Modules\Portfolio\Models\Type;
 
 class ProjectController extends Controller
 {
@@ -19,12 +20,15 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Project::orderBy('created_at', 'desc')->get();
+            $data = Project::with(['type'])->orderBy('created_at', 'desc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('icon', function ($data) {
                     $url = asset($data->icon && file_exists(public_path($data->icon)) ? $data->icon : 'default/logo.svg');
                     return '<img src="' . $url . '" alt="image" style="width: 50px; max-height: 100px; margin-left: 20px;">';
+                })
+                ->addColumn('type', function ($data) {
+                    return "<a href='" . route('admin.type.show', $data->type_id) . "'>" . $data->type->name . "</a>";
                 })
                 ->addColumn('status', function ($data) {
                     $backgroundColor = $data->status == "active" ? '#4CAF50' : '#ccc';
@@ -56,7 +60,7 @@ class ProjectController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns(['icon', 'status', 'action'])
+                ->rawColumns(['icon', 'type', 'status', 'action'])
                 ->make();
         }
         return view('portfolio::backend.layouts.project.index');
@@ -67,8 +71,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $categories = Project::where('status', 'active')->get();
-        return view('portfolio::backend.layouts.project.create', compact('categories'));
+        $types = Type::where('status', 'active')->get();
+        return view('portfolio::backend.layouts.project.create', compact('types'));
     }
 
     /**
@@ -94,7 +98,7 @@ class ProjectController extends Controller
             'value'         => 'nullable|array',
             'start_date'    => 'nullable|date',
             'end_date'      => 'nullable|date',
-            'type'          => 'nullable|in:personal,company,academic'
+            'type_id'       => 'nullable|exists:types,id'
         ]);
 
         if ($validate->fails()) {
@@ -151,7 +155,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('type')->findOrFail($id);
         return view('portfolio::backend.layouts.project.show', compact('project'));
     }
 
@@ -161,8 +165,8 @@ class ProjectController extends Controller
     public function edit(Project $project, $id)
     {
         $project = Project::findOrFail($id);
-        $categories = Project::where('status', 'active')->get();
-        return view('portfolio::backend.layouts.project.edit', compact('project', 'categories'));
+        $types = Type::where('status', 'active')->get();
+        return view('portfolio::backend.layouts.project.edit', compact('project', 'types'));
     }
 
     /**
@@ -188,7 +192,7 @@ class ProjectController extends Controller
             'value'         => 'nullable|array',
             'start_date'    => 'nullable|date',
             'end_date'      => 'nullable|date',
-            'type'          => 'nullable|in:personal,company,academic'
+            'type_id'       => 'nullable|exists:types,id'
         ]);
 
         if ($validate->fails()) {

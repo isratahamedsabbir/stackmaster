@@ -33,17 +33,23 @@
                                         @method('POST')
                                         <div class="row mb-4">
 
-                                            <div class="form-group">
-                                                <label for="type" class="form-label">Type:</label>
-                                                <select name="type" id="type" class="form-control @error('type') is-invalid @enderror" required>
-                                                    <option value="">Select Type</option>
-                                                    <option value="personal" {{ $project->type == 'personal' ? 'selected' : '' }}>Personal</option>
-                                                    <option value="company" {{ $project->type == 'company' ? 'selected' : '' }}>Company</option>
-                                                    <option value="academic" {{ $project->type == 'academic' ? 'selected' : '' }}>Academic</option>
-                                                </select>
-                                                @error('type')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="type_id" class="form-label">Category:</label>
+                                                        <select class="form-control @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
+                                                            <option value="">Select a Category ID</option>
+                                                            @if(!empty($types) && $types->count() > 0)
+                                                            @foreach($types as $type)
+                                                            <option value="{{ $type->id }}" {{ $project->type_id == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                        @error('type_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">
@@ -56,7 +62,7 @@
 
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Title:</label>
-                                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Title" id="title" value="{{ $project->title ?? '' }}" >
+                                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Title" id="title" value="{{ $project->title ?? '' }}">
                                                 @error('title')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

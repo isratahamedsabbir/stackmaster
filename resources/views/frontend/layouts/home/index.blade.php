@@ -25,7 +25,7 @@ $cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
     @include('frontend.layouts.home.sections.experience')
 
     <!-- section works -->
-    @include('frontend.layouts.home.sections.works', ['projects' => $projects])
+    @include('frontend.layouts.home.sections.works', ['types' => $types, 'projects' => $projects])
 
     <!-- section prices -->
     @include('frontend.layouts.home.sections.prices')

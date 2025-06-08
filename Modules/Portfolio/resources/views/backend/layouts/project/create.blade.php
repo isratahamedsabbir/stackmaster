@@ -37,17 +37,23 @@
                                         @method('POST')
                                         <div class="row mb-4">
 
-                                            <div class="form-group">
-                                                <label for="type" class="form-label">Type:</label>
-                                                <select name="type" id="type" class="form-control @error('type') is-invalid @enderror" required>
-                                                    <option value="">Select Type</option>
-                                                    <option value="personal" {{ old('type') == 'personal' ? 'selected' : '' }}>Personal</option>
-                                                    <option value="company" {{ old('type') == 'company' ? 'selected' : '' }}>Company</option>
-                                                    <option value="academic" {{ old('type') == 'academic' ? 'selected' : '' }}>Academic</option>
-                                                </select>
-                                                @error('type')
-                                                <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="type_id" class="form-label">Type:</label>
+                                                        <select class="form-control @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
+                                                            <option>Select a Type ID</option>
+                                                            @if(!empty($types) && $types->count() > 0)
+                                                            @foreach($types as $type)
+                                                            <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                        @error('type_id')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">

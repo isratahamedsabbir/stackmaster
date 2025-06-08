@@ -10,18 +10,22 @@
         <!-- portfolio filter (desktop) -->
         <ul class="portfolio-filter list-inline wow fadeInUp">
             <li class="current list-inline-item" data-filter="*">All</li>
-            <li class="list-inline-item" data-filter=".personal">Personal</li>
-            <li class="list-inline-item" data-filter=".academic">Academic</li>
-            <li class="list-inline-item" data-filter=".company">Company</li>
+            @if($types && count($types) > 0)
+            @foreach($types as $type)
+            <li class="list-inline-item" data-filter=".{{ $type->slug ?? '' }}">{{ $type->name ?? '' }}</li>
+            @endforeach
+            @endif
         </ul>
 
         <!-- portfolio filter (mobile) -->
         <div class="pf-filter-wrapper">
             <select class="portfolio-filter-mobile">
                 <option value="*">All</option>
-                <option value=".personel">Personel</li>
-                <option value=".academic">Academic</li>
-                <option value=".company">Company</li>
+                @if($types && count($types) > 0)
+                @foreach($types as $type)
+                <option value=".{{ $type->slug ?? '' }}">{{ $type->name ?? '' }}</option>
+                @endforeach
+                @endif
             </select>
         </div>
 
@@ -29,11 +33,11 @@
         <div class="row portfolio-wrapper">
 
             @forelse($projects as $project)
-            <div class="col-md-4 col-sm-6 grid-item {{ $project->type ?? '' }}">
+            <div class="col-md-4 col-sm-6 grid-item {{ $project->type->slug ?? '' }}">
                 <a href="{{ json_decode($project->metadata)->url ?? '#' }}" target="_blank">
                     <div class="portfolio-item rounded shadow-dark">
                         <div class="details">
-                            <span class="term">{{ $project->type ?? '' }}</span>
+                            <span class="term">{{ $project->type->name ?? '' }}</span>
                             <h4 class="title">{{ $project->name ?? '' }}</h4>
                             <span class="more-button"><i class="icon-link"></i></span>
                         </div>

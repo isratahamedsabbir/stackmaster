@@ -8,6 +8,7 @@ use App\Models\CMS;
 use App\Models\Post;
 use App\Models\SocialLink;
 use Modules\Portfolio\Models\Project;
+use Modules\Portfolio\Models\Type;
 
 class HomeController extends Controller
 {
@@ -22,9 +23,10 @@ class HomeController extends Controller
         
         $posts = Post::where('status', 'active')->paginate(9);
 
+        $types = Type::where('status', 'active')->get();
         $projects = Project::where('status', 'active')->get();
 
-        return view('frontend.layouts.home.index', compact('cms', 'posts', 'projects', 'socials'));
+        return view('frontend.layouts.home.index', compact('cms', 'posts', 'types', 'projects', 'socials'));
     }
 
     public function post($slug){

@@ -116,7 +116,7 @@
                                         </tr>
                                         <tr>
                                             <th>Type</th>
-                                            <td>{{ $project->type ?? '' }}</td>
+                                            <td>{{ $project->type->name ?? '' }}</td>
                                         </tr>
                                         <tr>
                                             <th>Backend Url</th>
