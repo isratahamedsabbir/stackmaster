@@ -3,7 +3,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -36,11 +39,10 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
+            "Modules\\": "Modules/",
+            "Modules\\Portfolio\\": "Modules/Portfolio/app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Modules\\Portfolio\\": "Modules/Portfolio/App/",
-            "Modules\\Portfolio\\Database\\Factories\\": "Modules/Portfolio/database/factories/",
-            "Modules\\Portfolio\\Database\\Seeders\\": "Modules/Portfolio/database/seeders/"
+            "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
             "app/Helpers/Helper.php",
