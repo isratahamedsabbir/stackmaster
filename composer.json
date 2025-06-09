@@ -41,6 +41,8 @@
             "App\\": "app/",
             "Modules\\": "Modules/",
             "Modules\\Portfolio\\": "Modules/Portfolio/app/",
+            "Modules\\Portfolio\\Database\\Factories\\": "Modules/Portfolio/database/factories/",
+            "Modules\\Portfolio\\Database\\Seeders\\": "Modules/Portfolio/database/seeders/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
