@@ -46,6 +46,7 @@
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Type</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Author</th>
                                             <th class="bg-transparent border-bottom-0">Icon</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
@@ -118,6 +119,12 @@
                     {
                         data: 'type',
                         name: 'type',
+                        orderable: true,
+                        searchable: true
+                    },
+                    {
+                        data: 'author',
+                        name: 'author',
                         orderable: true,
                         searchable: true
                     },

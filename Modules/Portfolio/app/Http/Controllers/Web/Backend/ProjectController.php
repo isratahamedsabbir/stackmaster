@@ -20,7 +20,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Project::with(['type'])->orderBy('created_at', 'desc')->get();
+            $data = Project::with(['user', 'type'])->orderBy('created_at', 'desc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('icon', function ($data) {
@@ -29,6 +29,9 @@ class ProjectController extends Controller
                 })
                 ->addColumn('type', function ($data) {
                     return "<a href='" . route('admin.type.show', $data->type_id) . "'>" . $data->type->name . "</a>";
+                })
+                ->addColumn('author', function ($data) {
+                    return "<a href='" . route('admin.users.show', $data->user_id) . "'>" . $data->user->name . "</a>";
                 })
                 ->addColumn('status', function ($data) {
                     $backgroundColor = $data->status == "active" ? '#4CAF50' : '#ccc';
@@ -60,7 +63,7 @@ class ProjectController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns(['icon', 'type', 'status', 'action'])
+                ->rawColumns(['icon', 'type', 'author', 'status', 'action'])
                 ->make();
         }
         return view('portfolio::backend.layouts.project.index');
@@ -119,6 +122,8 @@ class ProjectController extends Controller
             if ($request->hasFile('file')) {
                 $data['file'] = Helper::fileUpload($request->file('file'), 'project', time() . '_' . getFileName($request->file('file')));
             }
+
+            $data['user_id'] = auth('web')->user()->id;
 
             $data['slug'] = Helper::makeSlug(Project::class, $data['name']);
 
