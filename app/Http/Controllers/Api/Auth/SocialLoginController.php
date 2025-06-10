@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Notifications\UserRegistrationNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,16 +28,15 @@ class SocialLoginController extends Controller
     public function HandleProviderCallback($provider)
     {
         $data = Socialite::driver($provider)->stateless()->user();
-        dd($data);
         
     }
 
     public function SocialLogin(Request $request)
     {
         $request->validate([
-            'token'    => 'required',
-            'provider' => 'required|in:google,facebook,apple',
-            'role'       => 'required|in:user,trainer',
+            'token'         => 'required',
+            'provider'      => 'required|in:google,facebook,apple',
+            'role'          => 'required|in:user,trainer',
         ]);
 
         try {
