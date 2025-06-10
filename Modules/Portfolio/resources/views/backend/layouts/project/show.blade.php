@@ -107,6 +107,10 @@
                                             <td colspan="2" class="text-center"><img src="{{ asset($project->image && file_exists(public_path($project->image)) ? $project->image : 'default/logo.png') }}" alt="" width="100"></td>
                                         </tr>
                                         <tr>
+                                            <th>Author</th>
+                                            <td><a href="{{ route('admin.users.show', $project->user->id) }}">{{ $project->user->name ?? '' }}</a></td><td>
+                                        </tr>
+                                        <tr>
                                             <th>Name</th>
                                             <td>{{ $project->name ?? '' }}</td>
                                         </tr>
