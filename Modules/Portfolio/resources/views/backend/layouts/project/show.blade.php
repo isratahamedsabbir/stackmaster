@@ -120,7 +120,7 @@
                                         </tr>
                                         <tr>
                                             <th>Type</th>
-                                            <td>{{ $project->type->name ?? '' }}</td>
+                                            <td><a href="{{ route('admin.type.show', $project->type->id) }}">{{ $project->type->name ?? '' }}</a></td>
                                         </tr>
                                         <tr>
                                             <th>Backend Url</th>
@@ -150,8 +150,8 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>file</th>
-                                            <td><a href="{{ asset($project->file && file_exists(public_path($project->file)) ? $project->file : 'default/logo.png') }}" target="_blank">Download</a></td>
+                                            <th>Project</th>
+                                            <td><a class="btn btn-sm btn-primary" href="{{ asset($project->file && file_exists(public_path($project->file)) ? $project->file : 'default/logo.png') }}" target="_blank"><i class="fa fa-download"></i></a> Project File Download. </td>
                                         </tr>
                                     </table>
                                 </div>
