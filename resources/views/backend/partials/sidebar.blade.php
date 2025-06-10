@@ -41,6 +41,9 @@
                         <span class="side-menu__label">Post</span>
                     </a>
                 </li>
+                <li>
+                    <h3>Ecommerce</h3>
+                </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.product.*') ? 'has-link active' : '' }}" href="{{ route('admin.product.index') }}">
                         <i class="fa-solid fa-shop side-menu__icon"></i>

@@ -30,4 +30,5 @@ class TypeSeeder extends Seeder
             ]
         ]);
     }
+    
 }

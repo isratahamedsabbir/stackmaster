@@ -197,7 +197,20 @@
         });
 
         $("#debug").on("change", function() {
-            jsonUpdateByGet(this);
+            NProgress.start();
+            $.ajax({
+                url: $(this).data('url'),
+                type: "GET",
+                success: function(response) {
+                    NProgress.done();
+                    if (response.status === 't-success') {
+                        toastr.success(response.message);
+                        window.location.reload();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
         });
 
     });
