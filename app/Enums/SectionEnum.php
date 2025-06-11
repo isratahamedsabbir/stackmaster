@@ -12,6 +12,8 @@ enum SectionEnum: string
     case HOME_INTRO = 'home intro section';
     case HOME_INTROS = 'home intro sections';
 
+    case HOME_ABOUT = 'home about section';
+
     //common sections
     case FOOTER = 'footer section';
     case HEADER = 'header section';

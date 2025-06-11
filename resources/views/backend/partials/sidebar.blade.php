@@ -175,6 +175,7 @@
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.cms.home.example.index') }}" class="slide-item">Example Section</a></li>
                         <li><a href="{{ route('admin.cms.home.intro.index') }}" class="slide-item">Intro Section</a></li>
+                        <li><a href="{{ route('admin.cms.home.about.index') }}" class="slide-item">About Section</a></li>
                     </ul>
                 </li>
                 <li class="slide">

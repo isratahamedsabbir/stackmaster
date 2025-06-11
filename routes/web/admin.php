@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Backend\Access\UserController;
 use App\Http\Controllers\Web\Backend\BookingController;
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\ChatController;
+use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeAboutController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeExampleController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeIntroController;
 use App\Http\Controllers\Web\Backend\ContactController;
@@ -153,6 +154,13 @@ Route::controller(TransactionController::class)->prefix('transaction')->name('tr
 */
 
 Route::prefix('cms')->name('cms.')->group(function () {
+
+    //Home About
+    Route::prefix('home/about')->name('home.about.')->controller(HomeAboutController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}/show', 'show')->name('show');
+        Route::put('/content', 'content')->name('content');
+    });
 
     //Home Example
     Route::prefix('home/example')->name('home.example.')->controller(HomeExampleController::class)->group(function () {

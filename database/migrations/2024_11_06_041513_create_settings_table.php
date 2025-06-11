@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('logo_height')->nullable();
             $table->integer('logo_width')->nullable();
             $table->string('favicon')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->longText('signature')->nullable();
             $table->timestamps();
         });
