@@ -34,7 +34,7 @@ $cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
     @include('frontend.layouts.home.sections.testimonials')
 
     <!-- section blog -->
-    @include('frontend.layouts.home.sections.blog')
+    @include('frontend.layouts.home.sections.blog', ['posts' => $posts])
 
     <!-- section contact -->
     @include('frontend.layouts.home.sections.contact')

@@ -15,23 +15,18 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name' => 'yoga',
-                'slug' => 'yoga',
+                'name' => 'Web Design',
+                'slug' => 'web-design',
                 'status' => 'active',
             ],
             [
-                'name' => 'strength',
-                'slug' => 'strength',
+                'name' => 'Web Development',
+                'slug' => 'web-development',
                 'status' => 'active',
             ],
             [
-                'name' => 'pilates',
-                'slug' => 'pilates',
-                'status' => 'active',
-            ],
-            [
-                'name' => 'cardio',
-                'slug' => 'cardio',
+                'name' => 'Web Deployment',
+                'slug' => 'web-deployment',
                 'status' => 'active',
             ]
         ]);

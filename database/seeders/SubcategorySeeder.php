@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,27 +14,27 @@ class SubcategorySeeder extends Seeder
     {
         DB::table('subcategories')->insert([
             [
-                'name' => 'yoga',
-                'slug' => 'yoga',
+                'name' => 'React',
+                'slug' => 'react',
                 'category_id' => 1,
                 'status' => 'active'
             ],
             [
-                'name' => 'strength',
-                'slug' => 'strength',
+                'name' => 'Vue',
+                'slug' => 'vue',
                 'category_id' => 1,
                 'status' => 'active'
             ],
             [
-                'name' => 'pilates',
-                'slug' => 'pilates',
+                'name' => 'Laravel',
+                'slug' => 'laravel',
                 'category_id' => 2,
                 'status' => 'active',
             ],
             [
-                'name' => 'cardio',
-                'slug' => 'cardio',
-                'category_id' => 2,
+                'name' => 'AWS',
+                'slug' => 'aws',
+                'category_id' => 3,
                 'status' => 'active'
             ]
         ]);

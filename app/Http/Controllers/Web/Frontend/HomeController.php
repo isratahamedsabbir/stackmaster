@@ -21,7 +21,7 @@ class HomeController extends Controller
 
         $socials = SocialLink::where('status', 'active')->get();
         
-        $posts = Post::where('status', 'active')->paginate(9);
+        $posts = Post::with(['category', 'subcategory', 'user', 'images'])->where('status', 'active')->latest()->limit(3)->get();
 
         $types = Type::where('status', 'active')->get();
         $projects = Project::where('status', 'active')->get();
