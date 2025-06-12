@@ -17,6 +17,8 @@
   <meta property="og:title" content="{{ $title ?? settings()->name ?? config('app.name') }}" />
   <meta property="og:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
   <meta property="og:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}?v={{ time() }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
   
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
