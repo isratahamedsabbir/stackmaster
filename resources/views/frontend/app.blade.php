@@ -13,10 +13,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <meta property="og:url" content="{{ $url ?? env('APP_URL') }}" />
-  <meta property="og:type" content="{{ $type ?? 'portfolio' }}" />
+  <meta property="og:type" content="{{ $type ?? 'website' }}" />
   <meta property="og:title" content="{{ $title ?? settings()->name ?? config('app.name') }}" />
   <meta property="og:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
-  <meta property="og:image" content="{{ $image ?? asset(settings()->favicon ?? 'default/logo.svg') }}" />
+  <meta property="og:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}" />
 
   @include('frontend.partials.style')
 
