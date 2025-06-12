@@ -16,7 +16,7 @@
     <!-- logo image -->
     <div class="site-logo">
         <a href="{{ route('home') }}">
-            <h1 class="logo-text text-white">ias24x7</h1>
+            <h1 class="logo-text text-white">ias24<span class="text-primary">x</span>7</h1>
         </a>
     </div>
 
