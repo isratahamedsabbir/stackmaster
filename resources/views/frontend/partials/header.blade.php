@@ -16,7 +16,7 @@
     <!-- logo image -->
     <div class="site-logo">
         <a href="{{ route('home') }}">
-            <h1 class="logo-text bg-white">{{ ucfirst(ias24x7 ?? env('APP_NAME')) }}</h1>
+            <h1 class="logo-text text-white">{{ ucfirst(ias24x7 ?? env('APP_NAME')) }}</h1>
         </a>
     </div>
 
