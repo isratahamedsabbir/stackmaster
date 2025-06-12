@@ -10,6 +10,13 @@
   <meta name="author" content="{{$author ?? settings()->system_name ?? config('app.name') }}">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
+  <meta property="og:url" content="{{ $url ?? env('APP_URL') }}" />
+  <meta property="og:type" content="{{ $type ?? 'portfolio' }}" />
+  <meta property="og:title" content="{{ $title ?? settings()->name ?? config('app.name') }}" />
+  <meta property="og:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
+  <meta property="og:image" content="{{ $image ?? asset(settings()->favicon ?? 'default/logo.svg') }}" />
+
   @include('frontend.partials.style')
 
   <!--[if lt IE 9]>
