@@ -32,7 +32,8 @@ Route::get('/subcategory', [SubcategoryController::class, 'index']);
 Route::get('/social/links', [SocialLinksController::class, 'index']);
 Route::get('/settings', [SettingsController::class, 'index']);
 Route::get('/faq', [FaqController::class, 'index']);
-Route::post('subscriber/store',[SubscriberController::class, 'store'])->name('subscriber.store');
+
+Route::post('subscriber/store',[SubscriberController::class, 'store'])->name('api.subscriber.store');
 
 /*
 # Post
@@ -68,7 +69,7 @@ Route::group(['middleware' => 'guest:api'], function ($router) {
     Route::post('/resend-otp', [RegisterController::class, 'ResendOtp']);
     Route::post('/verify-otp', [RegisterController::class, 'VerifyEmail']);
     //login
-    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('api.login');
     //forgot password
     Route::post('/forget-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/otp-token', [ResetPasswordController::class, 'MakeOtpToken']);

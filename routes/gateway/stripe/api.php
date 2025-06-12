@@ -48,8 +48,8 @@ Route::controller(StripeSubscriptionsController::class)->prefix('payment/stripe/
 
 
 Route::controller(StripeWebHookHoldController::class)->prefix('payment/stripe/payment/hold')->name('payment.stripe.payment.hold')->group(function () {
-    Route::post('/create', 'createPaymentHold');
-    Route::post('/capture', 'capturePayment');
-    Route::post('/cancel', 'cancelPaymentHold');
+    Route::post('/create', 'createPaymentHold')->name('create');
+    Route::post('/capture', 'capturePayment')->name('capture');
+    Route::post('/cancel', 'cancelPaymentHold')->name('cancel');
 });
 

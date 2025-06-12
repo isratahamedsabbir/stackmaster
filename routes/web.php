@@ -18,11 +18,11 @@ Route::get('/post/show/{slug}',[HomeController::class, 'post'])->name('post.show
 
 //Social login test routes
 Route::get('social-login/{provider}',[SocialLoginController::class,'RedirectToProvider'])->name('social.login');
-Route::get('social-login/{provider}/callback',[SocialLoginController::class,'HandleProviderCallback']);
+Route::get('social-login/{provider}/callback',[SocialLoginController::class, 'HandleProviderCallback']);
 
-Route::post('subscriber/store',[SubscriberController::class,'store'])->name('subscriber.store');
+Route::post('subscriber/store',[SubscriberController::class, 'store'])->name('subscriber.data.store');
 
-Route::post('contact/store',[ContactController::class,'store'])->name('contact.store');
+Route::post('contact/store',[ContactController::class, 'store'])->name('contact.store');
 
 Route::controller(NotificationController::class)->prefix('notification')->name('notification.')->group(function () {
     Route::get('/', 'index')->name('index');
