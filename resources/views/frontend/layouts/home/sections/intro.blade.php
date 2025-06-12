@@ -23,7 +23,6 @@
             <!-- buttons -->
             <div class="mt-4">
                 <a href="{{ route('login') }}" class="btn btn-primary">{{ Auth::check() ? 'Dashboard' : 'login' }}</a>
-                <a href="#contact" class="btn btn-default">Hire me</a>
             </div>
         </div>
 
