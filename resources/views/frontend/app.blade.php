@@ -16,7 +16,7 @@
   <meta property="og:type" content="{{ $type ?? 'website' }}" />
   <meta property="og:title" content="{{ $title ?? settings()->name ?? config('app.name') }}" />
   <meta property="og:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
-  <meta property="og:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}" />
+  <meta property="og:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}?v={{ time() }}" />
 
   @include('frontend.partials.style')
 
