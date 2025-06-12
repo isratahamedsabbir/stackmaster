@@ -55,7 +55,7 @@
                                     
                                     <div class="form-group">
                                         <label for="description" class="form-label">Description:</label>
-                                        <textarea class="description form-control @error('description') is-invalid @enderror"
+                                        <textarea class="form-control @error('description') is-invalid @enderror"
                                             name="description" placeholder="Description" id="description">{{ $setting->description ?? old('description') ?? '' }}</textarea>
                                         @error('description')
                                         <span class="text-danger">{{ $message }}</span>
@@ -64,7 +64,7 @@
 
                                     <div class="form-group">
                                         <label for="keywords" class="form-label">Keywords:</label>
-                                        <textarea class="description form-control @error('keywords') is-invalid @enderror"
+                                        <textarea class="form-control @error('keywords') is-invalid @enderror"
                                             name="keywords" placeholder="Keywords" id="keywords">{{ $setting->keywords ?? old('keywords') ?? '' }}</textarea>
                                         @error('keywords')
                                         <span class="text-danger">{{ $message }}</span>
