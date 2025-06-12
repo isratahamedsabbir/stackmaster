@@ -33,22 +33,22 @@ class SettingController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
-            'name'           => 'nullable',
-            'title'          => 'nullable',
-            'description'    => 'nullable',
-            'phone'          => 'nullable',
-            'email'          => 'nullable',
-            'copyright'      => 'nullable',
-            'keywords'       => 'nullable',
-            'author'         => 'nullable',
-            'address'        => 'nullable',
-            'favicon'        => 'nullable',
+            'name'           => 'nullable|string|max:50',
+            'title'          => 'nullable|string|max:255',
+            'description'    => 'nullable|string|max:500',
+            'phone'          => 'nullable|string|max:20',
+            'email'          => 'nullable|string|email|max:100',
+            'copyright'      => 'nullable|string|max:255',
+            'keywords'       => 'nullable|string|max:255',
+            'author'         => 'nullable|string|max:100',
+            'address'        => 'nullable|string|max:255',
+            'favicon'        => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'thumbnail'      => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
         ]);
 
         try {
             $setting = Setting::first();
             
-            if ($request->hasFile('logo'))
             if ($request->hasFile('favicon')) {
                 if ($setting && $setting->favicon && file_exists(public_path($setting->favicon))) {
                     Helper::fileDelete(public_path($setting->favicon));
@@ -56,13 +56,16 @@ class SettingController extends Controller
                 $validatedData['favicon'] = Helper::fileUpload($request->file('favicon'), 'settings', time() . '_' . getFileName($request->file('favicon')));
             }
 
-            Setting::updateOrCreate(
-                [
-                    'id' => 1
-                ],
-                $validatedData
-            );
+            if ($request->hasFile('thumbnail')) {
+                if ($setting && $setting->thumbnail && file_exists(public_path($setting->thumbnail))) {
+                    Helper::fileDelete(public_path($setting->thumbnail));
+                }
+                $validatedData['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'settings', time() . '_' . getFileName($request->file('thumbnail')));
+            }
+
+            Setting::updateOrCreate(['id' => 1], $validatedData);
             return back()->with('t-success', 'Updated successfully');
+            
         } catch (Exception $e) {
             return back()->with('t-error', 'Failed to update' . $e->getMessage());
         }

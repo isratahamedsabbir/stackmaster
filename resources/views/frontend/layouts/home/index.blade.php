@@ -5,6 +5,7 @@ use App\Enums\SectionEnum;
 $cms_example    = $cms['home']->firstWhere('section', SectionEnum::HOME_EXAMPLE);
 $cms_examples   = $cms['home']->where('section', SectionEnum::HOME_EXAMPLES)->values();
 $cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
+$cms_about      = $cms['home']->firstWhere('section', SectionEnum::HOME_ABOUT);
 @endphp
 
 @extends('frontend.app', ['title' => 'landing page'])
@@ -16,7 +17,7 @@ $cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
     @include('frontend.layouts.home.sections.intro', ['cms_intro' => $cms_intro])
 
     <!-- section about -->
-    @include('frontend.layouts.home.sections.about')
+    @include('frontend.layouts.home.sections.about', ['cms_about' => $cms_about])
 
     <!-- section services -->
     @include('frontend.layouts.home.sections.services')

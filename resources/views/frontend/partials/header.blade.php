@@ -7,12 +7,6 @@
                 <span></span>
             </button>
         </div>
-        <!-- logo image -->
-        <div class="site-logo">
-            <a href="index.html">
-                <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" alt="Bolby" />
-            </a>
-        </div>
     </div>
 </header>
 
@@ -22,7 +16,7 @@
     <!-- logo image -->
     <div class="site-logo">
         <a href="{{ route('home') }}">
-            <img src="{{ asset($settings->logo ?? 'default/logo.svg') }}" alt="Bolby" />
+            <img src="{{ asset(settings()->thumbnail ?? 'default/logo.svg') }}" alt="Bolby" class="img-thumbnail" />
         </a>
     </div>
 

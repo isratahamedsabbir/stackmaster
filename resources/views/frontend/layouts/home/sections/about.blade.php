@@ -13,7 +13,7 @@
             <div class="col-md-3">
                 <div class="text-center text-md-left">
                     <!-- avatar image -->
-                    <img src="{{ asset('default') }}/profile.jpg" alt="Bolby" style="width:150px; height: 150px;" />
+                    <img src="{{ asset($cms_about->image ?? 'default/profile.jpg') }}" alt="Bolby" class="img-thumbnail" style="width:150px; height: 150px;" />
                 </div>
                 <div class="spacer d-md-none d-lg-none" data-height="30"></div>
             </div>
