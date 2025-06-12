@@ -5,7 +5,7 @@
         <!-- intro -->
         <div class="intro">
             <!-- avatar image -->
-            <img src="{{ asset(!empty($cms_intro->image) && file_exists(public_path($cms_intro->image)) ? $cms_intro->image : 'default/logo.svg') }}" alt="Bolby" class="mb-4" style="width: 150px; height: 180px"/>
+            <img src="{{ asset(!empty($cms_intro->image) && file_exists(public_path($cms_intro->image)) ? $cms_intro->image : 'default/logo.svg') }}" alt="Bolby" class="img-thumbnail mb-4" style="width: 150px; height: 180px"/>
 
             <!-- info -->
             <h1 class="mb-2 mt-0">{{ settings()->author ?? "Israt Ahamed Sabbir" }}</h1>
