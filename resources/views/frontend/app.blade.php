@@ -21,9 +21,9 @@
   <meta property="og:image:height" content="627" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}" />
   <meta name="twitter:title" content="{{ $title ?? settings()->title ?? config('app.name') }}" />
   <meta name="twitter:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
+  <meta name="twitter:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}" />
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
