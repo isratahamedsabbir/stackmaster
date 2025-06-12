@@ -4,19 +4,21 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
   <link rel="icon" href="{{ asset(settings()->logo ?? 'default/logo.png') }}" type="image/x-icon">
   <title>{{ $title ?? '' }} | {{ settings()->name ?? config('app.name') }}</title>
   <meta name="description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}">
   <meta name="keywords" content="{!! strip_tags($keywords ?? settings()->keywords ?? '') !!}">
   <meta name="author" content="{{$author ?? settings()->system_name ?? config('app.name') }}">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  
   <meta property="og:url" content="{{ $url ?? env('APP_URL') }}" />
   <meta property="og:type" content="{{ $type ?? 'website' }}" />
   <meta property="og:title" content="{{ $title ?? settings()->name ?? config('app.name') }}" />
   <meta property="og:description" content="{!! strip_tags($description ?? settings()->description ?? '') !!}" />
   <meta property="og:image" content="{{ $image ?? asset(settings()->thumbnail ?? 'default/logo.png') }}?v={{ time() }}" />
+  
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   @include('frontend.partials.style')
 
