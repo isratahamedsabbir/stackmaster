@@ -16,7 +16,7 @@
     <!-- logo image -->
     <div class="site-logo">
         <a href="{{ route('home') }}">
-            <img src="{{ asset(settings()->thumbnail ?? 'default/logo.svg') }}" alt="Bolby" class="img-thumbnail" />
+            <img src="{{ asset(settings()->logo ?? 'default/logo.svg') }}" alt="Bolby" class="img-thumbnail" />
         </a>
     </div>
 
