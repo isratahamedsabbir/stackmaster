@@ -16,7 +16,7 @@
     <!-- logo image -->
     <div class="site-logo">
         <a href="{{ route('home') }}">
-            <h1 class="logo-text">{{ settings()->site_name ?? 'My Website' }}</h1>
+            <h1 class="logo-text">{{ settings()->author ?? 'My Website' }}</h1>
         </a>
     </div>
 
