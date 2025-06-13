@@ -7,10 +7,10 @@
 
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex">
 
                 <!-- timeline wrapper -->
-                <div class="timeline edu bg-white rounded shadow-dark padding-30 overflow-hidden">
+                <div class="timeline edu bg-white rounded shadow-dark padding-30 overflow-hidden flex-fill">
 
                     <!-- timeline item -->
                     <div class="timeline-container wow fadeInUp">
@@ -47,10 +47,10 @@
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex">
 
                 <!-- timeline wrapper -->
-                <div class="timeline exp bg-white rounded shadow-dark padding-30 overflow-hidden">
+                <div class="timeline exp bg-white rounded shadow-dark padding-30 overflow-hidden flex-fill">
 
                     <!-- timeline item -->
                     <div class="timeline-container wow fadeInUp">

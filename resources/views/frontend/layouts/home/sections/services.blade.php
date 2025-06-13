@@ -9,9 +9,9 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-4  d-flex">
                 <!-- service box -->
-                <div class="service-box rounded data-background padding-30 text-light shadow-blue" data-color="#6C6CE5">
+                <div class="service-box rounded data-background padding-30 text-light shadow-blue flex-fill" data-color="#6C6CE5">
                     <div class="text-center">
                         <img src="{{ asset('default/logo.svg') }}" alt="UI/UX design" style="width:80px; height:80px" />
                     </div>
@@ -34,9 +34,9 @@
                 <div class="spacer d-md-none d-lg-none" data-height="30"></div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4  d-flex">
                 <!-- service box -->
-                <div class="service-box rounded data-background padding-30 shadow-yellow" data-color="#F9D74C">
+                <div class="service-box rounded data-background padding-30 shadow-yellow flex-fill" data-color="#F9D74C">
                     <div class="text-center">
                         <img src="{{ asset('default/logo.svg') }}" alt="UI/UX design" style="width:80px; height:80px" />
                     </div>
@@ -66,9 +66,9 @@
                 <div class="spacer d-md-none d-lg-none" data-height="30"></div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4  d-flex">
                 <!-- service box -->
-                <div class="service-box rounded data-background padding-30 text-light shadow-pink" data-color="#F97B8B">
+                <div class="service-box rounded data-background padding-30 text-light shadow-pink flex-fill" data-color="#F97B8B">
                     <div class="text-center">
                         <img src="{{ asset('default/logo.svg') }}" alt="UI/UX design" style="width:80px; height:80px" />
                     </div>

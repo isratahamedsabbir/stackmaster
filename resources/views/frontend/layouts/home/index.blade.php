@@ -29,7 +29,7 @@ $cms_about      = $cms['home']->firstWhere('section', SectionEnum::HOME_ABOUT);
     @include('frontend.layouts.home.sections.works', ['types' => $types, 'projects' => $projects])
 
     <!-- section prices -->
-    @include('frontend.layouts.home.sections.prices')
+    @include('frontend.layouts.home.sections.prices', ['products' => $products])
 
     <!-- section testimonials -->
     @include('frontend.layouts.home.sections.testimonials')
