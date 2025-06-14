@@ -66,7 +66,8 @@ class FaqController extends Controller
      */
     public function create()
     {
-        return view('backend.layouts.faq.create');
+        $categories = FAQ::select('category')->distinct()->get()->pluck('category')->toArray();
+        return view('backend.layouts.faq.create', compact('categories'));
     }
 
     /**
@@ -75,6 +76,7 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'category'           => 'required|string',
             'question'           => 'required|string',
             'answer'             => 'required|string'
         ]);
@@ -88,6 +90,7 @@ class FaqController extends Controller
 
             $faq = new FAQ();
 
+            $faq->category = $data['category'];
             $faq->question = $data['question'];
             $faq->answer = $data['answer'];
             $faq->save();
@@ -107,7 +110,8 @@ class FaqController extends Controller
     public function show($id)
     {
         $faq = FAQ::findOrFail($id);
-        return view('backend.layouts.faq.show', compact('faq'));
+        $categories = FAQ::select('category')->distinct()->get()->pluck('category')->toArray();
+        return view('backend.layouts.faq.show', compact('faq', 'categories'));
     }
 
     /**
@@ -116,7 +120,8 @@ class FaqController extends Controller
     public function edit($id)
     {
         $faq = FAQ::findOrFail($id);
-        return view('backend.layouts.faq.edit', compact('faq'));
+        $categories = FAQ::select('category')->distinct()->get()->pluck('category')->toArray();
+        return view('backend.layouts.faq.edit', compact('faq', 'categories'));
     }
 
     /**
@@ -125,6 +130,7 @@ class FaqController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'category'           => 'required|string',
             'question'           => 'required|string',
             'answer'             => 'required|string'
         ]);
@@ -138,6 +144,7 @@ class FaqController extends Controller
 
             $faq = FAQ::findOrFail($id);
 
+            $faq->category = $data['category'];
             $faq->question = $data['question'];
             $faq->answer = $data['answer'];
             $faq->save();

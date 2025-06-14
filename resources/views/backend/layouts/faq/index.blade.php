@@ -44,6 +44,7 @@
                                     <thead>
                                         <tr>
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Category</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Question</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
@@ -109,6 +110,12 @@
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    },
+                    {
+                        data: 'category',
+                        name: 'category',
+                        orderable: true,
+                        searchable: true
                     },
                     {
                         data: 'question',

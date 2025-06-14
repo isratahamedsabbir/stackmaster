@@ -33,6 +33,10 @@
                         <div class="card-body">
                             <table class="table table-bordered table-striped">
                                 <tr>
+                                    <th>Category</th>
+                                    <td>{{ $faq->category ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
                                     <th>Question</th>
                                     <td>{{ $faq->question ?? 'N/A' }}</td>
                                 </tr>
