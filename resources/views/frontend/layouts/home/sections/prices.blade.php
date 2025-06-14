@@ -1,4 +1,4 @@
-<section id="prices">
+<section id="prices" style="background-color: #f8fafc;">
 
     <div class="container">
 
@@ -9,42 +9,28 @@
 
         <div class="row">
 
-            <div class="col-md-4 pe-md-0 mt-md-4 mt-0">
-                <!-- price item -->
-                <div class="price-item bg-white rounded shadow-dark text-center">
-                    <img src="{{ asset('default/logo.svg') }}" alt="Regular" style="width:80px; height:80px;" />
-                    <h2 class="plan">Basic</h2>
-                    <p>A Simple option but powerful to manage your business</p>
-                    <p>Email support</p>
-                    <h3 class="price"><em>$</em>9<span>Month</span></h3>
-                    <a href="#" class="btn btn-default">Get Started</a>
+            @forelse ($products as $product)
+            <div class="col-md-6 col-lg-4 my-3 d-flex">
+                <div class="price-item bg-white rounded shadow-dark text-center py-4 flex-fill" style="position: relative;">
+                    <img src="{{ $product->thumbnail && file_exists(public_path($product->thumbnail)) ? asset($product->thumbnail) : asset('default/logo.svg') }}" alt="Premium" class="img-fluid mb-3" style="width:80px; height:80px;" />
+                    <h2 class="plan">{{ $product->category->name }}</h2>
+                    <p>{{ $product->title }}</p>
+                    @if ($product->description)
+                        {!! $product->description !!}
+                    @endif
+                    <h3 class="price">
+                        <em>${{ number_format($product->price, 2) }}</em>
+                    </h3>
+                    <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">
+                        <a href="#" class="btn btn-default mt-3">Get Started</a>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-4 px-md-0 my-4 my-md-0">
-                <!-- price item recommended-->
-                <div class="price-item bg-white rounded shadow-dark text-center best">
-                    <span class="badge">Recommended</span>
-                    <img src="{{ asset('default/logo.svg') }}" alt="Premium" style="width:80px; height:80px;" />
-                    <h2 class="plan">Premium</h2>
-                    <p>Unlimited product including apps integrations and more features</p>
-                    <p>Mon-Fri support</p>
-                    <h3 class="price"><em>$</em>49<span>Month</span></h3>
-                    <a href="#" class="btn btn-default">Get Started</a>
-                </div>
+            @empty
+            <div class="col-12 text-center">
+                <p>No products available at the moment.</p>
             </div>
-
-            <div class="col-md-4 ps-md-0 mt-md-4 mt-0">
-                <!-- price item -->
-                <div class="price-item bg-white rounded shadow-dark text-center">
-                    <img src="{{ asset('default/logo.svg') }}" alt="Ultimate" style="width:80px; height:80px;" />
-                    <h2 class="plan">Ultimate</h2>
-                    <p>A wise option for large companies and individuals</p>
-                    <p>24/7 support</p>
-                    <h3 class="price"><em>$</em>99<span>Month</span></h3>
-                    <a href="#" class="btn btn-default">Get Started</a>
-                </div>
-            </div>
+            @endforelse
 
         </div>
 
