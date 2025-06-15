@@ -1,5 +1,5 @@
 <!-- section about -->
-<section id="about">
+<section id="about" class="{{ isset($cms_about->is_display) && $cms_about->is_display == false ? 'd-none' : '' }}">
 
     <div class="container">
 

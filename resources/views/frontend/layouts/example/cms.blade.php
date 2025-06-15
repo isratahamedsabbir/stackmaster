@@ -5,7 +5,7 @@ use App\Enums\SectionEnum;
 $cms_banner = $cms['home']->firstWhere('section', SectionEnum::HOME_BANNER);
 $cms_banners = $cms['home']->where('section', SectionEnum::HOME_BANNERS)->values();
 @endphp
-<section class="{{ $cms_banner->is_display == false ? 'd-none' : '' }}">
+<section class="{{ isset($cms_banner->is_display) && $cms_banner->is_display == false ? 'd-none' : '' }}">
     <h1 class="text-shadow text-dark">{{ $cms_banner->title ?? 'Album example' }}</h1>
     <h6 class="mt-3">{!! $cms_banner->description ?? 'Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don\'t simply skip over it entirely.' !!}</h6>
     <a href="{{ $cms_banner->btn_link ?? '#' }}" class="btn btn-pill btn-primary btn-w-md py-2 me-2 mb-1">{{ $cms_banner->btn_text ?? 'Main call to action' }}<i class="fe fe-activity ms-2"></i></a>
