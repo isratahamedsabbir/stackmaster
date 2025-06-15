@@ -102,7 +102,7 @@ class HomeExampleController extends Controller
             $validatedData['page'] = $this->page;
             $validatedData['section'] = $this->items;
 
-            $counting = CMS::where('page', $validatedData['page'])->where('section', $validatedData['section'])->count(); 
+            $counting = CMS::where('page', $validatedData['page'])->where('section', $validatedData['section'])->count();
             if ($counting >= $this->count) {
                 return redirect()->back()->with('t-error', "Maximum  {$this->count} Item You Can Add");
             }
@@ -110,13 +110,13 @@ class HomeExampleController extends Controller
             if ($request->hasFile('bg')) {
                 $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section, time() . '_' . getFileName($request->file('bg')));
             }
-            
+
             if ($request->hasFile('image')) {
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section, time() . '_' . getFileName($request->file('image')));
             }
 
             // Create or update the CMS entry
-            if($request->has('rating')) {
+            if ($request->has('rating')) {
                 $validatedData['metadata']['rating'] = $validatedData['rating'];
                 unset($validatedData['rating']);
             }
@@ -163,13 +163,13 @@ class HomeExampleController extends Controller
             $validatedData['page'] = $this->page;
             $validatedData['section'] = $this->items;
 
-            if($request->hasFile('bg')) {
+            if ($request->hasFile('bg')) {
                 if ($section->bg && file_exists(public_path($section->bg))) {
                     Helper::fileDelete(public_path($section->bg));
                 }
                 $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section, time() . '_' . getFileName($request->file('bg')));
             }
-            
+
             if ($request->hasFile('image')) {
                 if ($section->image && file_exists(public_path($section->image))) {
                     Helper::fileDelete(public_path($section->image));
@@ -178,7 +178,7 @@ class HomeExampleController extends Controller
             }
 
             // Update the meta data
-            if($request->has('rating')) {
+            if ($request->has('rating')) {
                 $validatedData['metadata']['rating'] = $validatedData['rating'];
                 unset($validatedData['rating']);
             }
@@ -237,7 +237,7 @@ class HomeExampleController extends Controller
             $validatedData['section'] = $this->item;
             $section = CMS::where('page', $this->page)->where('section', $this->item)->first();
 
-            if($request->hasFile('bg')) {
+            if ($request->hasFile('bg')) {
                 if ($section && $section->bg && file_exists(public_path($section->bg))) {
                     Helper::fileDelete(public_path($section->bg));
                 }
@@ -251,7 +251,7 @@ class HomeExampleController extends Controller
                 $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section, time() . '_' . getFileName($request->file('image')));
             }
 
-            if($request->has('rating')) {
+            if ($request->has('rating')) {
                 $validatedData['metadata']['rating'] = $validatedData['rating'];
                 unset($validatedData['rating']);
             }
@@ -268,4 +268,20 @@ class HomeExampleController extends Controller
         }
     }
 
+    public function display()
+    {
+        try {
+            $pages = CMS::where('page', $this->page)->get();
+            foreach ($pages as $page) {
+                $page->update(['is_display' => !$page->is_display]);
+            }
+            return back()->with('t-success', 'Display status updated successfully.');
+
+        } catch (Exception $e) {
+
+            return back()->with('t-error', $e->getMessage());
+            
+        }
+    }
+    
 }

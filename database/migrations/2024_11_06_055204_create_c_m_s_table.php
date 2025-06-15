@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('btn_color')->nullable();
             $table->json('metadata')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->boolean('is_display')->default(true);
             $table->timestamps();
         });
     }

@@ -24,12 +24,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
                     <h1 class="page-title">CMS : {{ ucfirst($name ?? '') }} Page {{ ucfirst($section ?? '') }} Section.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">{{ ucfirst($name ?? '') }}</li>
-                        <li class="breadcrumb-item">{{ ucfirst($section ?? '') }}</li>
-                        <li class="breadcrumb-item active" aria-current="page">Index</li>
-                    </ol>
+                    <button onclick="window.location.href=`{{ route($url . '.display') }}`" class="btn me-2 {{ isset($data->is_display) && $data->is_display == 0 ? 'btn-danger' : 'btn-primary' }}">Display</button>
                 </div>
             </div>
             <!-- PAGE-HEADER END -->

@@ -159,7 +159,9 @@ Route::prefix('cms')->name('cms.')->group(function () {
     Route::prefix('home/about')->name('home.about.')->controller(HomeAboutController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}/show', 'show')->name('show');
+
         Route::put('/content', 'content')->name('content');
+        Route::get('/display', 'display')->name('display');
     });
 
     //Home Example
@@ -174,12 +176,15 @@ Route::prefix('cms')->name('cms.')->group(function () {
         Route::get('/{id}/status', 'status')->name('status');
 
         Route::put('/content', 'content')->name('content');
+        Route::get('/display', 'display')->name('display');
     });
 
     //Home Intro
     Route::prefix('home/intro')->name('home.intro.')->controller(HomeIntroController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        
         Route::put('/content', 'content')->name('content');
+        Route::get('/display', 'display')->name('display');
     });
     
 });

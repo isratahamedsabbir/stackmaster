@@ -24,12 +24,9 @@ $url = 'admin.cms.'.$name.'.'.$section;
                     <h1 class="page-title">CMS : {{ ucfirst($name ?? '') }} Page {{ ucfirst($section ?? '') }} Section.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">{{ ucfirst($name ?? '') }}</li>
-                        <li class="breadcrumb-item">{{ ucfirst($section ?? '') }}</li>
-                        <li class="breadcrumb-item active" aria-current="page">Index</li>
-                    </ol>
+                    <div class="ms-auto pageheader-btn">
+                        <button onclick="window.location.href=`{{ route($url . '.display') }}`" class="btn me-2 {{ isset($data->is_display) && $data->is_display == 0 ? 'btn-danger' : 'btn-primary' }}">Display</button>
+                    </div>
                 </div>
             </div>
             <!-- PAGE-HEADER END -->
@@ -42,7 +39,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
                         <div class="card-header d-flex justify-content-between border-bottom">
                             <h3 class="card-title">Content Edit</h3>
                             <!-- Add New Page Button -->
-                             @if($data)
+                            @if($data)
                             <a href="{{route($url.'.show', $data->id)}}" class="btn btn-primary">
                                 <i class="bx bx-plus me-sm-1 "></i> Show Section
                             </a>

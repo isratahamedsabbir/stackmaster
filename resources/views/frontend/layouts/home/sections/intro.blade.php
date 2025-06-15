@@ -1,5 +1,5 @@
 <!-- section home -->
-<section id="home" class="home d-flex align-items-center">
+<section id="home" class="home d-flex align-items-center {{ $cms_intro->is_display == false ? 'd-none' : '' }}">
     <div class="container">
 
         <!-- intro -->

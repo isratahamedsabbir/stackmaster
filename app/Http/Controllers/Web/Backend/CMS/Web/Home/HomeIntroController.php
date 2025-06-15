@@ -71,4 +71,20 @@ class HomeIntroController extends Controller
         }
     }
 
+    public function display()
+    {
+        try {
+            $pages = CMS::where('page', $this->page)->get();
+            foreach ($pages as $page) {
+                $page->update(['is_display' => !$page->is_display]);
+            }
+            return back()->with('t-success', 'Display status updated successfully.');
+
+        } catch (Exception $e) {
+
+            return back()->with('t-error', $e->getMessage());
+            
+        }
+    }
+
 }
