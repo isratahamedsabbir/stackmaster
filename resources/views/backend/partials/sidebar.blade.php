@@ -26,6 +26,7 @@
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
                         <i class="fa-solid fa-list side-menu__icon"></i>
+                        <i class="fa-solid fa-layer-group side-menu__icon"></i>
                         <span class="side-menu__label">Category</span>
                     </a>
                 </li>
