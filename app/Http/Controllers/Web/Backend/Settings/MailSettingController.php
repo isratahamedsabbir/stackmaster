@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
 
-class MailSettingController extends Controller {
+class MailSettingController extends Controller
+{
     /**
      * Display mail settings page.
      *
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $settings = [
             'mail_mailer'       => env('MAIL_MAILER', ''),
             'mail_host'         => env('MAIL_HOST', ''),
@@ -38,7 +40,8 @@ class MailSettingController extends Controller {
      * @param Request $request
      * @return RedirectResponse
      */
-    public function update(Request $request): RedirectResponse {
+    public function update(Request $request): RedirectResponse
+    {
         $request->validate([
             'mail_mailer'       => 'nullable|string',
             'mail_host'         => 'nullable|string',
@@ -61,13 +64,13 @@ class MailSettingController extends Controller {
                 '/MAIL_ENCRYPTION=(.*)\s*/',
                 '/MAIL_FROM_ADDRESS=(.*)\s*/',
             ], [
-                'MAIL_MAILER=' . $request->mail_mailer . $lineBreak,
-                'MAIL_HOST=' . $request->mail_host . $lineBreak,
-                'MAIL_PORT=' . $request->mail_port . $lineBreak,
-                'MAIL_USERNAME=' . $request->mail_username . $lineBreak,
-                'MAIL_PASSWORD=' . $request->mail_password . $lineBreak,
-                'MAIL_ENCRYPTION=' . $request->mail_encryption . $lineBreak,
-                'MAIL_FROM_ADDRESS=' . '"' . $request->mail_from_address . '"' . $lineBreak,
+                'MAIL_MAILER=' . str_replace(' ', '-', $request->mail_mailer) . $lineBreak,
+                'MAIL_HOST=' . str_replace(' ', '-', $request->mail_host) . $lineBreak,
+                'MAIL_PORT=' . str_replace(' ', '-', $request->mail_port) . $lineBreak,
+                'MAIL_USERNAME=' . str_replace(' ', '-', $request->mail_username) . $lineBreak,
+                'MAIL_PASSWORD=' . '"' . $request->mail_password . '"' . $lineBreak,
+                'MAIL_ENCRYPTION=' . str_replace(' ', '-', $request->mail_encryption) . $lineBreak,
+                'MAIL_FROM_ADDRESS=' . '"' . str_replace(' ', '-', $request->mail_from_address) . '"' . $lineBreak,
             ], $envContent);
 
             File::put(base_path('.env'), $envContent);
@@ -78,7 +81,8 @@ class MailSettingController extends Controller {
         }
     }
 
-    public function send(Request $request) {
+    public function send(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'receiver'  => 'required|email|max:100',
@@ -90,24 +94,20 @@ class MailSettingController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        try{
+        try {
 
-        $data = $validator->validated();
+            $data = $validator->validated();
 
-        $receiver = $data['receiver'];
-        $subject = $data['subject'];
-        $content = $data['content'];
+            $receiver = $data['receiver'];
+            $subject = $data['subject'];
+            $content = $data['content'];
 
-        Mail::to($receiver)->send(new TestMail($subject, $content));
+            Mail::to($receiver)->send(new TestMail($subject, $content));
 
-        return back()->with('t-success', 'Mail sent successfully');
-
-        }catch(Exception $e){
+            return back()->with('t-success', 'Mail sent successfully');
+        } catch (Exception $e) {
 
             return back()->with('t-error', $e->getMessage());
-
         }
- 
     }
-
 }
