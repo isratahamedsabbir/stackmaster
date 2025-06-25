@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 //stripe callback
 Route::controller(StripeCallBackController::class)->prefix('payment/stripe')->name('payment.stripe.')->group(function () {
     Route::post('/checkout', 'checkout')->middleware(['auth:api']);
+    Route::get('/success', 'success')->name('success');
+    Route::get('/cancel', 'failure')->name('cancel');
 });
 
 //stripe webhook

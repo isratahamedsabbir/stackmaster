@@ -37,8 +37,8 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['api', 'api-admin'])->prefix('api.admin')->name('api.admin.')->group(base_path('routes/api/admin.php'));
             Route::middleware(['api', 'retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/retailer.php'));
             Route::middleware(['api', 'otp', 'customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/customer.php'));
-            Route::middleware(['api'])->prefix('api/')->name('api.')->group(base_path('routes/gateway/stripe/api.php'));
-            Route::middleware(['web'])->group(base_path('routes/gateway/stripe/web.php'));
+            Route::prefix('api/')->name('api.')->group(base_path('routes/gateway/stripe/api.php'));
+            Route::group(base_path('routes/gateway/stripe/web.php'));
         }
     )
     ->withBroadcasting(
