@@ -38,7 +38,7 @@ class RegisterController extends Controller
             'agree'      => 'required|in:true',
         ]);
         try {
-
+            DB::beginTransaction();
             do {
                 $slug = "user_".rand(1000000000, 9999999999);
             } while (User::where('slug', $slug)->exists());
@@ -81,15 +81,24 @@ class RegisterController extends Controller
 
             $data = User::select($this->select)->with('roles')->find($user->id);
 
+            Mail::to($user->email)->send(new OtpMail($user->otp, $user, 'Verify Your Email Address'));
+
+            DB::commit();
+
+            $token = auth('api')->login($user);
+
             return response()->json([
                 'status'     => true,
                 'message'    => 'User register in successfully.',
                 'code'       => 200,
+                'token_type' => 'bearer',
+                'token'      => $token,
                 'expires_in' => auth('api')->factory()->getTTL() * 60,
                 'data' => $data
             ], 200);
             
         } catch (Exception $e) {
+            DB::rollBack();
             return Helper::jsonErrorResponse('User registration failed', 500, [$e->getMessage()]);
         }
     }
