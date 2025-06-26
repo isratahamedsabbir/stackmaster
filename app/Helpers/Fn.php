@@ -67,9 +67,13 @@ if (!function_exists('is_url')) {
 }
 
 if (!function_exists('settings')) {
-    function settings()
+    function settings(?string $key = null)
     {
-        return $settings = Setting::first();
+        $settings = Setting::first();
+        if ($key) {
+            return $settings->{$key} ?? null;
+        }
+        return $settings;
     }
 }
 
