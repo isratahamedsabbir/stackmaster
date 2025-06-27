@@ -17,18 +17,18 @@ class TestNotificationEvent implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
-    public $admin_id;
+    public $user_id;
 
-    public function __construct($data, $admin_id)
+    public function __construct($data, $user_id)
     {
         $this->data = $data;
-        $this->admin_id = $admin_id;
+        $this->user_id = $user_id;
     }
 
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('test-notify.'.$this->admin_id)
+            new PrivateChannel('test-notify.'.$this->user_id)
         ];
     }
     

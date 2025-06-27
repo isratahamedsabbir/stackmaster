@@ -13,14 +13,14 @@ class TestNotification extends Notification
 {
 
     public $data;
-    public $admin_id;
-    public function __construct($data, $admin_id)
+    public $user_id;
+    public function __construct($data, $user_id)
     {       
         $this->data = $data;
         $user = User::find($data['user_id']);
         $this->data['name'] = $user->name;
         $this->data['email'] = $user->email;
-        $this->admin_id = $admin_id;
+        $this->user_id = $user_id;
     }
 
     public function via(object $notifiable): array
@@ -42,8 +42,9 @@ class TestNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
+            'user_id' => $this->user_id,
             'title' => $this->data['title'],
-            'body' => $this->data['body'],
+            'body' => $this->data['body']
         ];
     }
 

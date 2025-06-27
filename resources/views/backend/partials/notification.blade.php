@@ -45,10 +45,10 @@
             },
             success: function(response) {
                 if (response.status === 'success') {
-                    toastr.success(response.body);
+                    toastr.success(response.message);
 
                 } else {
-                    toastr.error(response.body);
+                    toastr.error(response.message);
                 }
                 notification();
             },
@@ -69,9 +69,9 @@
             },
             success: function(response) {
                 if (response.status === 'success') {
-                    toastr.success(response.body);
+                    toastr.success(response.message);
                 } else {
-                    toastr.error(response.body);
+                    toastr.error(response.message);
                 }
                 notification();
             },
