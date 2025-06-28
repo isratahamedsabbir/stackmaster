@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Gateway\Stripe;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
+use App\Services\StripeService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,10 +19,13 @@ use Illuminate\Support\Str;
 
 class StripeWebHookController extends Controller
 {
-    public function __construct()
+    protected $stripeService;
+    public function __construct(StripeService $stripeService)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        $this->stripeService = $stripeService;
+        Stripe::setApiKey(config('services.stripe.secret'));
     }
+
     public function intent(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
@@ -80,36 +83,16 @@ class StripeWebHookController extends Controller
         try {
             switch ($event->type) {
                 case 'payment_intent.succeeded':
-                    $this->success($event->data->object);
+                    $this->stripeService->success($event->data->object);
                     return Helper::jsonResponse(true, 'Payment successful', 200, []);
-
                 case 'payment_intent.payment_failed':
-                    $this->failure($event->data->object);
+                    $this->stripeService->failure($event->data->object);
                     return Helper::jsonResponse(true, 'Payment failed', 200, []);
-
                 default:
                     return Helper::jsonResponse(true, 'Unhandled event type', 200, []);
             }
         } catch (Exception $e) {
             return Helper::jsonResponse(false, $e->getMessage(), 500, []);
         }
-    }
-
-    protected function success($paymentIntent): void
-    {
-        Transaction::create([
-            'user_id'   => $paymentIntent->metadata->user_id,
-            'amount'    => $paymentIntent->amount / 100,
-            'currency'  => $paymentIntent->currency,
-            'trx_id'    => $paymentIntent->id,
-            'type'      => 'increment',
-            'status'    => 'success',
-            'metadata'  => json_encode($paymentIntent->metadata)
-        ]);
-    }
-
-    protected function failure($paymentIntent): void
-    {
-        //? Handle payment failure    
     }
 }
