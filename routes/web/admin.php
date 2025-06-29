@@ -26,6 +26,7 @@ use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
 use App\Http\Controllers\Web\Backend\ProductController;
 use App\Http\Controllers\Web\Backend\Settings\CaptchaController;
+use App\Http\Controllers\Web\Backend\Settings\EnvController;
 use App\Http\Controllers\Web\Backend\Settings\LogoController;
 use App\Http\Controllers\Web\Backend\Settings\OtherController;
 use App\Http\Controllers\Web\Backend\Settings\SignatureController;
@@ -248,6 +249,12 @@ Route::controller(StripeController::class)->prefix('setting/stripe')->name('sett
 Route::controller(FirebaseController::class)->prefix('setting/firebase')->name('setting.firebase.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::patch('/update', 'update')->name('update');
+});
+
+//! Route for Environment Settings
+Route::controller(EnvController::class)->group(function () {
+    Route::get('setting/env', 'index')->name('setting.env.index');
+    Route::patch('setting/env', 'update')->name('setting.env.update');
 });
 
 //! Route for Firebase Settings

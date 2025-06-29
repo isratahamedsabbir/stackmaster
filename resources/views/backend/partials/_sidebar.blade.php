@@ -129,6 +129,7 @@
                     </a>
                     <ul class="slide-menu">
                         <li><a href="{{ route('admin.setting.general.index') }}" class="slide-item">General Settings</a></li>
+                        <li><a href="{{ route('admin.setting.env.index') }}" class="slide-item">Environment Settings</a></li>
                         <li><a href="{{ route('admin.setting.logo.index') }}" class="slide-item">Logo Settings</a></li>
                         <li><a href="{{ route('admin.setting.profile.index') }}" class="slide-item">Profile Settings</a></li>
                         <li><a href="{{ route('admin.setting.mail.index') }}" class="slide-item">Mail Settings</a></li>
