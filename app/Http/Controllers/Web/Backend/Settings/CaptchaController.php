@@ -32,8 +32,8 @@ class CaptchaController extends Controller {
      */
     public function update(Request $request): RedirectResponse {
         $request->validate([
-            'recaptcha_site_key'      => 'nullable|string',
-            'recaptcha_secret_key'  => 'nullable|string'
+            'recaptcha_site_key'    => 'nullable|string|regex:/^[\S]*$/',
+            'recaptcha_secret_key'  => 'nullable|string|regex:/^[\S]*$/'
         ]);
 
         try {

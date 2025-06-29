@@ -302,4 +302,5 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/pagination', [OtherController::class, 'pagination'])->name('.pagination');
     Route::get('/reverb', [OtherController::class, 'reverb'])->name('.reverb');
     Route::get('/debug', [OtherController::class, 'debug'])->name('.debug');
+    Route::get('/access', [OtherController::class, 'access'])->name('.access');
 });

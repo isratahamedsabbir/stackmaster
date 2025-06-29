@@ -32,8 +32,8 @@ class EnvController extends Controller {
      */
     public function update(Request $request): RedirectResponse {
         $request->validate([
-            'app_name'        => 'nullable|string',
-            'app_url'         => 'nullable|string',
+            'app_name' => 'nullable|string|regex:/^[\S]*$/',
+            'app_url'  => 'nullable|string|regex:/^[\S]*$/',
         ]);
 
         try {

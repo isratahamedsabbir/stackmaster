@@ -31,7 +31,7 @@ class GoogleMapController extends Controller {
      */
     public function update(Request $request): RedirectResponse {
         $request->validate([
-            'google_maps_api_key' => 'nullable|string'
+            'google_maps_api_key' => 'nullable|string|regex:/^[\S]*$/'
         ]);
 
         try {

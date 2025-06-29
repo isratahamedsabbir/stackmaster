@@ -15,6 +15,8 @@ class OtherController extends Controller
             'recaptcha'  => env('RECAPTCHA_ENABLE', ''),
             'pagination' => env('PAGINATION', ''),
             'reverb'     => env('REVERB', ''),
+            'debug'      => env('APP_DEBUG', ''),
+            'access'     => env('ACCESS', '')
         ];
         return view('backend.layouts.settings.other_settings', compact('settings'));
     }
@@ -96,6 +98,24 @@ class OtherController extends Controller
             $envContent = str_replace('APP_DEBUG=true', 'APP_DEBUG=false', file_get_contents(base_path('.env')));
         } else {
             $envContent = str_replace('APP_DEBUG=false', 'APP_DEBUG=true', file_get_contents(base_path('.env')));
+        }
+
+        file_put_contents(base_path('.env'), $envContent);
+
+        Artisan::call('config:clear');
+
+        return response()->json([
+            'status' => 't-success',
+            'message' => 'Your action was successful!'
+        ], 200);
+    }
+
+    public function access()
+    {
+        if(env('ACCESS') === true) {
+            $envContent = str_replace('ACCESS=true', 'ACCESS=false', file_get_contents(base_path('.env')));
+        } else {
+            $envContent = str_replace('ACCESS=false', 'ACCESS=true', file_get_contents(base_path('.env')));
         }
 
         file_put_contents(base_path('.env'), $envContent);

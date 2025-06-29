@@ -43,13 +43,13 @@ class MailSettingController extends Controller
     public function update(Request $request): RedirectResponse
     {
         $request->validate([
-            'mail_mailer'       => 'nullable|string',
-            'mail_host'         => 'nullable|string',
-            'mail_port'         => 'nullable|string',
-            'mail_username'     => 'nullable|string',
-            'mail_password'     => 'nullable|string',
-            'mail_encryption'   => 'nullable|string',
-            'mail_from_address' => 'nullable|string',
+            'mail_mailer'       => 'nullable|string|regex:/^[\S]*$/',
+            'mail_host'         => 'nullable|string|regex:/^[\S]*$/',
+            'mail_port'         => 'nullable|string|regex:/^[\S]*$/',
+            'mail_username'     => 'nullable|string|regex:/^[\S]*$/',
+            'mail_password'     => 'nullable|string|regex:/^[\S]*$/',
+            'mail_encryption'   => 'nullable|string|regex:/^[\S]*$/',
+            'mail_from_address' => 'nullable|string|regex:/^[\S]*$/',
         ]);
 
         try {
@@ -64,13 +64,13 @@ class MailSettingController extends Controller
                 '/MAIL_ENCRYPTION=(.*)\s*/',
                 '/MAIL_FROM_ADDRESS=(.*)\s*/',
             ], [
-                'MAIL_MAILER=' . str_replace(' ', '-', $request->mail_mailer) . $lineBreak,
-                'MAIL_HOST=' . str_replace(' ', '-', $request->mail_host) . $lineBreak,
-                'MAIL_PORT=' . str_replace(' ', '-', $request->mail_port) . $lineBreak,
-                'MAIL_USERNAME=' . str_replace(' ', '-', $request->mail_username) . $lineBreak,
+                'MAIL_MAILER=' . $request->mail_mailer . $lineBreak,
+                'MAIL_HOST=' . $request->mail_host . $lineBreak,
+                'MAIL_PORT=' . $request->mail_port . $lineBreak,
+                'MAIL_USERNAME=' . $request->mail_username . $lineBreak,
                 'MAIL_PASSWORD=' . '"' . $request->mail_password . '"' . $lineBreak,
-                'MAIL_ENCRYPTION=' . str_replace(' ', '-', $request->mail_encryption) . $lineBreak,
-                'MAIL_FROM_ADDRESS=' . '"' . str_replace(' ', '-', $request->mail_from_address) . '"' . $lineBreak,
+                'MAIL_ENCRYPTION=' . $request->mail_encryption . $lineBreak,
+                'MAIL_FROM_ADDRESS=' . '"' . $request->mail_from_address . '"' . $lineBreak,
             ], $envContent);
 
             File::put(base_path('.env'), $envContent);

@@ -33,9 +33,9 @@ class StripeController extends Controller {
      */
     public function update(Request $request): RedirectResponse {
         $request->validate([
-            'stripe_key'            => 'nullable|string',
-            'stripe_secret'         => 'nullable|string',
-            'stripe_webhook_secret' => 'nullable|string'
+            'stripe_key'            => 'nullable|string|regex:/^[\S]*$/',
+            'stripe_secret'         => 'nullable|string|regex:/^[\S]*$/',
+            'stripe_webhook_secret' => 'nullable|string|regex:/^[\S]*$/'
         ]);
 
         try {

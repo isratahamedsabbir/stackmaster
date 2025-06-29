@@ -25,7 +25,6 @@
                 </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
-                        <i class="fa-solid fa-list side-menu__icon"></i>
                         <i class="fa-solid fa-layer-group side-menu__icon"></i>
                         <span class="side-menu__label">Category</span>
                     </a>
@@ -105,7 +104,7 @@
                         <span class="side-menu__label">Chat</span>
                     </a>
                 </li>
-                <li class="slide">
+                <li class="sliden {{ env('ACCESS') === false ? 'd-none' : '' }}">
                     <a class="side-menu__item {{  request()->routeIs('admin.users.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32">
                             <rect width="416" height="416" rx="48" ry="48" />

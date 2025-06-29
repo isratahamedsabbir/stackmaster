@@ -24,8 +24,8 @@
 
 
             <div class="row">
-                <div class="col-12">
-                    <div class="card box-shadow-0">
+                <div class="col-md-12">
+                    <div class="card box-shadow-0 bg-blue-100">
                         <div class="card-body">
 
                             {{-- MAIL SEND --}}
@@ -81,7 +81,7 @@
                                 <div class="col-md-9 d-flex align-items-center" style="padding-left: 0px;">
                                     <div class="d-flex align-items-center" style="height: 38px;">
                                         <input type="number"
-                                            class="form-control @error('pagination') is-invalid @enderror"
+                                            class="@error('pagination') is-invalid @enderror"
                                             id="pagination" name="pagination"
                                             min="1" max="100"
                                             value="{{ $settings['pagination'] }}"
@@ -120,6 +120,24 @@
                                             name="debug"
                                             {{ env('APP_DEBUG') === true ? 'checked' : '' }}
                                             data-url="{{ route('admin.setting.other.debug') }}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- ACCESS --}}
+                            <div class="row mb-4">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <label for="access" class="col-form-label fw-bold mb-0">Access</label>
+                                </div>
+                                <div class="col-md-9 d-flex align-items-center">
+                                    <div class="form-check form-switch m-0">
+                                        <input class="form-check-input @error('access') is-invalid @enderror"
+                                            type="checkbox"
+                                            value="{{ env('ACCESS') }}"
+                                            id="access"
+                                            name="access"
+                                            {{ env('ACCESS') === true ? 'checked' : '' }}
+                                            data-url="{{ route('admin.setting.other.access') }}" />
                                     </div>
                                 </div>
                             </div>
@@ -197,6 +215,23 @@
         });
 
         $("#debug").on("change", function() {
+            NProgress.start();
+            $.ajax({
+                url: $(this).data('url'),
+                type: "GET",
+                success: function(response) {
+                    NProgress.done();
+                    if (response.status === 't-success') {
+                        toastr.success(response.message);
+                        window.location.reload();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                }
+            });
+        });
+
+        $("#access").on("change", function() {
             NProgress.start();
             $.ajax({
                 url: $(this).data('url'),
