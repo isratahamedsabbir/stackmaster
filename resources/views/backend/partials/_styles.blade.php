@@ -62,3 +62,5 @@
         z-index: 1000 !important;
     }
 </style>
+
+@include('backend.partials._custom-style')

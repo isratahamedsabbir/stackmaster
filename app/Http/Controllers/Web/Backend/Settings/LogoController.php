@@ -34,7 +34,7 @@ class LogoController extends Controller
         $validatedData = $request->validate([
             'logo_width'     => 'nullable|numeric',
             'logo_height'    => 'nullable|numeric',
-            'logo'           => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo'           => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         try {

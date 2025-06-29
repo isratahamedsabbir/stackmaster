@@ -86,9 +86,9 @@ class ProjectController extends Controller
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
             'title'         => 'nullable|max:255',
-            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
-            'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',
+            'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:5120',
             'description'   => 'nullable|string',
             'credintials'   => 'nullable|string',
             'technologies'  => 'nullable|string',
@@ -182,9 +182,9 @@ class ProjectController extends Controller
         $validate = Validator::make($request->all(), [
             'name'          => 'required|max:255',
             'title'         => 'nullable|max:255',
-            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'thumbnail'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10248',
-            'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:2048',
+            'file'          => 'nullable|file|mimes:pdf,doc,docx,txt,zip,rar,7z|max:5120',
             'description'   => 'nullable|string',
             'technologies'  => 'nullable|string',
             'credintials'   => 'nullable|string',

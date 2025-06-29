@@ -95,11 +95,11 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'title'             => 'required|max:250',
             'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'category_id'       => 'required|exists:categories,id',
             'subcategory_id'    => 'required|exists:subcategories,id',
             'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         if ($validator->fails()) {
@@ -173,11 +173,11 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'title'             => 'required|max:250',
             'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'category_id'       => 'required|exists:categories,id',
             'subcategory_id'    => 'required|exists:subcategories,id',
             'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         if ($validator->fails()) {

@@ -25,7 +25,7 @@ class ImageController extends Controller
         $validator = Validator::make($request->all(), [
             'post_id'        => 'required|exists:posts,id',
             'images'         => 'required|array|max:3',
-            'images.*'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*'       => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         if ($validator->fails()) {

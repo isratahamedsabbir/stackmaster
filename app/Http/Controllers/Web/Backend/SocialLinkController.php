@@ -78,7 +78,7 @@ class SocialLinkController extends Controller
             'sn'    => 'required|unique:social_links,sn',
             'name'  => 'required|string|max:50',
             'url'   => 'required|string|max:255',
-            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         try {
@@ -124,7 +124,7 @@ class SocialLinkController extends Controller
             'sn'    => 'required',
             'name'  => 'required|string|max:50',
             'url'   => 'required|string|max:255',
-            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'icon'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         try {

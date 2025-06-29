@@ -42,8 +42,8 @@ class SettingController extends Controller
             'keywords'       => 'nullable|string|max:255',
             'author'         => 'nullable|string|max:100',
             'address'        => 'nullable|string|max:255',
-            'favicon'        => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
-            'thumbnail'      => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
+            'favicon'        => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
+            'thumbnail'      => 'nullable|image|mimes:png,jpg,jpeg,webp|max:5120',
         ]);
 
         try {

@@ -70,7 +70,7 @@ class TypeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'             => 'required|max:50',
-            'icon'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'icon'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
         ]);
 
         if ($validator->fails()) {
@@ -118,7 +118,7 @@ class TypeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'             => 'required|max:50',
-            'icon'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'icon'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
         ]);
 
         if ($validator->fails()) {

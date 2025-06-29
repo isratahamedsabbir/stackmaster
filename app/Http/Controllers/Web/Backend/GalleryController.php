@@ -42,7 +42,7 @@ class GalleryController extends Controller
         // Validation (optional but recommended)
         $request->validate([
             'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         $files = $request->file('images');
