@@ -28,7 +28,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+                                    <form class="form form-horizontal" action="{{ route('admin.users.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <div class="mb-3">
@@ -63,7 +63,7 @@
                                         </div>
 
 
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="submit btn btn-primary">Submit</button>
                                     </form>
                                 </div>
                             </div>

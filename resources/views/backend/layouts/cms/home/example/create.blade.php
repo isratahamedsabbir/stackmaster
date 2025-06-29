@@ -34,7 +34,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form method="POST" action="{{ route($url.'.store') }}" enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="POST" action="{{ route($url.'.store') }}" enctype="multipart/form-data">
                                         @csrf
 
                                         <div class="row">
@@ -110,7 +110,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
 
                                         <div class="row mt-4">
                                             <div class="col-md-12 text-center">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
                                         </div>
 

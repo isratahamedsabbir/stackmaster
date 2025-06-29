@@ -50,9 +50,9 @@ $settings = \App\Models\Setting::first();
 
 <body class="ltr login-img" style="background-image: url('default/bg.jpg')">
 
-    @include('backend.partials.switcher')
+    @include('backend.partials._switcher')
 
-    @include('backend.partials.loader')
+    @include('backend.partials._loader')
 
     <!-- Switcher Icon-->
     <span class="demo-icon">

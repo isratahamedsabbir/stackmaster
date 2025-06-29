@@ -34,7 +34,7 @@
                 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card box-shadow-0">
                         <div class="card-body">
-                            <form method="post" action="{{ route('admin.setting.google.map.update') }}" enctype="multipart/form-data">
+                            <form class="form form-horizontal" method="post" action="{{ route('admin.setting.google.map.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row mb-4">
@@ -59,7 +59,7 @@
                                 <div class="row justify-content-end">
                                     <div class="col-sm-9">
                                         <div>
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="submit btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>

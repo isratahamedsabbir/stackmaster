@@ -27,7 +27,7 @@
                 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card box-shadow-0">
                         <div class="card-body">
-                            <form class="form-horizontal" method="post" action="{{ route('admin.setting.general.update') }}" enctype="multipart/form-data">
+                            <form class="form form-horizontal" method="post" action="{{ route('admin.setting.general.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
 
@@ -147,7 +147,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button class="btn btn-primary" type="submit">Update</button>
+                                        <button class="submit btn btn-primary" type="submit">Update</button>
                                     </div>
                                 </div>
                             </form>

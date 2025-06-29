@@ -29,7 +29,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form action="{{ route('admin.permissions.update', $permission->id) }}" method="POST">
+                                    <form class="form form-horizontal" action="{{ route('admin.permissions.update', $permission->id) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
 
@@ -52,7 +52,7 @@
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <button type="submit" class="submit btn btn-primary">Update</button>
                                     </form>
                                 </div>
                             </div>

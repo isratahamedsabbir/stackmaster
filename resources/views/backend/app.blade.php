@@ -20,30 +20,30 @@
 
     @vite(['resources/js/app.js'])
     
-    @include('backend.partials.styles')
+    @include('backend.partials._styles')
     
     
 </head>
 
 <body class="ltr app sidebar-mini">
-    @include('backend.partials.switcher')
+    @include('backend.partials._switcher')
 
-    @include('backend.partials.loader')
+    @include('backend.partials._loader')
 
     <!-- PAGE -->
     <div class="page">
         <div class="page-main">
-            @include('backend.partials.header')
-            @include('backend.partials.sidebar')
+            @include('backend.partials._header')
+            @include('backend.partials._sidebar')
 
             @yield('content')
         </div>
 
-        @include('backend.partials.footer')
+        @include('backend.partials._footer')
 
     </div>
     <!-- page -->
-    @include('backend.partials.scripts')
+    @include('backend.partials._scripts')
     
 </body>
 

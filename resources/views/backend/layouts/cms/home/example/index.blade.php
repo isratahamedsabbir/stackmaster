@@ -44,7 +44,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
                             @endif
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route($url.'.content') }}" enctype="multipart/form-data">
+                            <form class="form form-horizontal" method="POST" action="{{ route($url.'.content') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -117,7 +117,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
 
                                 <div class="row mt-4">
                                     <div class="col-md-12 text-center">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                        <button class="submit btn btn-primary" type="submit">Submit</button>
                                     </div>
                                 </div>
 

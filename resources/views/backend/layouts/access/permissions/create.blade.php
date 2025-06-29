@@ -29,7 +29,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form action="{{ route('admin.permissions.store') }}" method="POST">
+                                    <form class="form form-horizontal" action="{{ route('admin.permissions.store') }}" method="POST">
                                         @csrf
 
                                         <div class="mb-3">
@@ -51,7 +51,7 @@
                                             @enderror
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary">Create</button>
+                                        <button type="submit" class="submit btn btn-primary">Create</button>
                                     </form>
                                 </div>
                             </div>

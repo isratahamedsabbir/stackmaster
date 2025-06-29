@@ -28,7 +28,7 @@
                     <h2 class="card-header">Google Settings</h2>
                     <div class="card box-shadow-0">
                         <div class="card-body">
-                            <form method="post" action="{{ route('admin.setting.social.update') }}" enctype="multipart/form-data">
+                            <form class="form form-horizontal" method="post" action="{{ route('admin.setting.social.update') }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PATCH')
 
@@ -71,7 +71,7 @@
                                 <div class="row justify-content-end">
                                     <div class="col-sm-9">
                                         <div>
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="submit btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </div>
                                 </div>

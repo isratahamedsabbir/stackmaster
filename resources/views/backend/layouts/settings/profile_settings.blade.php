@@ -66,7 +66,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form class="form-horizontal" method="post" action="{{ route('admin.setting.profile.update') }}">
+                                    <form class="form form-horizontal" method="post" action="{{ route('admin.setting.profile.update') }}">
                                         @csrf
                                         @method('PUT')
                                         <div class="row mb-4">
@@ -89,7 +89,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
                                         </div>
                                     </form>
@@ -100,7 +100,7 @@
                         <div class="tab-pane" id="updatePassword">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form class="form-horizontal" method="post" action="{{ route('admin.setting.profile.update.Password') }}">
+                                    <form class="form form-horizontal" method="post" action="{{ route('admin.setting.profile.update.Password') }}">
                                         @csrf
                                         @method('PUT')
                                         <div class="row mb-4">
@@ -135,7 +135,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
                                         </div>
                                     </form>

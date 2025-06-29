@@ -112,17 +112,12 @@
     };
 </script>
 
-@include('backend.partials.toster')
+@include('backend.partials._toster')
 
-@include('backend.partials.ajax')
-@include('backend.partials.notification')
+@include('backend.partials._ajax')
 
-<script>
-    $('.summernote').summernote({
-        placeholder: 'text',
-        tabsize: 2,
-        height: 100
-    });
-</script>
+@include('backend.partials._notification')
+
+@include('backend.partials._custom-script')
 
 @stack('scripts')

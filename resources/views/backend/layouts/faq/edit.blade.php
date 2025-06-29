@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="card-body border-0">
-                            <form class="form-horizontal" method="POST" action="{{ route('admin.faq.update', $faq->id) }}">
+                            <form class="form form-horizontal" method="POST" action="{{ route('admin.faq.update', $faq->id) }}">
                                 @csrf
                                 <div class="row mb-4">
 
@@ -77,7 +77,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                        <button class="submit btn btn-primary" type="submit">Submit</button>
                                     </div>
 
                                 </div>

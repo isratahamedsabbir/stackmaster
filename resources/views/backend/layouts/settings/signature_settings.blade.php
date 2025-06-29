@@ -34,7 +34,7 @@
                 <div class="col-lg-7">
                     <div class="card box-shadow-0">
                         <div class="card-body">
-                            <form method="post" action="{{ route('admin.setting.signature.update') }}" enctype="multipart/form-data" id="signatureForm">
+                            <form class="form form-horizontal" method="post" action="{{ route('admin.setting.signature.update') }}" enctype="multipart/form-data" id="signatureForm">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row mb-4">
@@ -57,7 +57,7 @@
                                     <div class="row justify-content-end">
                                         <div class="col-sm-12">
                                             <div>
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
                                         </div>
                                     </div>

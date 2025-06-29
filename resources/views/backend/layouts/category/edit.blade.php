@@ -28,7 +28,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-body border-0">
-                                    <form class="form-horizontal" method="post" action="{{ route('admin.category.update', $category->id) }}" enctype="multipart/form-data">
+                                    <form class="form form-horizontal" method="post" action="{{ route('admin.category.update', $category->id) }}" enctype="multipart/form-data">
                                         @csrf
                                         @method('POST')
                                         <div class="row mb-4">
@@ -50,7 +50,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
 
                                         </div>
