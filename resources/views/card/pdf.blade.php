@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Membership Card | Citizens Movement for Change</title>
@@ -20,7 +21,7 @@
       background-color: white;
       border: 1px solid #ccc;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
       box-sizing: border-box;
       display: flex;
@@ -59,7 +60,8 @@
       width: 80px;
       height: 40px;
       background-color: white;
-      border-radius: 50% ; /* elliptical shape */
+      border-radius: 50%;
+      /* elliptical shape */
       z-index: 2;
       transform: rotate(135deg);
     }
@@ -140,7 +142,8 @@
       position: relative;
     }
 
-    .info-left, .info-right {
+    .info-left,
+    .info-right {
       width: 48%;
     }
 
@@ -256,6 +259,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- FRONT SIDE -->
@@ -301,7 +305,7 @@
           <div class="value">{{ ucfirst($user->profile->gender) }}</div>
         </div>
         <div class="qr">
-		  {{ $qrCode }}
+          <img src="data:image/png;base64,{{ $qrCode }}" alt="CMC Logo" class="header-logo" />
         </div>
       </div>
     </div>
@@ -332,4 +336,5 @@
   </div>
 
 </body>
+
 </html>
