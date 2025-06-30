@@ -45,6 +45,7 @@
                                         <tr>
                                             <th>SN</th>
                                             <th>Name</th>
+                                            <th>Slug</th>
                                             <th>Roles</th>
                                             <th>Guard</th>
                                             <th>Created</th>
@@ -58,6 +59,7 @@
                                         <tr>
                                             <td>{{ $sn++ }}</td>
                                             <td>{{ $user->name }}</td>
+                                            <td>{{ $user->slug }}</td>
                                             <td>
                                                 @forelse ($user->roles as $role)
                                                 <span class="badge rounded-pill bg-primary">{{ $role->name }}</span>
@@ -75,11 +77,17 @@
                                             <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d-m-Y') }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group" role="group" aria-label="Basic example">
+
                                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
                                                         <i class="mdi mdi-pencil"></i>
                                                     </a>
+
                                                     <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info">
                                                         <i class="mdi mdi-eye"></i>
+                                                    </a>
+                                                    
+                                                    <a href="{{ route('admin.users.card', $user->slug) }}" class="btn btn-success">
+                                                        <i class="mdi mdi-printer"></i>
                                                     </a>
 
                                                     @can('web_update', $user)
@@ -128,8 +136,6 @@
 </div>
 <!-- CONTAINER CLOSED -->
 @endsection
-
-
 
 @push('scripts')
 

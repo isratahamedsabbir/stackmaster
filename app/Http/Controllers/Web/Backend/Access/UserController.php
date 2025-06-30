@@ -7,26 +7,25 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserController extends Controller
 {
 
     public function index(Request $request)
     {
-        $users = User::with('roles')->orderBy('id', 'desc')->paginate(25);;
+        $user = Auth::guard('web')->user();
+        $users = User::where('id', '!=', $user->id)->with('roles')->orderBy('id', 'desc')->paginate(25);;
         return view('backend.layouts.access.users.index', compact('users'));
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        return view('backend.layouts.access.users.create', [
-            'roles' => Role::all()
-        ]);
+        return view('backend.layouts.access.users.create', ['roles' => Role::all()]);
     }
 
     public function store(Request $request)
@@ -62,7 +61,7 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with(['profile'])->find($id);
         return view('backend.layouts.access.users.show', compact('user'));
     }
 
@@ -127,6 +126,31 @@ class UserController extends Controller
         $user->save();
         session()->put('t-success', 'Status updated successfully');
         return view('backend.layouts.access.users.show', compact('user'));
+    }
+
+    public function card($slug)
+    {
+
+        $user = User::where('slug', $slug)->first();
+        $logoBase64 = base64_encode(file_get_contents(public_path('default/logo.png')));
+        $whitelogoBase64 = base64_encode(file_get_contents(public_path('default/logo.png')));
+        $backLogoBase64 = base64_encode(file_get_contents(public_path('default/logo.png')));
+
+        $avatarPath = public_path(
+            $user->avatar && file_exists(public_path($user->avatar)) ? $user->avatar : 'default/profile.jpg'
+        );
+
+        $avatarBase64 = base64_encode(file_get_contents($avatarPath));
+
+        //$qrCode = base64_encode(QrCode::size(90)->generate(route('card.check', $user->slug)));
+        $qrCode = QrCode::size(90)->generate($user->slug);
+
+        /* $pdf = Pdf::loadView('card.pdf', compact('user', 'logoBase64', 'avatarBase64', 'qrCode', 'backLogoBase64'))->setPaper('a4', 'portrait');
+
+        return $pdf->stream();  */
+
+        return view('card.web', compact('user', 'logoBase64', 'whitelogoBase64', 'avatarBase64', 'qrCode', 'backLogoBase64'));
+
     }
     
 }

@@ -40,6 +40,13 @@ class UserSeeder extends Seeder
                 ['id' => 4, 'name' => 'Customer', 'slug' => 'customer', 'email' => 'customer@customer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now()]
             ]);
 
+            DB::table('profiles')->insert([
+                ['id' => 1, 'user_id' => 1, 'dob' => '2019-01-01', 'gender' => 'male'],
+                ['id' => 2, 'user_id' => 2, 'dob' => '2019-01-01', 'gender' => 'male'],
+                ['id' => 3, 'user_id' => 3, 'dob' => '2019-01-01', 'gender' => 'male'],
+                ['id' => 4, 'user_id' => 4, 'dob' => '2019-01-01', 'gender' => 'male']
+            ]);
+
             DB::table('role_has_permissions')->insert([
                 ['permission_id' => 1, 'role_id' => 1],
                 ['permission_id' => 2, 'role_id' => 1],

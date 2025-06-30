@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Backend\Access;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
@@ -58,7 +59,7 @@ class PermissionController extends Controller
             $permission->guard_name = $request->guard_name;
             $permission->save();
             return redirect()->back()->with('t-success', 'Permission updated t-successfully');
-        }catch (\Exception $e){
+        }catch (Exception $e){
             return redirect()->back()->with('t-error', $e->getMessage());
         }
     }

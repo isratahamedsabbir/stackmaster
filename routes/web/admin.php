@@ -216,6 +216,7 @@ Route::controller(UserController::class)->prefix('users')->name('users.')->group
     Route::get('/status/{id}', 'status')->name('status');
     Route::get('/new', 'new')->name('new.index');
     Route::get('/ajax/new/count', 'newCount')->name('ajax.new.count');
+    Route::get('/card/{slug}', 'card')->name('card');
 });
 Route::resource('permissions', PermissionController::class);
 Route::resource('roles', RoleController::class);

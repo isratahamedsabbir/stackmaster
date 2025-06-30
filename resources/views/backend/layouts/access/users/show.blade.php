@@ -79,6 +79,25 @@
                 </div><!-- COL END -->
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card product-sales-main">
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>Date of Birth</th>
+                                    <td>{{ $user->profile->dob ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gender</th>
+                                    <td>{{ $user->profile->gender ?? 'N/A' }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div><!-- COL END -->
+            </div>
+
         </div>
     </div>
 </div>
