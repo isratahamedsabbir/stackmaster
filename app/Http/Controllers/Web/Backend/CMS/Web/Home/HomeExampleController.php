@@ -13,29 +13,34 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\CmsRequest;
 use App\Services\CmsService;
+use Illuminate\Support\Str;
 
 class HomeExampleController extends Controller
 {
     protected $cmsService;
 
-    public $name = "home";
-    public $section = "example";
-    public $page = PageEnum::HOME;
-    public $item = SectionEnum::HOME_EXAMPLE;
-    public $items = SectionEnum::HOME_EXAMPLES;
-    public $count = 4;
+    public $page;
+    public $section;
+    public $sections;
+    public $count;
 
     public function __construct(CmsService $cmsService)
     {
         $this->cmsService = $cmsService;
+        
+        $this->page = PageEnum::HOME;
+        $this->section = SectionEnum::EXAMPLE;
+        $this->sections = SectionEnum::EXAMPLES;
+        $this->count = 3;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
+
         if ($request->ajax()) {
-            $data = CMS::where('page', $this->page)->where('section', $this->items)->latest()->get();
+            $data = CMS::where('page', $this->page)->where('section', $this->sections)->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('image', function ($data) {
@@ -78,8 +83,8 @@ class HomeExampleController extends Controller
                 ->make();
         }
 
-        $data = CMS::where('page', $this->page)->where('section', $this->item)->latest()->first();
-        return view("backend.layouts.cms.{$this->name}.{$this->section}.index", ["data" => $data, "name" => $this->name, "section" => $this->section]);
+        $data = CMS::where('page', $this->page)->where('section', $this->section)->latest()->first();
+        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.index", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
     }
 
     /**
@@ -87,7 +92,7 @@ class HomeExampleController extends Controller
      */
     public function create()
     {
-        return view("backend.layouts.cms.{$this->name}.{$this->section}.create", ["name" => $this->name, "section" => $this->section]);
+        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.create", ["page" => $this->page->value, "section" => $this->section->value]);
     }
 
     /**
@@ -100,7 +105,7 @@ class HomeExampleController extends Controller
         try {
             // Add the page and section to validated data
             $validatedData['page'] = $this->page;
-            $validatedData['section'] = $this->items;
+            $validatedData['section'] = $this->sections;
 
             $counting = CMS::where('page', $validatedData['page'])->where('section', $validatedData['section'])->count();
             if ($counting >= $this->count) {
@@ -108,12 +113,16 @@ class HomeExampleController extends Controller
             }
 
             if ($request->hasFile('bg')) {
-                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section, time() . '_' . getFileName($request->file('bg')));
+                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section->value, time() . '_' . getFileName($request->file('bg')));
             }
 
             if ($request->hasFile('image')) {
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section, time() . '_' . getFileName($request->file('image')));
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section->value, time() . '_' . getFileName($request->file('image')));
             }
+
+            do {
+                $validatedData['slug'] = 'slug_'.Str::random(8);
+            } while (CMS::where('slug', $validatedData['slug'])->exists());
 
             // Create or update the CMS entry
             if ($request->has('rating')) {
@@ -124,7 +133,7 @@ class HomeExampleController extends Controller
             // Create or update the CMS entry
             CMS::create($validatedData);
 
-            return redirect()->route("admin.cms.{$this->name}.{$this->section}.index")->with('t-success', 'Created successfully');
+            return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Created successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('t-error', $e->getMessage());
         }
@@ -136,7 +145,7 @@ class HomeExampleController extends Controller
     public function show($id)
     {
         $data = CMS::where('id', $id)->first();
-        return view("backend.layouts.cms.{$this->name}.{$this->section}.show", ["data" => $data, "name" => $this->name, "section" => $this->section]);
+        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.show", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
     }
 
     /**
@@ -145,7 +154,7 @@ class HomeExampleController extends Controller
     public function edit(string $id)
     {
         $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.{$this->name}.{$this->section}.update", ["data" => $data, "name" => $this->name, "section" => $this->section]);
+        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.update", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
     }
 
     /**
@@ -161,20 +170,20 @@ class HomeExampleController extends Controller
 
             // Update the page and section if necessary
             $validatedData['page'] = $this->page;
-            $validatedData['section'] = $this->items;
+            $validatedData['section'] = $this->sections;
 
             if ($request->hasFile('bg')) {
                 if ($section->bg && file_exists(public_path($section->bg))) {
                     Helper::fileDelete(public_path($section->bg));
                 }
-                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section, time() . '_' . getFileName($request->file('bg')));
+                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section->value, time() . '_' . getFileName($request->file('bg')));
             }
 
             if ($request->hasFile('image')) {
                 if ($section->image && file_exists(public_path($section->image))) {
                     Helper::fileDelete(public_path($section->image));
                 }
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section, time() . '_' . getFileName($request->file('image')));
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section->value, time() . '_' . getFileName($request->file('image')));
             }
 
             // Update the meta data
@@ -186,7 +195,7 @@ class HomeExampleController extends Controller
             // Update the CMS entry with the validated data
             $section->update($validatedData);
 
-            return redirect()->route("admin.cms.{$this->name}.{$this->section}.index")->with('t-success', 'Updated successfully');
+            return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Updated successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('t-error', $e->getMessage());
         }
@@ -234,21 +243,21 @@ class HomeExampleController extends Controller
         $validatedData = $request->validated();
         try {
             $validatedData['page'] = $this->page;
-            $validatedData['section'] = $this->item;
-            $section = CMS::where('page', $this->page)->where('section', $this->item)->first();
+            $validatedData['section'] = $this->section;
+            $section = CMS::where('page', $this->page)->where('section', $this->section)->first();
 
             if ($request->hasFile('bg')) {
                 if ($section && $section->bg && file_exists(public_path($section->bg))) {
                     Helper::fileDelete(public_path($section->bg));
                 }
-                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section, time() . '_' . getFileName($request->file('bg')));
+                $validatedData['bg'] = Helper::fileUpload($request->file('bg'), $this->section->value, time() . '_' . getFileName($request->file('bg')));
             }
 
             if ($request->hasFile('image')) {
                 if ($section && $section->image && file_exists(public_path($section->image))) {
                     Helper::fileDelete(public_path($section->image));
                 }
-                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section, time() . '_' . getFileName($request->file('image')));
+                $validatedData['image'] = Helper::fileUpload($request->file('image'), $this->section->value, time() . '_' . getFileName($request->file('image')));
             }
 
             if ($request->has('rating')) {
@@ -259,10 +268,16 @@ class HomeExampleController extends Controller
             if ($section) {
                 CMS::where('page', $validatedData['page'])->where('section', $validatedData['section'])->update($validatedData);
             } else {
+                
+                // Generate a unique slug
+                do {
+                    $validatedData['slug'] = 'slug_'.Str::random(8);
+                } while (CMS::where('slug', $validatedData['slug'])->exists());
+
                 CMS::create($validatedData);
             }
 
-            return redirect()->route("admin.cms.{$this->name}.{$this->section}.index")->with('t-success', 'Updated successfully');
+            return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Updated successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('t-error', $e->getMessage());
         }

@@ -2,10 +2,10 @@
 use \Illuminate\Support\Str;
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
-$cms_example    = $cms['home']->firstWhere('section', SectionEnum::HOME_EXAMPLE);
-$cms_examples   = $cms['home']->where('section', SectionEnum::HOME_EXAMPLES)->values();
-$cms_intro      = $cms['home']->firstWhere('section', SectionEnum::HOME_INTRO);
-$cms_about      = $cms['home']->firstWhere('section', SectionEnum::HOME_ABOUT);
+$cms_example    = $cms['home']->firstWhere('section', SectionEnum::EXAMPLE);
+$cms_examples   = $cms['home']->where('section', SectionEnum::EXAMPLES)->values();
+$cms_intro      = $cms['home']->firstWhere('section', SectionEnum::INTRO);
+$cms_about      = $cms['home']->firstWhere('section', SectionEnum::ABOUT);
 @endphp
 
 @extends('frontend.app', ['title' => 'landing page'])

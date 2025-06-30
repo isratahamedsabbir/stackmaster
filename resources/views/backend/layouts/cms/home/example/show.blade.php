@@ -1,8 +1,8 @@
 @php
-$url = 'admin.cms.'.$name.'.'.$section;
+$url = 'admin.cms.'.$page.'.'.$section;
 @endphp
 
-@extends('backend.app', ['title' => $name . ' - ' . $section])
+@extends('backend.app', ['title' => $page . ' - ' . $section])
 
 @section('content')
 
@@ -15,12 +15,12 @@ $url = 'admin.cms.'.$name.'.'.$section;
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">CMS : {{ ucfirst($name ?? '') }} Page {{ ucfirst($section ?? '') }} Section.</h1>
+                    <h1 class="page-title">CMS : {{ ucfirst($page ?? '') }} Page {{ ucfirst($section ?? '') }} Section.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">{{ ucfirst($name ?? '') }}</li>
+                        <li class="breadcrumb-item">{{ ucfirst($page ?? '') }}</li>
                         <li class="breadcrumb-item">{{ ucfirst($section ?? '') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">Show</li>
                     </ol>
@@ -31,7 +31,7 @@ $url = 'admin.cms.'.$name.'.'.$section;
                 <div class="col-md-12">
                     <div class="card post-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">Content {{ ucfirst($name ?? '') }}</h3>
+                            <h3 class="card-title mb-0">Content {{ ucfirst($page ?? '') }}</h3>
                             <div class="card-options">
                                 <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
                             </div>
@@ -41,49 +41,49 @@ $url = 'admin.cms.'.$name.'.'.$section;
                                 <tr>
                                     <th>Page</th>
                                     <td>
-                                        {{ Str::limit($data->page ?? '', 20) }}
+                                        {{ Str::limit($data->page ?? 'N/A', 20) }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Section</th>
                                     <td>
-                                        {{ Str::limit($data->section ?? '', 20) }}
+                                        {{ Str::limit($data->section ?? 'N/A', 20) }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Name</th>
                                     <td>
-                                        {{ Str::limit($data->name ?? '', 20) }}
+                                        {{ Str::limit($data->name ?? 'N/A', 20) }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Slug</th>
                                     <td>
-                                        {{ Str::limit($data->slug ?? '', 20) }}
+                                        {{ Str::limit($data->slug ?? 'N/A', 20) }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Title</th>
                                     <td>
-                                        {{ $data->title ?? '' }}
+                                        {{ $data->title ?? 'N/A' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Sub Title</th>
                                     <td>
-                                        {{ $data->sub_title ?? '' }}
+                                        {{ $data->sub_title ?? 'N/A' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Description</th>
                                     <td>
-                                        {!! $data->description ?? '' !!}
+                                        {!! $data->description ?? 'N/A' !!}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Sub Description</th>
                                     <td>
-                                        {{ $data->sub_description ?? '' }}
+                                        {{ $data->sub_description ?? 'N/A' }}
                                     </td>
                                 </tr>
                                 <tr>

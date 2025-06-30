@@ -1,5 +1,5 @@
 @php
-$url = 'admin.cms.'.$name.'.'.$section;
+$url = 'admin.cms.'.$page.'.'.$section;
 @endphp
 
 @extends('backend.app', ['title' => 'Create Banner'])
@@ -15,12 +15,12 @@ $url = 'admin.cms.'.$name.'.'.$section;
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">CMS : {{ ucfirst($name ?? '') }} Page {{ ucfirst($section ?? '') }} Section Create.</h1>
+                    <h1 class="page-title">CMS : {{ ucfirst($page ?? '') }} Page {{ ucfirst($section ?? '') }} Section Create.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">{{ ucfirst($name ?? '') }}</li>
+                        <li class="breadcrumb-item">{{ ucfirst($page ?? '') }}</li>
                         <li class="breadcrumb-item">{{ ucfirst($section ?? '') }}</li>
                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                     </ol>

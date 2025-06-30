@@ -183,7 +183,8 @@ Route::prefix('cms')->name('cms.')->group(function () {
     //Home Intro
     Route::prefix('home/intro')->name('home.intro.')->controller(HomeIntroController::class)->group(function () {
         Route::get('/', 'index')->name('index');
-        
+        Route::get('/{id}/show', 'show')->name('show');
+
         Route::put('/content', 'content')->name('content');
         Route::get('/display', 'display')->name('display');
     });

@@ -2,8 +2,8 @@
 use \Illuminate\Support\Str;
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
-$cms_banner = $cms['home']->firstWhere('section', SectionEnum::HOME_BANNER);
-$cms_banners = $cms['home']->where('section', SectionEnum::HOME_BANNERS)->values();
+$cms_banner = $cms['home']->firstWhere('section', SectionEnum::BANNER);
+$cms_banners = $cms['home']->where('section', SectionEnum::BANNERS)->values();
 @endphp
 <section class="{{ isset($cms_banner->is_display) && $cms_banner->is_display == false ? 'd-none' : '' }}">
     <h1 class="text-shadow text-dark">{{ $cms_banner->title ?? 'Album example' }}</h1>
