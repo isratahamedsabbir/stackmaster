@@ -34,6 +34,7 @@
                         <div class="card-body border-0">
                             <div class="form-group">
                                 <input type="file" class="dropify form-control" name="images[]" id="images" multiple />
+                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                             </div>
                         </div>
                     </div>

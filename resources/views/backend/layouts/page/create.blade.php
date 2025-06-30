@@ -43,6 +43,7 @@
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Title:</label>
                                                 <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Title" id="" value="{{ old('title') }}">
+                                                <p class="textTransform">Note: Title will be used as a page title</p>
                                                 @error('title')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

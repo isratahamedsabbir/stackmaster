@@ -95,6 +95,7 @@
                                             <div class="form-group">
                                                 <label for="thumbnail" class="form-label">Thumbnail:</label>
                                                 <input type="file" data-default-file="{{ $product->thumbnail && file_exists(public_path($product->thumbnail)) ? url($product->thumbnail) : url('default/logo.png') }}" class="dropify form-control @error('thumbnail') is-invalid @enderror" name="thumbnail" id="thumbnail">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('thumbnail')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

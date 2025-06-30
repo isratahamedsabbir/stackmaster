@@ -128,6 +128,7 @@
                                                 <input type="file" class="dropify form-control @error('thumbnail') is-invalid @enderror"
                                                     data-default-file="{{ !empty($setting->thumbnail) && file_exists(public_path($setting->thumbnail)) ? asset($setting->thumbnail) : asset('default/logo.png') }}"
                                                     name="thumbnail" id="thumbnail">
+                                                    <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('favicon')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -139,6 +140,7 @@
                                                 <input type="file" class="dropify form-control @error('favicon') is-invalid @enderror"
                                                     data-default-file="{{ !empty($setting->favicon) && file_exists(public_path($setting->favicon)) ? asset($setting->favicon) : asset('default/logo.png') }}"
                                                     name="favicon" id="favicon">
+                                                    <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('favicon')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

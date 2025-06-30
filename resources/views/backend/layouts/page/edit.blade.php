@@ -44,6 +44,7 @@
                                             <div class="form-group">
                                                 <label for="title" class="form-label">Title:</label>
                                                 <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Title" id="" value="{{ $page->title }}">
+                                                <p class="textTransform">Title will be shown on page header</p>
                                                 @error('title')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

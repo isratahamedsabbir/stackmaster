@@ -100,6 +100,7 @@
                                             <div class="form-group">
                                                 <label for="thumbnail" class="form-label">Thumbnail:</label>
                                                 <input type="file" data-default-file="{{ $post->thumbnail && file_exists(public_path($post->thumbnail)) ? url($post->thumbnail) : url('default/logo.png') }}" class="dropify form-control @error('thumbnail') is-invalid @enderror" name="thumbnail" id="thumbnail">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('thumbnail')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -109,6 +110,7 @@
                                             <div class="form-group">
                                                 <label for="images" class="form-label">Images:</label>
                                                 <input type="file" class="dropify form-control @error('images') is-invalid @enderror" data-default-file="{{ url('default/logo.png') }}" name="images[]" id="images" multiple>
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('images')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

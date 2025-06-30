@@ -59,6 +59,7 @@
                                                 <input type="file" class="dropify form-control @error('logo') is-invalid @enderror"
                                                     data-default-file="{{ !empty($setting->logo) && file_exists(public_path($setting->logo)) ? asset($setting->logo) : asset('default/logo.png') }}"
                                                     name="logo" id="logo">
+                                                    <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('logo')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror

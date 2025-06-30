@@ -108,6 +108,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             <input type="file" class="dropify @error('image') is-invalid @enderror" name="image"
                                                 id="image"
                                                 data-default-file="{{ isset($data->image) ? asset($data->image) : '' }}">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                             @error('image')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror

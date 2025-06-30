@@ -59,6 +59,7 @@
                                             <div class="form-group">
                                                 <label for="icon" class="form-label">Icon:</label>
                                                 <input type="file" class="dropify form-control @error('icon') is-invalid @enderror" name="icon" id="icon">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                 @error('icon')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
