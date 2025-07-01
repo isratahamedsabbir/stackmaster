@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <th>Affiliate</th>
-                                    <td><a href="{{ url('affiliate/' . $user->slug) }}">{{ $user->slug }}</a></td>
+                                    <td><button data-clipboard-text="{{ $user->slug ? url('affiliate/' . $user->slug) : 'N/A' }}" class="btn btn-success copy-btn" {{ $user->slug ? '' : 'disabled' }}><i class="fa-regular fa-copy"></i></button></td>
                                 </tr>
                                 <tr>
                                     <th>Created At</th>
@@ -104,5 +104,25 @@
 <!-- CONTAINER CLOSED -->
 @endsection
 @push('scripts')
+<script type="text/javascript">
+    const copyBtns = document.querySelectorAll(".copy-btn");
 
+    if (copyBtns.length > 0) {
+        copyBtns.forEach(copyBtn => {
+            copyBtn.addEventListener("click", async function() {
+                try {
+                    const copyText = this.dataset.clipboardText;
+
+                    // Await the writeText call directly instead of using .then
+                    await navigator.clipboard.writeText(copyText);
+
+                    alert("Copied to clipboard!");
+                } catch (error) {
+                    // Handling errors properly
+                    console.error("Error copying text: ", error);
+                }
+            });
+        });
+    }
+</script>
 @endpush

@@ -5,6 +5,18 @@
   <meta charset="UTF-8">
   <title>Membership Card | Citizens Movement for Change</title>
   <style>
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #printBtn {
+        display: none;
+      }
+
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f3f3f3;
@@ -13,6 +25,7 @@
       align-items: center;
       height: 100vh;
       gap: 40px;
+      position: relative;
     }
 
     .card {
@@ -210,6 +223,7 @@
       color: white;
       padding: 10px;
       margin: 10px 0 5px;
+      -webkit-print-color-adjust: exact;
     }
 
     .notice {
@@ -224,6 +238,7 @@
       padding: 10px;
       border-radius: 6px;
       text-align: center;
+      -webkit-print-color-adjust: exact;
     }
 
     .footer-header {
@@ -257,6 +272,18 @@
       font-style: italic;
       margin-top: 2px;
     }
+
+    #printBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: #0047ab;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -277,8 +304,8 @@
 
     <div class="profile">
       <img src="data:image/jpeg;base64,{{ $avatarBase64 }}" alt="Member Photo" />
-      <div class="name">{{ $user->name }}</div>
-      <div class="role">{{ $user->profile->type }}</div>
+      <div class="name">{{ $user->name ?? 'N/A' }}</div>
+      <div class="role">{{ $user->profile->type ?? 'N/A' }}</div>
     </div>
 
     <div class="info-section">
@@ -305,8 +332,7 @@
           <div class="value">{{ ucfirst($user->profile->gender) }}</div>
         </div>
         <div class="qr">
-        {{ $qrCode }}
-          <!-- <img src="data:image/png;base64,{{ $qrCode }}" alt="CMC Logo" class="header-logo" /> -->
+          {{ $qrCode }}
         </div>
       </div>
     </div>
@@ -335,7 +361,14 @@
       </div>
     </div>
   </div>
-
+  <button type="button" id="printBtn">Print</button>
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("printBtn").addEventListener("click", function() {
+      window.print();
+    });
+  });
+</script>
 
 </html>

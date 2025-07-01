@@ -143,13 +143,13 @@ class UserController extends Controller
         $avatarBase64 = base64_encode(file_get_contents($avatarPath));
 
         //for pdf
-        $qrCode = base64_encode(QrCode::size(90)->generate(route('admin.users.card', $user->slug)));
+        /* $qrCode = base64_encode(QrCode::size(90)->generate(route('admin.users.card', $user->slug)));
         $pdf = Pdf::loadView('card.pdf', compact('user', 'logoBase64', 'whitelogoBase64', 'avatarBase64', 'qrCode', 'backLogoBase64'))->setPaper('a4', 'portrait');
-        return $pdf->stream(); 
+        return $pdf->stream();  */
         
         //for web
-        /*$qrCode = QrCode::size(90)->generate(route('admin.users.card', $user->slug));
-        return view('card.web', compact('user', 'logoBase64', 'whitelogoBase64', 'avatarBase64', 'qrCode', 'backLogoBase64')); */
+        $qrCode = QrCode::size(90)->generate(route('admin.users.card', $user->slug));
+        return view('card.web', compact('user', 'logoBase64', 'whitelogoBase64', 'avatarBase64', 'qrCode', 'backLogoBase64'));
 
     }
     
