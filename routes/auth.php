@@ -11,7 +11,7 @@ use App\Http\Controllers\Web\Auth\RegisteredUserController;
 use App\Http\Controllers\Web\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('check')->group(function () {
+Route::middleware('web-check')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::middleware(['check'])->group(function () {
+Route::middleware(['web-check'])->group(function () {
     Route::get('verify/otp/page', [RegisteredUserController::class, 'otpPage'])->name('verify.otp.page');
     Route::post('verify/otp', [RegisteredUserController::class, 'otpVerify'])->name('verify.otp');
     Route::get('verify/otp/resend/page', [RegisteredUserController::class, 'otpResendPage'])->name('verify.otp.resend.page');

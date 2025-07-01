@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\CustomRedirectMiddleware;
+use App\Http\Middleware\WebCustomRedirectMiddleware;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
 
             $request->session()->regenerate();
             session()->put('t-success', 'Password Confirmed Successfully');
-            return app(CustomRedirectMiddleware::class)->handle($request, function () {});
+            return app(WebCustomRedirectMiddleware::class)->handle($request, function () {});
 
         }else{
             return back()->withErrors([

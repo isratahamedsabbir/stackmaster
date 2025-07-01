@@ -5,7 +5,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthCheckMiddleware
+class WebAuthCheckMiddleware
 {
     public function handle(Request $request, Closure $next)
     {

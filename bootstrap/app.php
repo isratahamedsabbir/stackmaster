@@ -3,12 +3,12 @@
 use App\Helpers\Helper;
 use App\Http\Middleware\ApiAdminMiddleware;
 use App\Http\Middleware\WebAdminMiddleware;
-use App\Http\Middleware\AuthCheckMiddleware;
-use App\Http\Middleware\CustomerMiddleware;
-use App\Http\Middleware\DeveloperMiddleware;
+use App\Http\Middleware\WebAuthCheckMiddleware;
+use App\Http\Middleware\ApiCustomerMiddleware;
+use App\Http\Middleware\WebDeveloperMiddleware;
 use App\Http\Middleware\ApiOtpVerifiedMiddleware;
 use App\Http\Middleware\WebOtpVerifiedMiddleware;
-use App\Http\Middleware\RetailerMiddleware;
+use App\Http\Middleware\ApiRetailerMiddleware;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -32,11 +32,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::middleware(['web'])->prefix('ajax')->name('ajax.')->group(base_path('routes/ajax.php'));
-            Route::middleware(['web', 'developer'])->prefix('developer')->name('developer.')->group(base_path('routes/web-developer.php'));
+            Route::middleware(['web', 'web-developer'])->prefix('developer')->name('developer.')->group(base_path('routes/web-developer.php'));
             Route::middleware(['web', 'web-admin'])->prefix('admin')->name('admin.')->group(base_path('routes/web-admin.php'));
             Route::middleware(['api', 'api-admin'])->prefix('api.admin')->name('api.admin.')->group(base_path('routes/api-admin.php'));
-            Route::middleware(['api', 'retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/api-retailer.php'));
-            Route::middleware(['api', 'otp', 'customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/api-customer.php'));
+            Route::middleware(['api', 'api-retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/api-retailer.php'));
+            Route::middleware(['api', 'otp', 'api-customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/api-customer.php'));
             Route::middleware(['api'])->group(base_path('routes/api-stripe.php'));
         }
     )
@@ -46,14 +46,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'developer'             => DeveloperMiddleware::class,
+            'web-developer'         => WebDeveloperMiddleware::class,
             'web-admin'             => WebAdminMiddleware::class,
             'api-admin'             => ApiAdminMiddleware::class,
-            'customer'              => CustomerMiddleware::class,
-            'retailer'              => RetailerMiddleware::class,
+            'api-customer'          => ApiCustomerMiddleware::class,
+            'api-retailer'          => ApiRetailerMiddleware::class,
             'api-otp'               => ApiOtpVerifiedMiddleware::class,
             'web-otp'               => WebOtpVerifiedMiddleware::class,
-            'check'                 => AuthCheckMiddleware::class,
+            'web-check'             => WebAuthCheckMiddleware::class,
             'role'                  => RoleMiddleware::class,
             'permission'            => PermissionMiddleware::class,
             'role_or_permission'    => RoleOrPermissionMiddleware::class
