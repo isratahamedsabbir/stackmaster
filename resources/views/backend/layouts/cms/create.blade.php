@@ -51,95 +51,51 @@ $url = 'admin.cms.'.$page.'.'.$section;
 
                                         <div class="row {{ in_array('title', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="title" class="form-label">Title:</label>
-                                                    <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" placeholder="Enter here title" id="title" value="{{ old('title') }}">
-                                                    @error('title')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.text name="title" label="Title" placeholder="Enter here title" :value="old('title') ?? ''" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row {{ in_array('sub_title', $components) ? '' : 'd-none' }}">
+                                            <div class="col-md-12">
+                                                <x-form.text name="sub_title" label="Sub Title" placeholder="Enter here sub title" :value="old('sub_title') ?? ''" />
                                             </div>
                                         </div>
 
                                         <div class="row {{ in_array('description', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="description" class="form-label">Description:</label>
-                                                    <textarea class="summernote form-control @error('description') is-invalid @enderror" name="description" id="description" placeholder="Enter here description" rows="3">{{ old('description') }}</textarea>
-                                                    @error('description')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.textarea name="description" label="Description" placeholder="Enter here description" :value="old('description') ?? ''" />
                                             </div>
                                         </div>
 
                                         <div class="row {{ in_array('sub_description', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="sub_description" class="form-label">Sub Description:</label>
-                                                    <textarea class="summernote form-control @error('sub_description') is-invalid @enderror" name="sub_description" id="sub_description" placeholder="Enter here sub description" rows="3">{{ old('sub_description') }}</textarea>
-                                                    @error('sub_description')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.textarea name="sub_description" label="Sub Description" placeholder="Enter here sub description" :value="old('sub_description') ?? ''" />
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-4 {{ in_array('btn_text', $components) ? '' : 'd-none' }}">
-                                                <div class="form-group">
-                                                    <label for="btn_text" class="form-label">Button Text:</label>
-                                                    <input type="text" class="form-control @error('btn_text') is-invalid @enderror" name="btn_text" placeholder="Enter here button text" id="btn_text" value="{{ old('btn_text') }}">
-                                                    @error('btn_text')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.text name="btn_text" label="Button Text" placeholder="Enter here button text" :value="old('btn_text') ?? ''" />
                                             </div>
                                             <div class="col-md-4 {{ in_array('btn_link', $components) ? '' : 'd-none' }}">
-                                                <div class="form-group">
-                                                    <label for="btn_link" class="form-label">Button Link:</label>
-                                                    <input type="text" class="form-control @error('btn_link') is-invalid @enderror" name="btn_link" placeholder="Enter here link" id="btn_link" value="{{ old('btn_link') }}">
-                                                    @error('btn_link')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.text name="btn_link" label="Button Link" placeholder="Enter here button link" :value="old('btn_link') ?? ''" />
                                             </div>
                                             <div class="col-md-4 {{ in_array('btn_color', $components) ? '' : 'd-none' }}">
-                                                <div class="form-group">
-                                                    <label for="btn_color" class="form-label">Button Color:</label>
-                                                    <input type="color" class="form-control @error('btn_color') is-invalid @enderror" name="btn_color" placeholder="Enter here Color" id="btn_link" value="{{ old('btn_color') }}">
-                                                    @error('btn_color')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                <x-form.colour name="btn_color" label="Button Color" placeholder="Enter here button color" :value="old('btn_color') ?? ''" />
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-6 {{ in_array('image', $components) ? '' : 'd-none' }}">
-                                                <div class="form-group">
-                                                    <label for="image" class="form-label">Side Image:</label>
-                                                    <input type="file" class="dropify @error('image') is-invalid @enderror" name="image"
-                                                        id="image"
-                                                        data-default-file="">
+                                                <x-form.file name="image" label="Image">
                                                     <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
-                                                    @error('image')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                </x-form.file>
                                             </div>
 
                                             <div class="col-md-6 {{ in_array('bg', $components) ? '' : 'd-none' }}">
-                                                <div class="form-group">
-                                                    <label for="bg" class="form-label">Background:</label>
-                                                    <input type="file" class="dropify @error('bg') is-invalid @enderror" name="bg"
-                                                        id="bg"
-                                                        data-default-file="">
+                                                <x-form.file name="bg" label="Background">
                                                     <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
-                                                    @error('image')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
+                                                </x-form.file>
                                             </div>
                                         </div>
 
