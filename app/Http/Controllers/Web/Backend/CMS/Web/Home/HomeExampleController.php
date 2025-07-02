@@ -19,9 +19,13 @@ class HomeExampleController extends Controller
 {
     protected $cmsService;
 
+    
     public $page;
+    public $component;
     public $section;
+    
     public $sections;
+    public $components;
     public $count;
 
     public function __construct(CmsService $cmsService)
@@ -29,8 +33,12 @@ class HomeExampleController extends Controller
         $this->cmsService = $cmsService;
         
         $this->page = PageEnum::HOME;
+
+        $this->component = ['title', 'sub_title', 'bg', 'image', 'description', 'btn_text', 'btn_color', 'btn_link'];
         $this->section = SectionEnum::EXAMPLE;
+
         $this->sections = SectionEnum::EXAMPLES;
+        $this->components = ['title', 'sub_title', 'bg', 'image', 'description', 'sub_description', 'btn_text', 'btn_link', 'btn_color', 'metadata'];
         $this->count = 3;
     }
     /**
@@ -84,7 +92,7 @@ class HomeExampleController extends Controller
         }
 
         $data = CMS::where('page', $this->page)->where('section', $this->section)->latest()->first();
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.index", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.index", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value, "component" => $this->component, 'sections' => $this->sections]);
     }
 
     /**
@@ -92,7 +100,7 @@ class HomeExampleController extends Controller
      */
     public function create()
     {
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.create", ["page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.create", ["page" => $this->page->value, "section" => $this->section->value, "components" => $this->components]);
     }
 
     /**
@@ -145,7 +153,7 @@ class HomeExampleController extends Controller
     public function show($id)
     {
         $data = CMS::where('id', $id)->first();
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.show", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.show", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
     }
 
     /**
@@ -154,7 +162,7 @@ class HomeExampleController extends Controller
     public function edit(string $id)
     {
         $data = CMS::findOrFail($id);
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.update", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.update", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value, "components" => $this->components]);
     }
 
     /**

@@ -17,13 +17,21 @@ class HomeIntroController extends Controller
     protected $cmsService;
 
     public $page;
+    public $component;
     public $section;
+
+    public $sections;
+    public $components;
+    public $count;
+
 
     public function __construct(CmsService $cmsService)
     {
         $this->cmsService = $cmsService;
-
+        
         $this->page = PageEnum::HOME;
+
+        $this->component = ['title', 'sub_title', 'bg', 'image', 'description', 'btn_text', 'btn_color', 'btn_link'];
         $this->section = SectionEnum::INTRO;
     }
     /**
@@ -32,13 +40,13 @@ class HomeIntroController extends Controller
     public function index()
     {
         $data = CMS::where('page', $this->page)->where('section', $this->section)->latest()->first();
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.index", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.index", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value, "component" => $this->component, 'sections' => $this->sections]);
     }
 
     public function show($id)
     {
         $data = CMS::where('id', $id)->first();
-        return view("backend.layouts.cms.{$this->page->value}.{$this->section->value}.show", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
+        return view("backend.layouts.cms.show", ["data" => $data, "page" => $this->page->value, "section" => $this->section->value]);
     }
 
     public function content(CmsRequest $request)
@@ -71,10 +79,10 @@ class HomeIntroController extends Controller
             if ($section) {
                 CMS::where('page', $validatedData['page'])->where('section', $validatedData['section'])->update($validatedData);
             } else {
-
+                
                 // Generate a unique slug
                 do {
-                    $validatedData['slug'] = 'slug_' . Str::random(8);
+                    $validatedData['slug'] = 'slug_'.Str::random(8);
                 } while (CMS::where('slug', $validatedData['slug'])->exists());
 
                 CMS::create($validatedData);
@@ -94,9 +102,12 @@ class HomeIntroController extends Controller
                 $page->update(['is_display' => !$page->is_display]);
             }
             return back()->with('t-success', 'Display status updated successfully.');
+
         } catch (Exception $e) {
 
             return back()->with('t-error', $e->getMessage());
+            
         }
     }
+    
 }

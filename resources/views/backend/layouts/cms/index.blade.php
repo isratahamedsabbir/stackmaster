@@ -32,7 +32,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
             <!-- ROW-4 -->
             <div class="row">
 
-                <div class="col-md-5">
+                <div class="{{ isset($sections) && $sections ? 'col-md-5' : 'col-md-12' }}">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between border-bottom">
                             <h3 class="card-title">Content Edit</h3>
@@ -48,7 +48,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                 @csrf
                                 @method('PUT')
 
-                                <div class="row">
+                                <div class="row {{ in_array('title', $component) ? '' : 'd-none' }}">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="title" class="form-label">Title:</label>
@@ -62,7 +62,21 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row {{ in_array('sub_title', $component) ? '' : 'd-none' }}">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="sub_title" class="form-label">Sub Title:</label>
+                                            <input type="text" class="form-control @error('sub_title') is-invalid @enderror" name="sub_title" placeholder="Enter here sub title" id="sub_title" value="{{ $data->sub_title ?? '' }}">
+                                            @error('sub_title')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row {{ in_array('description', $component) ? '' : 'd-none' }}">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="description" class="form-label">Description:</label>
@@ -76,8 +90,22 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                     </div>
                                 </div>
 
+                                <div class="row {{ in_array('sub_description', $component) ? '' : 'd-none' }}">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="sub_description" class="form-label">Sub Description:</label>
+                                            <textarea class="summernote form-control @error('sub_description') is-invalid @enderror" name="sub_description" id="sub_description" placeholder="Enter here sub description" rows="3">{{ $data->sub_description ?? '' }}</textarea>
+                                            @error('sub_description')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4  {{ in_array('btn_text', $component) ? '' : 'd-none' }}">
                                         <div class="form-group">
                                             <label for="btn_text" class="form-label">Button Text:</label>
                                             <input type="text" class="form-control @error('btn_text') is-invalid @enderror" name="btn_text" placeholder="Enter here button text" id="btn_text" value="{{ $data->btn_text ?? '' }}">
@@ -88,7 +116,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4  {{ in_array('btn_link', $component) ? '' : 'd-none' }}">
                                         <div class="form-group">
                                             <label for="btn_link" class="form-label">Button Link:</label>
                                             <input type="text" class="form-control @error('btn_link') is-invalid @enderror" name="btn_link" placeholder="Enter here link" id="btn_link" value="{{ $data->btn_link ?? '' }}">
@@ -99,10 +127,21 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-4  {{ in_array('btn_color', $component) ? '' : 'd-none' }}">
+                                        <div class="form-group">
+                                            <label for="btn_color" class="form-label">Button Color:</label>
+                                            <input type="color" class="form-control @error('btn_color') is-invalid @enderror" name="btn_color" placeholder="Enter here color" id="btn_color" value="{{ $data->btn_color ?? '' }}">
+                                            @error('btn_color')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6 {{ in_array('image', $component) ? '' : 'd-none' }}">
                                         <div class="form-group">
                                             <label for="image" class="form-label">Side Image:</label>
                                             <input type="file" class="dropify @error('image') is-invalid @enderror" name="image"
@@ -110,6 +149,18 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                                 data-default-file="{{ isset($data->image) ? asset($data->image) : '' }}">
                                                 <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                             @error('image')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 {{ in_array('bg', $component) ? '' : 'd-none' }}">
+                                        <div class="form-group">
+                                            <label for="bg" class="form-label">Background:</label>
+                                            <input type="file" class="dropify @error('bg') is-invalid @enderror" name="bg"
+                                                id="bg"
+                                                data-default-file="{{ isset($data->bg) ? asset($data->bg) : '' }}">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                                            @error('bg')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -128,14 +179,16 @@ $url = 'admin.cms.'.$page.'.'.$section;
                 </div>
 
 
-                <div class="col-md-7">
+                <div class="{{ isset($sections) && $sections ? 'col-md-7' : 'd-none' }}">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between border-bottom">
                             <h3 class="card-title">All {{ $page ?? '' }} {{ $section ?? '' }} Items</h3>
                             <!-- Add New Page Button -->
+                            @if(isset($sections) && $sections)
                             <a href="{{route($url.'.create')}}" class="btn btn-primary">
                                 <i class="bx bx-plus me-sm-1 "></i> Add New
                             </a>
+                            @endif
                         </div>
                         <div class="card-body">
                             <div class="">
@@ -170,6 +223,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
 
 
 @push('scripts')
+@if(isset($sections) && $sections)
 <script>
     $(document).ready(function() {
 
@@ -342,4 +396,5 @@ $url = 'admin.cms.'.$page.'.'.$section;
         window.location.href = url.replace(':id', id);
     }
 </script>
+@endif
 @endpush

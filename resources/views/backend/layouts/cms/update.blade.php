@@ -38,7 +38,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                         @csrf
                                         @method('PATCH')
 
-                                        <div class="row">
+                                        <div class="row{{ in_array('metadata', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="rating" class="form-label">Rating:</label>
@@ -50,7 +50,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             </div>
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row {{ in_array('title', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="title" class="form-label">Title:</label>
@@ -62,7 +62,19 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             </div>
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row {{ in_array('sub_title', $components) ? '' : 'd-none' }}">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="sub_title" class="form-label">Sub Title:</label>
+                                                    <input type="text" class="form-control @error('sub_title') is-invalid @enderror" name="sub_title" placeholder="Enter here sub title" id="sub_title" value="{{ $data->sub_title ?? '' }}">
+                                                    @error('sub_title')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row {{ in_array('description', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="description" class="form-label">Description:</label>
@@ -74,8 +86,20 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                             </div>
                                         </div>
 
+                                        <div class="row {{ in_array('sub_description', $components) ? '' : 'd-none' }}">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="sub_description" class="form-label">Sub Description:</label>
+                                                    <textarea class="summernote form-control @error('sub_description') is-invalid @enderror" name="sub_description" id="sub_description" placeholder="Enter here sub description" rows="3">{{ $data->sub_description ?? '' }}</textarea>
+                                                    @error('sub_description')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4 {{ in_array('btn_text', $components) ? '' : 'd-none' }}">
                                                 <div class="form-group">
                                                     <label for="btn_text" class="form-label">Button Text:</label>
                                                     <input type="text" class="form-control @error('btn_text') is-invalid @enderror" name="btn_text" placeholder="Enter here button text" id="btn_text" value="{{ $data->btn_text ?? '' }}">
@@ -84,7 +108,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-4 {{ in_array('btn_link', $components) ? '' : 'd-none' }}">
                                                 <div class="form-group">
                                                     <label for="btn_link" class="form-label">Button Link:</label>
                                                     <input type="text" class="form-control @error('btn_link') is-invalid @enderror" name="btn_link" placeholder="Enter here link" id="btn_link" value="{{ $data->btn_link ?? '' }}">
@@ -93,17 +117,38 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                                     @enderror
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 {{ in_array('btn_color', $components) ? '' : 'd-none' }}">
+                                                <div class="form-group">
+                                                    <label for="btn_color" class="form-label">Button Color:</label>
+                                                    <input type="color" class="form-control @error('btn_color') is-invalid @enderror" name="btn_color" placeholder="Enter here color" id="btn_color" value="{{ $data->btn_color ?? '' }}">
+                                                    @error('btn_color')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6 {{ in_array('image', $components) ? '' : 'd-none' }}">
                                                 <div class="form-group">
-                                                    <label for="image" class="form-label">Side Image:</label>
+                                                    <label for="image" class="form-label">Image:</label>
                                                     <input type="file" class="dropify @error('image') is-invalid @enderror" name="image"
                                                         id="image"
                                                         data-default-file="{{ isset($data->image) ? asset($data->image) : '' }}">
-                                                        <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                                                    <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
                                                     @error('image')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 {{ in_array('bg', $components) ? '' : 'd-none' }}">
+                                                <div class="form-group">
+                                                    <label for="bg" class="form-label">Background:</label>
+                                                    <input type="file" class="dropify @error('bg') is-invalid @enderror" name="bg"
+                                                        id="bg"
+                                                        data-default-file="{{ isset($data->bg) ? asset($data->bg) : '' }}">
+                                                    <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                                                    @error('bg')
                                                     <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
