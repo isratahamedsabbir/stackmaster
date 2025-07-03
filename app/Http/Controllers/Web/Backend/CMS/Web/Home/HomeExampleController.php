@@ -39,7 +39,7 @@ class HomeExampleController extends Controller
 
         $this->sections = SectionEnum::EXAMPLES;
         $this->components = ['title', 'sub_title', 'bg', 'image', 'description', 'sub_description', 'btn_text', 'btn_link', 'btn_color', 'metadata'];
-        $this->count = 3;
+        $this->count = 10;
     }
     /**
      * Display a listing of the resource.
