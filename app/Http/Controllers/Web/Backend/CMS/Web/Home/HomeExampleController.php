@@ -24,8 +24,8 @@ class HomeExampleController extends Controller
     public $component;
     public $section;
     
-    public $sections;
     public $components;
+    public $sections;
     public $count;
 
     public function __construct(CmsService $cmsService)

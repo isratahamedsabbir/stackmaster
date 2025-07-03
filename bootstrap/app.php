@@ -53,7 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'api-retailer'          => ApiRetailerMiddleware::class,
             'api-otp'               => ApiOtpVerifiedMiddleware::class,
             'web-otp'               => WebOtpVerifiedMiddleware::class,
-            'web-check'             => WebAuthCheckMiddleware::class,
+            'check'                 => WebAuthCheckMiddleware::class,
             'role'                  => RoleMiddleware::class,
             'permission'            => PermissionMiddleware::class,
             'role_or_permission'    => RoleOrPermissionMiddleware::class
