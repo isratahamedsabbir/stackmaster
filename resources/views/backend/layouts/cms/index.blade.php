@@ -1,5 +1,5 @@
 @php
-$url = 'admin.cms.'.$page.'.'.$section;
+$url = 'admin.cms.app.'.$page.'.'.$section;
 @endphp
 
 @extends('backend.app', ['title' => $page . ' - ' . $section])
@@ -21,7 +21,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">CMS : {{ ucfirst($page ?? '') }} Page {{ ucfirst($section ?? '') }} Section.</h1>
+                    <h1 class="page-title">CMS : {{ ucwords(str_replace('_', ' ', $page ?? '')) }} Page {{ ucwords(str_replace('_', ' ', $section ?? '')) }} Section.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <button onclick="window.location.href=`{{ route($url . '.display') }}`" class="btn me-2 {{ isset($data->is_display) && $data->is_display == 0 ? 'btn-danger' : 'btn-primary' }}">Display</button>
@@ -112,7 +112,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                 <div class="{{ isset($sections) && $sections ? 'col-md-7' : 'd-none' }}">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between border-bottom">
-                            <h3 class="card-title">All {{ $page ?? '' }} {{ $section ?? '' }} Items</h3>
+                            <h3 class="card-title">All {{ ucwords(str_replace('_', ' ', $page ?? '')) }} {{ ucwords(str_replace('_', ' ', $section ?? '')) }} Items</h3>
                             <!-- Add New Page Button -->
                             @if(isset($sections) && $sections)
                             <a href="{{route($url.'.create')}}" class="btn btn-primary">

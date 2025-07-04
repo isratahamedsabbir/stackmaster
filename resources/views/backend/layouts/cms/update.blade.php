@@ -1,5 +1,5 @@
 @php
-$url = 'admin.cms.'.$page.'.'.$section;
+$url = 'admin.cms.app.'.$page.'.'.$section;
 @endphp
 
 @extends('backend.app', ['title' => 'Update '.$section])
@@ -15,13 +15,13 @@ $url = 'admin.cms.'.$page.'.'.$section;
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">CMS : {{ ucfirst($page ?? '') }} Page {{ ucfirst($section ?? '') }} Section Update.</h1>
+                    <h1 class="page-title">CMS : {{ ucwords(str_replace('_', ' ', $page ?? '')) }} Page {{ ucwords(str_replace('_', ' ', $section ?? '')) }} Section Update.</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">CMS</li>
-                        <li class="breadcrumb-item">{{ ucfirst($page ?? '') }}</li>
-                        <li class="breadcrumb-item">{{ ucfirst($section ?? '') }}</li>
+                        <li class="breadcrumb-item">{{ ucwords(str_replace('_', ' ', $page ?? '')) }}</li>
+                        <li class="breadcrumb-item">{{ ucwords(str_replace('_', ' ', $section ?? '')) }}</li>
                         <li class="breadcrumb-item active" aria-current="page">Update</li>
                     </ol>
                 </div>
@@ -59,6 +59,12 @@ $url = 'admin.cms.'.$page.'.'.$section;
                                         <div class="row {{ in_array('sub_title', $components) ? '' : 'd-none' }}">
                                             <div class="col-md-12">
                                                 <x-form.text name="sub_title" label="Sub Title" placeholder="Enter here sub title" :value="$data->sub_title ?? ''" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row {{ in_array('description_title', $components) ? '' : 'd-none' }}">
+                                            <div class="col-md-12">
+                                                <x-form.text name="description_title" label="Description Title" placeholder="Enter here description title" :value="$data->description_title ?? ''" />
                                             </div>
                                         </div>
 
