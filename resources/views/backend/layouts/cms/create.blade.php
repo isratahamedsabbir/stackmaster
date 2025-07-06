@@ -1,5 +1,5 @@
 @php
-$url = 'admin.cms.app.'.$page.'.'.$section;
+$url = 'admin.cms.'.$page.'.'.$section;
 @endphp
 
 @extends('backend.app', ['title' => 'Create Banner'])

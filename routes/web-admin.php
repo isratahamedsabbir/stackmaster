@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\FaqController;
 use App\Http\Controllers\Web\Backend\ImageController;
+use App\Http\Controllers\Web\Backend\LivewireController;
 use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
@@ -305,4 +306,9 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/reverb', [OtherController::class, 'reverb'])->name('.reverb');
     Route::get('/debug', [OtherController::class, 'debug'])->name('.debug');
     Route::get('/access', [OtherController::class, 'access'])->name('.access');
+});
+
+//livewire
+Route::prefix('livewire/crud')->name('livewire.crud')->group(function () {
+    Route::get('/', [LivewireController::class, 'index'])->name('.index');
 });

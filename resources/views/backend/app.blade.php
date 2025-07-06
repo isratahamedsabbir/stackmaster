@@ -21,6 +21,8 @@
     @vite(['resources/js/app.js'])
     
     @include('backend.partials._styles')
+
+    @livewireStyles
     
     
 </head>
@@ -44,6 +46,8 @@
     </div>
     <!-- page -->
     @include('backend.partials._scripts')
+
+    @livewireScripts
     
 </body>
 
