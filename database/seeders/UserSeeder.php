@@ -92,6 +92,24 @@ class UserSeeder extends Seeder
                 ['permission_id' => 7, 'model_id' => 4, 'model_type' => 'App\Models\User'],
                 ['permission_id' => 8, 'model_id' => 4, 'model_type' => 'App\Models\User'],
             ]);
+
+
+            for ($i = 5; $i <= 100; $i++) {
+                DB::table('users')->insert([
+                    'name' => 'User ' . $i,
+                    'slug' => 'user-' . $i,
+                    'email' => 'user' . $i . '@example.com',
+                    'password' => Hash::make('12345678'),
+                    'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv',
+                    'otp_verified_at' => now()
+                ]);
+
+                DB::table('model_has_roles')->insert([
+                    'role_id' => 4,
+                    'model_id' => $i,
+                    'model_type' => 'App\Models\User'
+                ]);
+            }
         }
     }
 }
