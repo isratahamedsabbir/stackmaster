@@ -212,7 +212,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="submit btn btn-primary" type="submit">Submit</button>
                                             </div>
 
                                         </div>

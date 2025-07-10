@@ -24,6 +24,7 @@ Route::middleware(['web', 'web-admin'])->prefix('admin/project')->name('admin.pr
     Route::post('/update/{id}', 'update')->name('update');
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
+    Route::post('/sort', 'sort')->name('sort');
 });
 
 

@@ -52,7 +52,8 @@
                                             <th class="bg-transparent border-bottom-0">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="sortable">
+                                        {{-- Data will be populated by DataTable --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -242,6 +243,66 @@
     function goToOpen(id) {
         let url = "{{ route('admin.project.show', ':id') }}";
         window.location.href = url.replace(':id', id);
+    }
+</script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var modules = $('#sortable');
+
+        modules.sortable({
+            connectWith: '#sortable',
+            items: 'tr',
+            stop: function(event, ui) {
+                var target = $(event.target);
+                var para = $(ui.item).parent();
+                
+                sendModuleSortableRequest(para);
+
+                if (target.data('id') !== para.data('id')) {
+                    if (target.find('tr').length) {
+                        sendModuleSortableRequest(target);
+                    } else {
+                        target.find('.empty-message').show();
+                    }
+                }
+            }
+        });
+
+        $('table, #sortable').disableSelection();
+    });
+
+    function sendModuleSortableRequest(para) {
+        var items = para.sortable('toArray', {
+            attribute: 'id'
+        }).filter(item => item !== "");
+        
+        if (items.length === 0) {
+            toastr.error('No items to sort.');
+            return;
+        }
+        
+        var data = {
+            _token: $('meta[name="csrf-token"]').attr('content'),
+            ids: items
+        };
+
+        $.ajax({
+            url: "{{ route('admin.project.sort') }}",
+            type: "POST",
+            data: data,
+            success: function(response) {
+                if (response.success) {
+                    $('#datatable').DataTable().ajax.reload();
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                toastr.error('An error occurred while updating the data.');
+            }
+        });
     }
 </script>
 @endpush

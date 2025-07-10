@@ -32,6 +32,7 @@ return new class extends Migration
             $table->json('metadata')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->integer('order')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

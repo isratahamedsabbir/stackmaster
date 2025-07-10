@@ -5,6 +5,8 @@ namespace Modules\Portfolio\Http\Controllers\Web\Backend;
 use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
@@ -305,4 +307,20 @@ class ProjectController extends Controller
             'message' => 'Your action was successful!',
         ]);
     }
+
+    public function sort(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'ids'       => 'required|array'
+        ]);
+
+        if (!$validator->passes()) {
+            return response()->json(['t-error' => $validator->errors()->toArray()]);
+        } else {
+            foreach ($request->ids as $key => $id) {
+                Project::where('id', $id)->update(['order_id' => $key + 1]);
+            }
+        }
+    }
+
 }
