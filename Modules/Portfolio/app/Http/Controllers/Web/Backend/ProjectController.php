@@ -66,6 +66,14 @@ class ProjectController extends Controller
                             </div>';
                 })
                 ->rawColumns(['icon', 'type', 'author', 'status', 'action'])
+                ->setRowId(function ($data) {
+                    return $data->id;
+                })
+                ->setRowAttr([
+                    'order_id' => function($data) {
+                        return $data->order_id;
+                    },
+                ])
                 ->make();
         }
         return view('portfolio::backend.layouts.project.index');

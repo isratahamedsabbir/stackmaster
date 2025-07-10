@@ -70,8 +70,6 @@
 <!-- CONTAINER CLOSED -->
 @endsection
 
-
-
 @push('scripts')
 <script>
     $(document).ready(function() {
@@ -292,12 +290,8 @@
             type: "POST",
             data: data,
             success: function(response) {
-                if (response.success) {
-                    $('#datatable').DataTable().ajax.reload();
-                    toastr.success(response.message);
-                } else {
-                    toastr.error(response.message);
-                }
+                $('#datatable').DataTable().ajax.reload();
+                toastr.success('Successfully updated the sort order!');
             },
             error: function(xhr, status, error) {
                 toastr.error('An error occurred while updating the data.');
