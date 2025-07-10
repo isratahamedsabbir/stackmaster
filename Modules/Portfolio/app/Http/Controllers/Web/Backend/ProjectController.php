@@ -22,7 +22,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Project::with(['user', 'type'])->orderBy('created_at', 'desc')->get();
+            $data = Project::with(['user', 'type'])->orderBy('order', 'asc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('icon', function ($data) {
@@ -70,8 +70,8 @@ class ProjectController extends Controller
                     return $data->id;
                 })
                 ->setRowAttr([
-                    'order_id' => function($data) {
-                        return $data->order_id;
+                    'order' => function($data) {
+                        return $data->order;
                     },
                 ])
                 ->make();
@@ -326,7 +326,7 @@ class ProjectController extends Controller
             return response()->json(['t-error' => $validator->errors()->toArray()]);
         } else {
             foreach ($request->ids as $key => $id) {
-                Project::where('id', $id)->update(['order_id' => $key + 1]);
+                Project::where('id', $id)->update(['order' => $key + 1]);
             }
         }
     }

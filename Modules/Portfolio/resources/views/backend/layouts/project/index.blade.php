@@ -71,6 +71,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -242,9 +243,7 @@
         let url = "{{ route('admin.project.show', ':id') }}";
         window.location.href = url.replace(':id', id);
     }
-</script>
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
-<script>
+
     $(document).ready(function() {
         var modules = $('#sortable');
 
