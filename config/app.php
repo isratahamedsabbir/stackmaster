@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'encryption_key' => env('APP_ENCRYPTION_KEY', 'base64:newencryptionkey1234567890abcdef'),
+
 ];
