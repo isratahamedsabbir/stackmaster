@@ -141,6 +141,12 @@
                         <li><a href="{{ route('admin.setting.other.index') }}" class="slide-item">Other Settings</a></li>
                     </ul>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.template.*') ? 'has-link active' : '' }}" href="{{ route('admin.template.index') }}">
+                        <i class="fa-solid fa-synagogue side-menu__icon"></i>
+                        <span class="side-menu__label">Template</span>
+                    </a>
+                </li>
                 <li>
                     <h3>CMS</h3>
                 </li>
