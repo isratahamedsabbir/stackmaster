@@ -23,7 +23,8 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $menus = Menu::query()->latest()->get();
-        return view("backend.layouts.menu.index", compact('menus'));
+        $groupedMenus = $menus->groupBy('parent_id');
+        return view("backend.layouts.menu.index", compact('menus', 'groupedMenus'));
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-if (!function_exists('email')) {
+if (!function_exists('parseTemplate')) {
 
 
 
