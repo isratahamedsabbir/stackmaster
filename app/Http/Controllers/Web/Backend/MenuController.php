@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Backend;
 
 use App\Helpers\Helper;
-use App\Models\Post;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 
-class PostController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Post::with(['category', 'subcategory', 'user'])->orderBy('id', 'desc')->get();
+            $data = Menu::with(['category', 'subcategory', 'user'])->orderBy('id', 'desc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function ($data) {
@@ -75,7 +75,7 @@ class PostController extends Controller
                 ->rawColumns(['category', 'subcategory', 'author', 'title', 'thumbnail', 'status', 'action'])
                 ->make();
         }
-        return view("backend.layouts.post.index");
+        return view("backend.layouts.menu.index");
     }
 
     /**
@@ -84,7 +84,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.post.create', compact('categories'));
+        return view('backend.layouts.menu.create', compact('categories'));
     }
 
     /**
@@ -109,7 +109,7 @@ class PostController extends Controller
         try {
             $data = $validator->validated();
 
-            $post = new Post();
+            $post = new Menu();
 
             $post->user_id = auth('web')->user()->id;
 
@@ -117,7 +117,7 @@ class PostController extends Controller
                 $data['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
             }
 
-            $post->slug = Helper::makeSlug(Post::class, $data['title']);
+            $post->slug = Helper::makeSlug(Menu::class, $data['title']);
 
             $post->title = $data['title'];
             $post->thumbnail = $data['thumbnail'];
@@ -142,27 +142,27 @@ class PostController extends Controller
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.post.index')->with('t-success', 'post created successfully');
+        return redirect()->route('admin.menu.index')->with('t-success', 'post created successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post, $id)
+    public function show(Menu $post, $id)
     {
-        $post = Post::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
-        return view('backend.layouts.post.show', compact('post'));
+        $post = Menu::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
+        return view('backend.layouts.menu.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post, $id)
+    public function edit(Menu $post, $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Menu::findOrFail($id);
         $categories = Category::where('status', 'active')->get();
         $subcategories = Subcategory::where('status', 'active')->get();
-        return view('backend.layouts.post.edit', compact('post', 'categories', 'subcategories'));
+        return view('backend.layouts.menu.edit', compact('post', 'categories', 'subcategories'));
     }
 
     /**
@@ -187,7 +187,7 @@ class PostController extends Controller
         try {
             $data = $validator->validated();
 
-            $post = Post::findOrFail($id);
+            $post = Menu::findOrFail($id);
 
             if ($request->hasFile('thumbnail')) {
                 $validate['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
@@ -222,7 +222,7 @@ class PostController extends Controller
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.post.edit', $post->id)->with('t-success', 'post updated successfully');
+        return redirect()->route('admin.menu.edit', $post->id)->with('t-success', 'post updated successfully');
     }
 
     /**
@@ -232,7 +232,7 @@ class PostController extends Controller
     {
         try {
 
-            $data = Post::findOrFail($id);
+            $data = Menu::findOrFail($id);
 
             if ($data->thumbnail && file_exists(public_path($data->thumbnail))) {
                 Helper::fileDelete(public_path($data->thumbnail));
@@ -263,7 +263,7 @@ class PostController extends Controller
 
     public function status(int $id): JsonResponse
     {
-        $data = Post::findOrFail($id);
+        $data = Menu::findOrFail($id);
         if (!$data) {
             return response()->json([
                 'status' => 't-error',

@@ -186,6 +186,12 @@
                     </ul>
                 </li>
                 <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.menu.*') ? 'has-link active' : '' }}" href="{{ route('admin.menu.index') }}">
+                        <i class="fa-solid fa-bars-staggered side-menu__icon"></i>
+                        <span class="side-menu__label">Menu</span>
+                    </a>
+                </li>
+                <li class="slide">
                     <a class="side-menu__item {{  Request::routeIs('ajax.gallery.*') ? 'has-link active' : '' }}" href="{{ route('ajax.gallery.index') }}">
                         <i class="fa-solid fa-image side-menu__icon"></i>
                         <span class="side-menu__label">Image Gallery</span>

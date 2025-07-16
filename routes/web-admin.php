@@ -22,6 +22,7 @@ use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\FaqController;
 use App\Http\Controllers\Web\Backend\ImageController;
 use App\Http\Controllers\Web\Backend\LivewireController;
+use App\Http\Controllers\Web\Backend\MenuController;
 use App\Http\Controllers\Web\Backend\OrderController;
 use App\Http\Controllers\Web\Backend\PageController;
 use App\Http\Controllers\Web\Backend\PostController;
@@ -43,6 +44,17 @@ Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard'
 /*
 * CRUD
 */
+
+Route::controller(MenuController::class)->prefix('menu')->name('menu.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::get('/status/{id}', 'status')->name('status');
+});
 
 Route::controller(TemplateController::class)->prefix('template')->name('template.')->group(function () {
     Route::get('/', 'index')->name('index');
