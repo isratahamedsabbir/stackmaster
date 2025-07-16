@@ -1,7 +1,7 @@
 @extends('backend.app', ['title' => 'Menu'])
 
 @push('styles')
-<link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />  
+<link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />
 @endpush
 
 
@@ -38,30 +38,37 @@
                         <div class="card-body">
 
                             @if($menus->count() > 0)
-                                <ul class="list-group">
-                                    @foreach($menus as $menu)
-                                        <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
-                                            <div>
-                                                <h5 class="mb-0">{{ $menu->name }}</h5>
-                                                <p class="text-muted mb-0">{{ $menu->description }}</p>
-                                            </div>
-                                            <div>
-                                                <a href="{{ route('admin.menu.edit', $menu->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                                <form action="{{ route('admin.menu.destroy', $menu->id) }}" method="POST" class="d-inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @else
-                                <div class="d-flex justify-content-between align-items-center mb-3">
+                            <ul class="list-group">
+                                @foreach($menus as $menu)
+                                <li class="list-group-item d-flex justify-content-between align-items-center mb-3">
                                     <div>
-                                        <h5 class="mb-0">No data found</h5>
+                                        <h5 class="mb-0">{{ $menu->name }}</h5>
+                                        <small class="text-muted">{{ $menu->url ?? '' }}</small>
+                                        <p class="text-muted mb-0">{{ $menu->description ?? '' }}</p>
                                     </div>
+                                    <div>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-success">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </button>
+
+                                            <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @else
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h5 class="mb-0">No data found</h5>
                                 </div>
+                            </div>
                             @endif
 
                         </div>
@@ -104,9 +111,6 @@
 <!-- CONTAINER CLOSED -->
 @endsection
 
-
-
 @push('scripts')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 @endpush
