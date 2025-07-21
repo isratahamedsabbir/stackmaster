@@ -97,7 +97,10 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.post.create', compact('categories'));
+        return view('backend.layouts.post.create', [
+            'categories' => $categories,
+            'route' => $this->route
+        ]);
     }
 
     /**
@@ -164,7 +167,10 @@ class PostController extends Controller
     public function show(Post $post, $id)
     {
         $post = Post::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
-        return view('backend.layouts.post.show', compact('post'));
+        return view('backend.layouts.post.show', [
+            'post' => $post,
+            'route' => $this->route
+        ]);
     }
 
     /**
@@ -175,7 +181,12 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $categories = Category::where('status', 'active')->get();
         $subcategories = Subcategory::where('status', 'active')->get();
-        return view('backend.layouts.post.edit', compact('post', 'categories', 'subcategories'));
+        return view('backend.layouts.post.edit', [
+            'post' => $post,
+            'categories' => $categories,
+            'subcategories' => $subcategories,
+            'route' => $this->route
+        ]);
     }
 
     /**
