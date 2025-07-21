@@ -113,37 +113,32 @@
             confirmButtonText: 'Yes, delete it!',
         }).then((result) => {
             if (result.isConfirmed) {
-                deleteItem(id);
-            }
-        });
-    }
-
-    // Delete Button
-    function deleteItem(id) {
-        NProgress.start();
-        let url = "{{ route('admin.post.destroy', ':id') }}";
-        let csrfToken = '{{ csrf_token() }}';
-        $.ajax({
-            type: "DELETE",
-            url: url.replace(':id', id),
-            headers: {
-                'X-CSRF-TOKEN': csrfToken
-            },
-            success: function(resp) {
-                NProgress.done();
-                toastr.success(resp.message);
-                window.location.href = "{{ route('admin.post.index') }}";
-            },
-            error: function(error) {
-                NProgress.done();
-                toastr.error(error.message);
+                NProgress.start();
+                let url = "{{ route($route . '.destroy', ':id') }}";
+                let csrfToken = '{{ csrf_token() }}';
+                $.ajax({
+                    type: "DELETE",
+                    url: url.replace(':id', id),
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(resp) {
+                        NProgress.done();
+                        toastr.success(resp.message);
+                        window.location.href = "{{ route($route . '.index') }}";
+                    },
+                    error: function(error) {
+                        NProgress.done();
+                        toastr.error(error.message);
+                    }
+                });
             }
         });
     }
 
     //edit
     function goToEdit(id) {
-        let url = "{{ route('admin.post.edit', ':id') }}";
+        let url = "{{ route($route . '.edit', ':id') }}";
         window.location.href = url.replace(':id', id);
     }
 </script>

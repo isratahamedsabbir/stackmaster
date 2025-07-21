@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="card-body border-0">
-                            <form class="form form-horizontal" method="POST" action="{{ route('admin.post.update', $post->id) }}" enctype="multipart/form-data">
+                            <form class="form form-horizontal" method="POST" action="{{ route($route . '.update', $post->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row mb-4">
 
