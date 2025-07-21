@@ -108,7 +108,7 @@
     // Status Change
     function statusChange(id) {
         NProgress.start();
-        let url = "{{ route('admin.post.status', ':id') }}";
+        let url = "{{ route($route . '.status', ':id') }}";
         $.ajax({
             type: "GET",
             url: url.replace(':id', id),
@@ -125,7 +125,7 @@
     }
 
     // Status Change Confirm Alert
-    function showStatusChangeAlert(route) {
+    function showStatusChangeAlert(id) {
         event.preventDefault();
         Swal.fire({
             title: 'Are you sure?',
@@ -137,9 +137,14 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 NProgress.start();
+                let url = "{{ route($route . '.status', ':id') }}";
+                let csrfToken = '{{ csrf_token() }}';
                 $.ajax({
                     type: "GET",
-                    url: route,
+                    url: url.replace(':id', id),
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
                     success: function(resp) {
                         NProgress.done();
                         toastr.success(resp.message);
@@ -155,7 +160,7 @@
     }
 
     // delete Confirm
-    function showDeleteConfirm(route) {
+    function showDeleteConfirm(id) {
         event.preventDefault();
         Swal.fire({
             title: 'Are you sure you want to delete this record?',
@@ -168,10 +173,11 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 NProgress.start();
+                let url = "{{ route($route . '.destroy', ':id') }}";
                 let csrfToken = '{{ csrf_token() }}';
                 $.ajax({
                     type: "DELETE",
-                    url: route,
+                    url: url.replace(':id', id),
                     headers: {
                         'X-CSRF-TOKEN': csrfToken
                     },
@@ -190,12 +196,14 @@
     }
 
     //edit
-    function goToEdit(route) {
-        window.location.href = route;
+    function goToEdit(id) {
+        let url = "{{ route($route . '.edit', ':id') }}";
+        window.location.href = url.replace(':id', id);
     }
 
     //view
-    function goToOpen(route) {
-        window.location.href = route;
+    function goToOpen(id) {
+        let url = "{{ route($route . '.show', ':id') }}";
+        window.location.href = url.replace(':id', id);
     }
 </script>

@@ -46,14 +46,13 @@ class PostController extends Controller
                     return '<img src="' . $url . '" alt="image" style="width: 50px; max-height: 100px; margin-left: 20px;">';
                 })
                 ->addColumn('status', function ($data) {
-                    $statusRoute = route($this->route . '.status', $data->id);
 
                     $backgroundColor = $data->status == "active" ? '#4CAF50' : '#ccc';
                     $sliderTranslateX = $data->status == "active" ? '26px' : '2px';
                     $sliderStyles = "position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; transform: translateX($sliderTranslateX);";
 
                     $status = '<div class="form-check form-switch" style="margin-left:40px; position: relative; width: 50px; height: 24px; background-color: ' . $backgroundColor . '; border-radius: 12px; transition: background-color 0.3s ease; cursor: pointer;">';
-                    $status .= '<input onclick="showStatusChangeAlert(\'' . $statusRoute . '\')" type="checkbox" class="form-check-input" id="customSwitch' . $data->id . '" getAreaid="' . $data->id . '" name="status" style="position: absolute; width: 100%; height: 100%; opacity: 0; z-index: 2; cursor: pointer;">';
+                    $status .= '<input onclick="showStatusChangeAlert(' . $data->id . ')" type="checkbox" class="form-check-input" id="customSwitch' . $data->id . '" getAreaid="' . $data->id . '" name="status" style="position: absolute; width: 100%; height: 100%; opacity: 0; z-index: 2; cursor: pointer;">';
                     $status .= '<span style="' . $sliderStyles . '"></span>';
                     $status .= '<label for="customSwitch' . $data->id . '" class="form-check-label" style="margin-left: 10px;"></label>';
                     $status .= '</div>';
@@ -61,22 +60,18 @@ class PostController extends Controller
                     return $status;
                 })
                 ->addColumn('action', function ($data) {
-                    
-                    $editRoute = route($this->route . '.edit', $data->id);
-                    $showRoute = route($this->route . '.show', $data->id);
-                    $deleteRoute = route($this->route . '.destroy', $data->id);
 
                     return '<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
 
-                                <a href="#" type="button" onclick="goToEdit(\'' . $editRoute . '\')" class="btn btn-primary fs-14 text-white delete-icn" title="Delete">
+                                <a href="#" type="button" onclick="goToEdit(' . $data->id . ')" class="btn btn-primary fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-edit"></i>
                                 </a>
 
-                                <a href="#" type="button" onclick="goToOpen(\'' . $showRoute . '\')" class="btn btn-success fs-14 text-white delete-icn" title="Delete">
+                                <a href="#" type="button" onclick="goToOpen(' . $data->id . ')" class="btn btn-success fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-eye"></i>
                                 </a>
 
-                                <a href="#" type="button" onclick="showDeleteConfirm(\'' . $deleteRoute . '\')" class="btn btn-danger fs-14 text-white delete-icn" title="Delete">
+                                <a href="#" type="button" onclick="showDeleteConfirm(' . $data->id . ')" class="btn btn-danger fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-trash"></i>
                                 </a>
                             </div>';
