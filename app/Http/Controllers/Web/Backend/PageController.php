@@ -68,7 +68,12 @@ class PageController extends Controller
         $validate = $request->validate([
             'name'    => 'required|unique:categories,name',
             'title'   => 'required|string|max:255',
-            'content' => 'required'
+            'content' => 'required|string',
+            'icon'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
+            'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         try {
@@ -107,7 +112,12 @@ class PageController extends Controller
         $validate = $request->validate([
             'name'    => 'required|unique:categories,name',
             'title'   => 'required|string|max:255',
-            'content' => 'required'
+            'content' => 'required|string',
+            'icon'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
+            'meta_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5120',
         ]);
 
         try {

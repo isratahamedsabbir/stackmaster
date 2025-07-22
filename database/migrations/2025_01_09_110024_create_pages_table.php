@@ -15,8 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("slug");
-            $table->text("title");
-            $table->longText("content");
+            $table->string("icon")->nullable();
+            $table->text("title")->nullable();
+            $table->longText("content")->nullable();
+            $table->string("meta_title")->nullable();
+            $table->text("meta_description")->nullable();
+            $table->text("meta_keywords")->nullable();
+            $table->string("meta_image")->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

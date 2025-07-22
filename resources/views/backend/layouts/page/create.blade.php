@@ -50,9 +50,52 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label for="icon" class="form-label">Icon:</label>
+                                                <input type="file" class="dropify form-control @error('icon') is-invalid @enderror" data-default-file="{{ url('default/logo.png') }}" name="icon" id="icon">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                                                @error('icon')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label for="content" class="form-label">Content:</label>
                                                 <textarea class="form-control @error('content') is-invalid @enderror description" name="content" placeholder="Content" id="description" rows="6">{{ old('content') }}</textarea>
                                                 @error('content')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="meta_title" class="form-label">Meta Title:</label>
+                                                <input type="text" class="form-control @error('meta_title') is-invalid @enderror" name="meta_title" placeholder="Meta Title" id="" value="{{ old('meta_title') }}">
+                                                <p class="textTransform">Note: Title will be used as a page title</p>
+                                                @error('meta_title')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="meta_description" class="form-label">Meta Description:</label>
+                                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Content" id="description" rows="6">{{ old('content') }}</textarea>
+                                                @error('meta_description')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="meta_keywords" class="form-label">Meta Keywords:</label>
+                                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" placeholder="Content" id="description" rows="6">{{ old('content') }}</textarea>
+                                                @error('meta_description')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="meta_image" class="form-label">Meta Image:</label>
+                                                <input type="file" class="dropify form-control @error('icon') is-invalid @enderror" data-default-file="{{ url('default/logo.png') }}" name="icon" id="icon">
+                                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                                                @error('icon')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -77,5 +120,5 @@
 <!-- CONTAINER CLOSED -->
 @endsection
 @push('scripts')
-    
+
 @endpush
