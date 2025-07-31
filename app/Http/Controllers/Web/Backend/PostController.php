@@ -80,9 +80,7 @@ class PostController extends Controller
                 ->make();
         }
 
-        return view("backend.layouts.post.index", [
-            'route' => $this->route
-        ]);
+        return view("backend.layouts.post.index", ['route' => $this->route]);
         
     }
 

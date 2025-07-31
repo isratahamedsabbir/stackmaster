@@ -37,7 +37,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                         <div class="card-header d-flex justify-content-between border-bottom">
                             <h3 class="card-title">Content Edit</h3>
                             <!-- Add New Page Button -->
-                             @if($data)
+                            @if($data)
                             <a href="{{route($url.'.show', $data->id)}}" class="btn btn-primary">
                                 <i class="bx bx-plus me-sm-1 "></i> Show Section
                             </a>
@@ -149,8 +149,6 @@ $url = 'admin.cms.'.$page.'.'.$section;
 </div>
 <!-- CONTAINER CLOSED -->
 @endsection
-
-
 
 @push('scripts')
 @if(isset($sections) && $sections)

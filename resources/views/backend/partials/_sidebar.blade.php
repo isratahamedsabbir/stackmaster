@@ -207,10 +207,13 @@
                         <span class="side-menu__label">Image Gallery</span>
                     </a>
                 </li>
+                <li>
+                    <h3>CRUD</h3>
+                </li>
                 <li class="slide">
                     <a class="side-menu__item {{  Request::routeIs('admin.livewire.crud.*') ? 'has-link active' : '' }}" href="{{ route('admin.livewire.crud.index') }}">
                         <i class="fa-solid fa-image side-menu__icon"></i>
-                        <span class="side-menu__label">CRUD</span>
+                        <span class="side-menu__label">Livewire</span>
                     </a>
                 </li>
             </ul>
