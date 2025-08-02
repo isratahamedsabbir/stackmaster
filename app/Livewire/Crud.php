@@ -13,7 +13,7 @@ class Crud extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search = '';
-    public $statusFilter = 'all'; // all, active, inactive
+    public $statusFilter = 'all';
     public $perPage = 10;
 
     protected $queryString = [

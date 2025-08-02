@@ -39,7 +39,7 @@
             white-space: nowrap;
         }
 
-        .btn-group-sm > .btn {
+        .btn-group-sm>.btn {
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
         }
@@ -55,7 +55,7 @@
         .table-responsive {
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .table th {
@@ -72,17 +72,17 @@
 
     <!-- Flash Messages -->
     @if (session()->has('message'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i> {{ session('message') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> {{ session('message') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
     @endif
 
     @if (session()->has('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
     @endif
 
     <!-- Search and Filter Section -->
@@ -91,10 +91,10 @@
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    <input type="text" 
-                           class="form-control" 
-                           wire:model.live.debounce.300ms="search"
-                           placeholder="Search by name, email, or slug...">
+                    <input type="text"
+                        class="form-control"
+                        wire:model.live.debounce.300ms="search"
+                        placeholder="Search by name, email, or slug...">
                 </div>
             </div>
             <div class="col-md-3">
@@ -123,21 +123,21 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Search Results Info -->
         @if(!empty($search) || $statusFilter !== 'all')
-            <div class="mt-3">
-                <small class="text-muted">
-                    <i class="fas fa-info-circle"></i>
-                    Showing {{ $users->count() }} of {{ $users->total() }} results
-                    @if(!empty($search))
-                        for "<strong>{{ $search }}</strong>"
-                    @endif
-                    @if($statusFilter !== 'all')
-                        with status: <strong>{{ ucfirst($statusFilter) }}</strong>
-                    @endif
-                </small>
-            </div>
+        <div class="mt-3">
+            <small class="text-muted">
+                <i class="fas fa-info-circle"></i>
+                Showing {{ $users->count() }} of {{ $users->total() }} results
+                @if(!empty($search))
+                for "<strong>{{ $search }}</strong>"
+                @endif
+                @if($statusFilter !== 'all')
+                with status: <strong>{{ ucfirst($statusFilter) }}</strong>
+                @endif
+            </small>
+        </div>
         @endif
     </div>
 
@@ -178,19 +178,19 @@
                     </td>
                     <td>
                         <img src="{{ $user->avatar ? asset($user->avatar) : asset('default/profile.jpg') }}"
-                             alt="Avatar" 
-                             width="50" 
-                             height="50" 
-                             class="rounded-circle user-avatar"
-                             style="object-fit: cover;">
+                            alt="Avatar"
+                            width="50"
+                            height="50"
+                            class="rounded-circle user-avatar"
+                            style="object-fit: cover;">
                     </td>
                     <td>
-                        <button type="button" 
-                                class="btn btn-sm status-toggle {{ $user->status === 'active' ? 'btn-success' : 'btn-secondary' }}"
-                                wire:click="toggleStatus({{ $user->id }})"
-                                wire:loading.attr="disabled"
-                                wire:target="toggleStatus({{ $user->id }})"
-                                title="Click to {{ $user->status === 'active' ? 'deactivate' : 'activate' }} user">
+                        <button type="button"
+                            class="btn btn-sm status-toggle {{ $user->status === 'active' ? 'btn-success' : 'btn-secondary' }}"
+                            wire:click="toggleStatus({{ $user->id }})"
+                            wire:loading.attr="disabled"
+                            wire:target="toggleStatus({{ $user->id }})"
+                            title="Click to {{ $user->status === 'active' ? 'deactivate' : 'activate' }} user">
                             <span wire:loading.remove wire:target="toggleStatus({{ $user->id }})">
                                 <i class="fas {{ $user->status === 'active' ? 'fa-check' : 'fa-times' }}"></i>
                                 {{ $user->status === 'active' ? 'Active' : 'Inactive' }}
@@ -202,12 +202,12 @@
                     </td>
                     <td class="table-actions">
                         <div class="btn-group btn-group-sm">
-                            <button type="button" 
-                                    class="btn {{ $user->status === 'active' ? 'btn-outline-warning' : 'btn-outline-success' }}"
-                                    wire:click="toggleStatus({{ $user->id }})"
-                                    wire:loading.attr="disabled"
-                                    wire:target="toggleStatus({{ $user->id }})"
-                                    title="{{ $user->status === 'active' ? 'Deactivate' : 'Activate' }} user">
+                            <button type="button"
+                                class="btn {{ $user->status === 'active' ? 'btn-outline-warning' : 'btn-outline-success' }}"
+                                wire:click="toggleStatus({{ $user->id }})"
+                                wire:loading.attr="disabled"
+                                wire:target="toggleStatus({{ $user->id }})"
+                                title="{{ $user->status === 'active' ? 'Deactivate' : 'Activate' }} user">
                                 <span wire:loading.remove wire:target="toggleStatus({{ $user->id }})">
                                     <i class="fas {{ $user->status === 'active' ? 'fa-pause' : 'fa-play' }}"></i>
                                 </span>
@@ -215,16 +215,16 @@
                                     <i class="fas fa-spinner fa-spin"></i>
                                 </span>
                             </button>
-                            
-                            <button type="button" 
-                                    class="btn btn-outline-danger"
-                                    wire:click="delete({{ $user->id }})"
-                                    wire:confirm="Are you sure you want to delete '{{ $user->name }}'? This action cannot be undone."
-                                    wire:loading.attr="disabled"
-                                    wire:target="delete({{ $user->id }})"
-                                    data-user-id="{{ $user->id }}"
-                                    data-user-name="{{ $user->name }}"
-                                    title="Delete user">
+
+                            <button type="button"
+                                class="btn btn-outline-danger"
+                                wire:click="delete({{ $user->id }})"
+                                wire:confirm="Are you sure you want to delete '{{ $user->name }}'? This action cannot be undone."
+                                wire:loading.attr="disabled"
+                                wire:target="delete({{ $user->id }})"
+                                data-user-id="{{ $user->id }}"
+                                data-user-name="{{ $user->name }}"
+                                title="Delete user">
                                 <span wire:loading.remove wire:target="delete({{ $user->id }})">
                                     <i class="fas fa-trash"></i>
                                 </span>
@@ -243,15 +243,15 @@
                             <h5>No users found</h5>
                             <p class="mb-0">
                                 @if(!empty($search) || $statusFilter !== 'all')
-                                    Try adjusting your search criteria or filters.
+                                Try adjusting your search criteria or filters.
                                 @else
-                                    No users are available to display.
+                                No users are available to display.
                                 @endif
                             </p>
                             @if(!empty($search) || $statusFilter !== 'all')
-                                <button class="btn btn-outline-primary btn-sm mt-2" wire:click="clearSearch">
-                                    <i class="fas fa-times"></i> Clear Filters
-                                </button>
+                            <button class="btn btn-outline-primary btn-sm mt-2" wire:click="clearSearch">
+                                <i class="fas fa-times"></i> Clear Filters
+                            </button>
                             @endif
                         </div>
                     </td>
@@ -263,14 +263,14 @@
 
     <!-- Pagination with Info -->
     @if($users->hasPages())
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <div class="text-muted">
-                Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
-            </div>
-            <div>
-                {{ $users->links() }}
-            </div>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="text-muted">
+            Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} results
         </div>
+        <div>
+            {{ $users->links() }}
+        </div>
+    </div>
     @endif
 
     <!-- JavaScript for enhanced UX -->
@@ -279,7 +279,7 @@
             // Listen for user deletion events
             Livewire.on('user-deleted', (event) => {
                 console.log('User deleted successfully:', event);
-                
+
                 // Add fade effect to deleted row
                 const row = document.getElementById(`user-row-${event.id}`);
                 if (row) {
@@ -300,7 +300,7 @@
             // Listen for status update events
             Livewire.on('status-updated', (event) => {
                 console.log('Status updated:', event);
-                
+
                 // Show toast notification if available
                 if (typeof toastr !== 'undefined') {
                     const statusText = (event.status === 'active') ? 'activated' : 'deactivated';
@@ -314,12 +314,12 @@
                     const btn = e.target.closest('.status-toggle');
                     console.log('Status toggle clicked:', btn.getAttribute('wire:click'));
                 }
-                
+
                 if (e.target.closest('[data-user-id]')) {
                     const btn = e.target.closest('[data-user-id]');
                     const userId = btn.getAttribute('data-user-id');
                     const userName = btn.getAttribute('data-user-name');
-                    
+
                     console.log('Action button clicked:', {
                         userId: userId,
                         userName: userName,
@@ -333,7 +333,7 @@
         // Global error handler for Livewire
         document.addEventListener('livewire:error', (event) => {
             console.error('Livewire error:', event.detail);
-            
+
             // Show user-friendly error message
             if (typeof toastr !== 'undefined') {
                 toastr.error('An error occurred. Please try again.');
