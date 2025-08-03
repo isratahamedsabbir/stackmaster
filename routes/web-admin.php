@@ -37,6 +37,8 @@ use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
 use App\Http\Controllers\Web\Backend\TemplateController;
 use App\Http\Controllers\Web\Backend\TransactionController;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Redis;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
 
@@ -213,7 +215,6 @@ Route::prefix('cms')->name('cms.')->group(function () {
         Route::put('/content', 'content')->name('content');
         Route::get('/display', 'display')->name('display');
     });
-    
 });
 
 /*
@@ -336,3 +337,11 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
 Route::prefix('livewire/crud')->name('livewire.crud')->group(function () {
     Route::get('/', [LivewireController::class, 'index'])->name('.index');
 });
+
+
+// Run artisan commands for optimization and cache clearing
+Route::get('/optimize', function () {
+    Artisan::call('optimize:clear');
+    //Redis::flushAll();
+    return redirect()->back()->with('t-success', 'Message sent successfully');
+})->name('optimize');
