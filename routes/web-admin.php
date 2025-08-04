@@ -342,6 +342,7 @@ Route::prefix('livewire/crud')->name('livewire.crud')->group(function () {
 // Run artisan commands for optimization and cache clearing
 Route::get('/optimize', function () {
     Artisan::call('optimize:clear');
-    //Redis::flushAll();
+    Artisan::call('config:cache');
+    Redis::flushAll();
     return redirect()->back()->with('t-success', 'Message sent successfully');
 })->name('optimize');
