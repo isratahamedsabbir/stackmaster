@@ -1,15 +1,16 @@
 <?php
 function adminMenu($menus, $groupedMenus)
 {
-    echo '<ul class="list-group">';
+    echo '<ul id="sortable" class="list-group">';
     foreach ($menus as $menu) {
         $menuJson = htmlspecialchars(json_encode($menu), ENT_QUOTES, 'UTF-8');
+
         $name = $menu->name;
         if (strlen($name) > 20) {
             $name = substr($name, 0, 17) . '...';
         }
 
-        echo '<li onclick="openEditor(' . $menuJson . ')" class="list-group-item d-flex justify-content-between align-items-center mb-3 bg-success text-white" style="border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">';
+        echo '<li onclick="openEditor(' . $menuJson . ')" class="list-group-item d-flex justify-content-between align-items-center mb-3 bg-success text-white ui-state-default" style="border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">';
 
         // Flex row: title on left, delete icon on right
         echo '<div class="d-flex justify-content-between w-100 align-items-center">';
@@ -23,7 +24,7 @@ function adminMenu($menus, $groupedMenus)
 
         // Render children
         if (isset($groupedMenus[$menu->id])) {
-            echo '<li class="ms-4">';
+            echo '<li class="ms-5">';
             adminMenu($groupedMenus[$menu->id], $groupedMenus);
             echo '</li>';
         }
@@ -36,7 +37,7 @@ function adminMenu($menus, $groupedMenus)
 @extends('backend.app', ['title' => 'Menu'])
 
 @push('styles')
-<link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
 @endpush
 
 
@@ -114,7 +115,7 @@ function adminMenu($menus, $groupedMenus)
                                                 <select class="form-control @error('parent_id') is-invalid @enderror" name="parent_id" id="parent_id">
                                                     <option value="">Select Parent</option>
                                                     @foreach($menus as $childs)
-                                                        <option value="{{ $childs->id }}" {{ old('parent_id') == $childs->parent_id ? 'selected' : '' }}>{{ $childs->name }}</option>
+                                                    <option value="{{ $childs->id }}" {{ old('parent_id') == $childs->parent_id ? 'selected' : '' }}>{{ $childs->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 @error('parent_id')
@@ -146,8 +147,8 @@ function adminMenu($menus, $groupedMenus)
 @endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script>
-    
     function openCreate() {
         $('#formTitle').text('Create Menu');
         $('#form').attr('action', "{{ route('admin.menu.store') }}");
@@ -160,7 +161,20 @@ function adminMenu($menus, $groupedMenus)
         $('#form').attr('action', "{{ route('admin.menu.update', ':id') }}".replace(':id', menu.id));
         $('#name').val(menu.name);
         $('#parent_id').val(menu.parent_id);
-        $('#parent_id option[value="'+menu.id+'"]').remove();
+        $('#parent_id option[value="' + menu.id + '"]').remove();
     }
+</script>
+<script>
+    $(function () {
+        $("#sortable").sortable({
+            placeholder: "ui-state-highlight",
+            update: function (event, ui) {
+                let sortedIDs = $(this).sortable("toArray", { attribute: 'data-id' });
+                console.log(sortedIDs); // You can send this to server via AJAX
+            }
+        });
+
+        $("#sortable").disableSelection();
+    });
 </script>
 @endpush
