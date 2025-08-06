@@ -47,6 +47,12 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-lg-12 mb-2" id="pagenation" style="text-align: center">
+                    <!-- Pagination will be dynamically generated here -->
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -54,27 +60,31 @@
 @endsection
 @push('scripts')
 <script>
-    function imagesLoad() {
+    function imagesLoad(page = 1) {
+        NProgress.start();
         $('#image_load').empty();
         $.ajax({
-            url: `{{ route('ajax.gallery.all') }}`,
+            url: `{{ route('ajax.gallery.all') }}?page=${page}`,
             type: 'GET',
             success: function(resp) {
-                let html = '';
-                $.each(resp.data, function(key, image) {
-                    html += `<div style="height: 150px; width: 150px; object-fit: cover; display: inline-block; margin: 5px">
+                NProgress.done();
+                
+                // Clear previous images
+                let imagehtml = '';
+                $.each(resp.files.data, function(key, image) {
+                    imagehtml += `<div style="height: 150px; width: 150px; object-fit: cover; display: inline-block; margin: 5px">
                                 <div class="position-relative">
-                                    <img src="` + image.src + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover;">
+                                    <img src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover;">
 
                                     <!-- Trash Icon -->
                                     <i class="fa fa-trash position-absolute top-0 start-0 d-flex align-items-center justify-content-center bg-white text-danger p-1 rounded-circle icon-btn"
                                     style="cursor: pointer; width: 30px; height: 30px;"
-                                    data-name="` + image.name + `"
+                                    data-id="` + image.id + `"
                                     onclick="deleteImage(event)">
                                     </i>
 
                                     <!-- Link Icon -->
-                                    <a href="` + image.src + `" target="_blank"
+                                    <a href="` + image.path + `" target="_blank"
                                     class="position-absolute top-0 end-0 d-flex align-items-center justify-content-center bg-white text-info p-1 rounded-circle icon-btn"
                                     style="cursor: pointer; width: 30px; height: 30px;">
                                         <i class="fa-solid fa-link"></i>
@@ -82,9 +92,53 @@
                                 </div>
                             </div>`;
                 });
-                $('#image_load').html(html);
+                $('#image_load').html(imagehtml);
+
+                // Pagination
+                let paginationHtml = '';
+                if (resp.files.last_page > 1) {
+                    const currentPage = resp.files.current_page;
+                    const totalPages = resp.files.last_page;
+                    const delta = 2;
+                    const range = [];
+                    const rangeWithDots = [];
+                    let l;
+
+                    range.push(1);
+
+                    if (currentPage - delta > 2) {
+                        range.push('...');
+                    }
+
+                    for (let i = Math.max(2, currentPage - delta); i <= Math.min(currentPage + delta, totalPages - 1); i++) {
+                        range.push(i);
+                    }
+
+                    l = totalPages - 1;
+                    if (currentPage + delta < totalPages - 1) {
+                        range.push('...', l);
+                    } else {
+                        range.push(l);
+                    }
+
+                    range.push(totalPages);
+
+                    for (let i = 0; i < range.length; i++) {
+                        if (range[i] === currentPage) {
+                            rangeWithDots.push(`<button class="btn btn-primary" onclick="imagesLoad(${range[i]})">${range[i]}</button>`);
+                        } else if (typeof range[i] === 'number') {
+                            rangeWithDots.push(`<button class="btn btn-secondary" onclick="imagesLoad(${range[i]})">${range[i]}</button>`);
+                        } else {
+                            rangeWithDots.push(`<button class="btn btn-secondary" disabled>${range[i]}</button>`);
+                        }
+                    }
+
+                    paginationHtml += rangeWithDots.join('');
+                }
+                $('#pagenation').html(paginationHtml);
             },
             error: function(resp) {
+                NProgress.done();
                 $('#image_load').html(resp.message);
             }
         });
@@ -96,10 +150,10 @@
         event.preventDefault();
         if (confirm("Are you sure you want to delete this image?")) {
             NProgress.start();
-            let name = $(event.target).data('name');
-            console.log(name);
+            let id = $(event.target).data('id');
+            console.log(id);
             $.ajax({
-                url: `{{ route('ajax.gallery.destroy', ':name') }}`.replace(':name', name),
+                url: `{{ route('ajax.gallery.destroy', ':id') }}`.replace(':id', id),
                 type: 'GET',
                 success: function(resp) {
                     NProgress.done();
@@ -119,13 +173,13 @@
         let files = $(this)[0].files;
 
         for (let i = 0; i < files.length; i++) {
-            data.append('images[]', files[i]); // append each file with `images[]` name
+            data.append('images[]', files[i]);
         }
 
         NProgress.start();
 
         $.ajax({
-            url: `{{ route('ajax.gallery.store') }}`, // replace with your actual route if needed
+            url: `{{ route('ajax.gallery.store') }}`,
             type: 'POST',
             data: data,
             contentType: false,

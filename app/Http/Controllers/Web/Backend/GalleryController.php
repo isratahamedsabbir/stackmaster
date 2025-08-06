@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\File;
 
 class GalleryController extends Controller
 {
@@ -16,41 +16,31 @@ class GalleryController extends Controller
 
     public function list()
     {
-        $imagesDirectory = public_path("uploads/gallery/");
-        $files = array_values(array_diff(scandir($imagesDirectory), ['.', '..']));
-        $imageFiles = array_filter($files, function ($file) use ($imagesDirectory) {
-            return is_file($imagesDirectory . $file);
-        });
-
-        $data = [];
-
-        foreach ($imageFiles as $file) {
-            $data[$file] = [
-                'name' => encrypt($file),
-                'src' => asset("uploads/gallery/$file")
-            ];
-        }
-
+        $files = File::where('type', 'image')->paginate(4);
         return response()->json([
             'status' => 'success',
-            'data' => $data
+            'files' => $files
         ]);
     }
 
     public function store(Request $request)
     {
-        // Validation (optional but recommended)
         $request->validate([
-            'images' => 'required|array',
+            'images'   => 'required|array',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         $files = $request->file('images');
-        $imagesDirectory = public_path("uploads/gallery/");
 
         foreach ($files as $file) {
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move($imagesDirectory, $filename);
+            $file->move(public_path("uploads/gallery/"), $filename);
+            File::create([
+                'name' => $filename,
+                'path' => "uploads/gallery/$filename",
+                'type' => 'image',
+                'mime_type' => $file->getClientMimeType()
+            ]);
         }
 
         return response()->json([
@@ -59,15 +49,17 @@ class GalleryController extends Controller
         ]);
     }
 
-    public function destroy($name)
+    public function destroy($id)
     {
+        $id = $id;
 
-        $name = decrypt($name);
-        $imagesDirectory = public_path("uploads/gallery/$name");
+        $file = File::findOrFail($id);
 
-        if (file_exists($imagesDirectory)) {
-            unlink($imagesDirectory);
+        if (file_exists(public_path($file->path))) {
+            unlink(public_path($file->path));
         }
+
+        $file->delete();
 
         return response()->json([
             'status' => 'success',
