@@ -60,6 +60,8 @@
 @endsection
 @push('scripts')
 <script>
+    let global_page = 1;
+
     function imagesLoad(page = 1) {
         NProgress.start();
         $('#image_load').empty();
@@ -69,18 +71,24 @@
             success: function(resp) {
                 NProgress.done();
                 
+                global_page = resp.files.current_page;
+                if (page > resp.files.last_page) {
+                    imagesLoad(resp.files.last_page);
+                }
+
                 // Clear previous images
                 let imagehtml = '';
                 $.each(resp.files.data, function(key, image) {
                     imagehtml += `<div style="height: 150px; width: 150px; object-fit: cover; display: inline-block; margin: 5px">
                                 <div class="position-relative">
-                                    <img src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover;">
+                                    <img onclick="alert('` + image.id + `')" data-src="` + image.path + `" src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover; cursor: pointer;">
 
                                     <!-- Trash Icon -->
                                     <i class="fa fa-trash position-absolute top-0 start-0 d-flex align-items-center justify-content-center bg-white text-danger p-1 rounded-circle icon-btn"
                                     style="cursor: pointer; width: 30px; height: 30px;"
                                     data-id="` + image.id + `"
-                                    onclick="deleteImage(event)">
+                                    title="Delete Image"
+                                    onclick="deleteImage(event, this)">
                                     </i>
 
                                     <!-- Link Icon -->
@@ -89,6 +97,7 @@
                                     style="cursor: pointer; width: 30px; height: 30px;">
                                         <i class="fa-solid fa-link"></i>
                                     </a>
+
                                 </div>
                             </div>`;
                 });
@@ -102,7 +111,6 @@
                     const delta = 2;
                     const range = [];
                     const rangeWithDots = [];
-                    let l;
 
                     range.push(1);
 
@@ -110,18 +118,19 @@
                         range.push('...');
                     }
 
-                    for (let i = Math.max(2, currentPage - delta); i <= Math.min(currentPage + delta, totalPages - 1); i++) {
+                    for (
+                        let i = Math.max(2, currentPage - delta); i <= Math.min(currentPage + delta, totalPages - 1); i++
+                    ) {
                         range.push(i);
                     }
 
-                    l = totalPages - 1;
                     if (currentPage + delta < totalPages - 1) {
-                        range.push('...', l);
-                    } else {
-                        range.push(l);
+                        range.push('...');
                     }
 
-                    range.push(totalPages);
+                    if (totalPages > 1) {
+                        range.push(totalPages);
+                    }
 
                     for (let i = 0; i < range.length; i++) {
                         if (range[i] === currentPage) {
@@ -136,6 +145,7 @@
                     paginationHtml += rangeWithDots.join('');
                 }
                 $('#pagenation').html(paginationHtml);
+
             },
             error: function(resp) {
                 NProgress.done();
@@ -151,13 +161,14 @@
         if (confirm("Are you sure you want to delete this image?")) {
             NProgress.start();
             let id = $(event.target).data('id');
-            console.log(id);
+
             $.ajax({
                 url: `{{ route('ajax.gallery.destroy', ':id') }}`.replace(':id', id),
                 type: 'GET',
                 success: function(resp) {
                     NProgress.done();
-                    imagesLoad();
+                    console.log(global_page);
+                    imagesLoad(global_page);
                     toastr.success(resp.message);
                 },
                 error: function(resp) {
@@ -189,7 +200,9 @@
             },
             success: function(resp) {
                 NProgress.done();
-                $('#images').val('');
+                $('.dropify-clear').click();
+                $('#image_load').empty();
+                $('#pagenation').empty();
                 imagesLoad();
                 toastr.success(resp.message);
             },

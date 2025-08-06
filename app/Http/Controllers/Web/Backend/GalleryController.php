@@ -16,7 +16,7 @@ class GalleryController extends Controller
 
     public function list()
     {
-        $files = File::where('type', 'image')->paginate(4);
+        $files = File::where('type', 'image')->orderBy('id', 'desc')->paginate(12);
         return response()->json([
             'status' => 'success',
             'files' => $files
