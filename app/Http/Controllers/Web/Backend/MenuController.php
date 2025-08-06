@@ -94,39 +94,11 @@ class MenuController extends Controller
         return redirect()->route('admin.menu.index')->with('t-success', 'post created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Menu $post, $id)
-    {
-        $post = Menu::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
-        return view('backend.layouts.menu.show', compact('post'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Menu $post, $id)
-    {
-        $post = Menu::findOrFail($id);
-        $categories = Category::where('status', 'active')->get();
-        $subcategories = Subcategory::where('status', 'active')->get();
-        return view('backend.layouts.menu.edit', compact('post', 'categories', 'subcategories'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'title'             => 'required|max:250',
-            'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'category_id'       => 'required|exists:categories,id',
-            'subcategory_id'    => 'required|exists:subcategories,id',
-            'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'name'         => 'required|max:50',
+            'parent_id'    => 'nullable|exists:menus,id|not_in:' . $id,
         ]);
 
         if ($validator->fails()) {
@@ -142,72 +114,31 @@ class MenuController extends Controller
                 $validate['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
             }
 
-            $post->title = $data['title'];
-            $post->thumbnail = $data['thumbnail'] ?? $post->thumbnail;
-            $post->content = $data['content'];
-            $post->category_id = $data['category_id'];
-            $post->subcategory_id = $data['subcategory_id'];
+            $post->name = $data['name'];
+            $post->parent_id = $data['parent_id'] ?? null;
             $post->save();
 
-            //image insert
-            $image_count = Image::where('post_id', $post->id)->count();
-            $new_images_count = $request->has('images') ? count($request['images']) : 0;
+            session()->put('t-success', 'updated successfully');
 
-            if (($image_count + $new_images_count) > 3) {
-                session()->put('t-error', 'Please select at most 3 images');
-            } else {
-                if ($new_images_count > 0) {
-                    foreach ($request->file('images') as $image) {
-                        $imageName = 'images_' . Str::random(10);
-                        $uploadedImagePath = Helper::fileUpload($image, 'post', $imageName);
-                        Image::create(['post_id' => $post->id, 'path' => $uploadedImagePath]);
-                    }
-                }
-            }
-
-            session()->put('t-success', 'post updated successfully');
         } catch (Exception $e) {
 
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.menu.edit', $post->id)->with('t-success', 'post updated successfully');
+        return redirect()->back()->with('t-success', 'updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
-
-            $data = Menu::findOrFail($id);
-
-            if ($data->thumbnail && file_exists(public_path($data->thumbnail))) {
-                Helper::fileDelete(public_path($data->thumbnail));
-            }
-
-            $images = Image::where('post_id', $data->id)->get();
-            if (count($images) > 0) {
-                foreach ($images as $image) {
-                    if ($image->path && file_exists(public_path($image->path))) {
-                        Helper::fileDelete(public_path($image->path));
-                    }
-                    $image->delete();
-                }
-            }
-
-            $data->delete();
-            return response()->json([
-                'status' => 't-success',
-                'message' => 'Your action was successful!'
-            ]);
+            $menu = Menu::findOrFail($id);
+            $menu->delete();
+            session()->put('t-success', 'Menu deleted successfully');
         } catch (Exception $e) {
-            return response()->json([
-                'status' => 't-error',
-                'message' => 'Your action was successful!'
-            ]);
+            session()->put('t-error', $e->getMessage());
         }
+
+        return redirect()->route('admin.menu.index');
     }
 
     public function status(int $id): JsonResponse
@@ -226,4 +157,5 @@ class MenuController extends Controller
             'message' => 'Your action was successful!',
         ]);
     }
+
 }
