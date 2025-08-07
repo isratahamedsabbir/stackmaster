@@ -1,5 +1,6 @@
 {
     "Project": true,
     "Portfolio": true,
-    "Gallery": true
+    "Gallery": true,
+    "Chat": true
 }

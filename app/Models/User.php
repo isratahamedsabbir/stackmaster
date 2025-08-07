@@ -108,30 +108,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(FirebaseTokens::class);
     }
 
-    //chat model relation
-    public function senders() {
-        return $this->hasMany(Chat::class, 'sender_id');
-    }
-
-    public function receivers() {
-        return $this->hasMany(Chat::class, 'receiver_id');
-    }
-
-    public function roomsAsUserOne()
-    {
-        return $this->hasMany(Room::class, 'user_one_id');
-    }
-
-    public function roomsAsUserTwo()
-    {
-        return $this->hasMany(Room::class, 'user_two_id');
-    }
-
-    public function allRooms()
-    {
-        return Room::where('user_one_id', $this->id)->orWhere('user_two_id', $this->id);
-    }
-
     public function profile() {
         return $this->hasOne(Profile::class);
     }
@@ -150,6 +126,32 @@ class User extends Authenticatable implements JWTSubject
 
     public function products() {
         return $this->hasMany(Product::class);
+    }
+
+    //chat related methods
+    public function senders()
+    {
+        return $this->hasMany(Chat::class, 'sender_id');
+    }
+
+    public function receivers()
+    {
+        return $this->hasMany(Chat::class, 'receiver_id');
+    }
+
+    public function roomsAsUserOne()
+    {
+        return $this->hasMany(Room::class, 'user_one_id');
+    }
+
+    public function roomsAsUserTwo()
+    {
+        return $this->hasMany(Room::class, 'user_two_id');
+    }
+
+    public function allRooms()
+    {
+        return Room::where('user_one_id', $this->id)->orWhere('user_two_id', $this->id);
     }
     
 }
