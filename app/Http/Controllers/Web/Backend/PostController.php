@@ -20,7 +20,7 @@ class PostController extends Controller
 {
 
     public $route = 'admin.post';
-    public $view = 'admin.post';
+    public $view = 'backend.layouts.post';
     /**
      * Display a listing of the resource.
      */
