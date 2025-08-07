@@ -35,7 +35,7 @@ use App\Http\Controllers\Web\Backend\Settings\SignatureController;
 use App\Http\Controllers\Web\Backend\SocialLinkController;
 use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
-use App\Http\Controllers\Web\Backend\TemplateController;
+use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Redis;
@@ -58,7 +58,7 @@ Route::controller(MenuController::class)->prefix('menu')->name('menu.')->group(f
     Route::get('/status/{id}', 'status')->name('status');
 });
 
-Route::controller(TemplateController::class)->prefix('template')->name('template.')->group(function () {
+Route::controller(TemplateEmailController::class)->prefix('template/email')->name('template.email.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');

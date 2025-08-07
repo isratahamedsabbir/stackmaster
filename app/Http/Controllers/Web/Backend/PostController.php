@@ -20,6 +20,7 @@ class PostController extends Controller
 {
 
     public $route = 'admin.post';
+    public $view = 'admin.post';
     /**
      * Display a listing of the resource.
      */
@@ -80,7 +81,7 @@ class PostController extends Controller
                 ->make();
         }
 
-        return view("backend.layouts.post.index", ['route' => $this->route]);
+        return view($this->view . ".index", ['route' => $this->route]);
         
     }
 
@@ -90,7 +91,7 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.post.create', [
+        return view($this->view . ".create", [
             'categories' => $categories,
             'route' => $this->route
         ]);
@@ -151,7 +152,7 @@ class PostController extends Controller
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.post.index')->with('t-success', 'post created successfully');
+        return redirect()->route($this->route . '.index')->with('t-success', 'post created successfully');
     }
 
     /**
@@ -160,7 +161,7 @@ class PostController extends Controller
     public function show(Post $post, $id)
     {
         $post = Post::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
-        return view('backend.layouts.post.show', [
+        return view($this->view . ".show", [
             'post' => $post,
             'route' => $this->route
         ]);
@@ -174,7 +175,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $categories = Category::where('status', 'active')->get();
         $subcategories = Subcategory::where('status', 'active')->get();
-        return view('backend.layouts.post.edit', [
+        return view($this->view . ".edit", [
             'post' => $post,
             'categories' => $categories,
             'subcategories' => $subcategories,
@@ -239,7 +240,7 @@ class PostController extends Controller
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.post.edit', $post->id)->with('t-success', 'post updated successfully');
+        return redirect()->route($this->route . '.edit', $post->id)->with('t-success', 'post updated successfully');
     }
 
     /**

@@ -142,10 +142,13 @@
                     </ul>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.template.*') ? 'has-link active' : '' }}" href="{{ route('admin.template.index') }}">
+                    <a class="side-menu__item {{  request()->routeIs('admin.template.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <i class="fa-solid fa-synagogue side-menu__icon"></i>
-                        <span class="side-menu__label">Template</span>
+                        <span class="side-menu__label">Template</span><i class="angle fa fa-angle-right"></i>
                     </a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.template.email.index') }}" class="slide-item">Email Template</a></li>
+                    </ul>
                 </li>
                 <li>
                     <h3>CMS</h3>

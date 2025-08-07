@@ -1,4 +1,4 @@
-@extends('backend.app', ['title' => 'Post'])
+@extends('backend.app', ['title' => 'Email Template'])
 
 @push('styles')
 <link href="{{ asset('default/datatable.css') }}" rel="stylesheet" />
@@ -17,11 +17,11 @@
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Post</h1>
+                    <h1 class="page-title">Email Template</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Post</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email Template</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Index</li>
                     </ol>
                 </div>
@@ -44,11 +44,8 @@
                                     <thead>
                                         <tr>
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Title</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Category</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Subcategory</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Author</th>
-                                            <th class="bg-transparent border-bottom-0">Thumbnail</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Name</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Slug</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
                                         </tr>
@@ -71,5 +68,5 @@
 @endsection
 
 @push('scripts')
-@include('backend.layouts.post._script')
+@include('backend.layouts.template.email._script')
 @endpush
