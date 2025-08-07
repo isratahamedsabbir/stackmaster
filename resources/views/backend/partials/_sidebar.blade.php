@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Facades\Route;
+@endphp
+
 <!--APP-SIDEBAR-->
 <div class="sticky">
     <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
@@ -173,8 +177,6 @@
                         <span class="side-menu__label">FAQ</span>
                     </a>
                 </li>
-
-
 
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="#">
