@@ -55,6 +55,12 @@
                     </a>
                 </li>
                 <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.attribute.*') ? 'has-link active' : '' }}" href="{{ route('admin.attribute.index') }}">
+                        <i class="fa-solid fa-eye side-menu__icon"></i>
+                        <span class="side-menu__label">Attribute</span>
+                    </a>
+                </li>
+                <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.order.*') ? 'has-link active' : '' }}" href="{{ route('admin.order.index') }}">
                         <i class="fa-solid fa-truck side-menu__icon"></i>
                         <span class="side-menu__label">Order</span>

@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Property;
+use Attribute;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,5 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PageSeeder::class); 
         $this->call(TransactionSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(AttributeSeeder::class);
+        $this->call(PropertySeeder::class);
     }
 }
