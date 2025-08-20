@@ -29,7 +29,7 @@
                 pagingType: "full_numbers",
                 dom: "<'row justify-content-between table-topbar'<'col-md-4 col-sm-3'l><'col-md-5 col-sm-5 px-0'f>>tipr",
                 ajax: {
-                    url: "{{ route($route . '.index') }}",
+                    url: "{{ route($route . '.index', $attribute_id) }}",
                     type: "GET",
                 },
 
@@ -40,34 +40,16 @@
                         searchable: false
                     },
                     {
-                        data: 'title',
-                        name: 'title',
+                        data: 'name',
+                        name: 'name',
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: 'category',
-                        name: 'category',
+                        data: 'attribute',
+                        name: 'attribute',
                         orderable: true,
                         searchable: true
-                    },
-                    {
-                        data: 'subcategory',
-                        name: 'subcategory',
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: 'author',
-                        name: 'author',
-                        orderable: true,
-                        searchable: true
-                    },
-                    {
-                        data: 'thumbnail',
-                        name: 'thumbnail',
-                        orderable: false,
-                        searchable: false
                     },
                     {
                         data: 'status',

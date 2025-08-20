@@ -177,6 +177,12 @@
         window.location.href = url.replace(':id', id);
     }
 
+    //property
+    function goToProperty(id) {
+        let url = "{{ route('admin.property.index', ':id') }}";
+        window.location.href = url.replace(':id', id);
+    }
+
     //view
     function goToOpen(id) {
         let url = "{{ route($route . '.show', ':id') }}";

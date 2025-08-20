@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers\Web\Backend;
 
-use App\Helpers\Helper;
-use App\Models\Post;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Image;
-use App\Models\Subcategory;
+use App\Models\Attribute;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -24,32 +20,24 @@ class PropertyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $attribute_id)
     {
+        
         if ($request->ajax()) {
-            $data = Post::with(['category', 'subcategory', 'user'])->orderBy('id', 'desc')->get();
+            $data = Property::query()
+            ->where('attribute_id', $attribute_id)
+            ->with(['attribute'])
+            ->orderBy('id', 'desc')
+            ->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('category', function ($data) {
-                    return "<a href='" . route('admin.category.show', $data->category_id) . "'>" . $data->category->name . "</a>";
-                })
-                ->addColumn('subcategory', function ($data) {
-                    return "<a href='" . route('admin.subcategory.show', $data->subcategory_id) . "'>" . $data->subcategory->name . "</a>";
-                })
-                ->addColumn('author', function ($data) {
-                    return "<a href='" . route('admin.users.show', $data->user_id) . "'>" . $data->user->name . "</a>";
-                })
-                ->addColumn('title', function ($data) {
-                    return Str::limit($data->title, 20);
-                })
-                ->addColumn('thumbnail', function ($data) {
-                    $url = asset($data->thumbnail && file_exists(public_path($data->thumbnail)) ? $data->thumbnail : 'default/logo.svg');
-                    return '<img src="' . $url . '" alt="image" style="width: 50px; max-height: 100px; margin-left: 20px;">';
+                ->addColumn('attribute', function ($data) {
+                    return "<a href='" . route('admin.attribute.show', $data->attribute_id) . "'>" . $data->attribute->name . "</a>";
                 })
                 ->addColumn('status', function ($data) {
 
-                    $backgroundColor = $data->status == "active" ? '#4CAF50' : '#ccc';
-                    $sliderTranslateX = $data->status == "active" ? '26px' : '2px';
+                    $backgroundColor = $data->status == 1 ? '#4CAF50' : '#ccc';
+                    $sliderTranslateX = $data->status == 1 ? '26px' : '2px';
                     $sliderStyles = "position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background-color: white; border-radius: 50%; transition: transform 0.3s ease; transform: translateX($sliderTranslateX);";
 
                     $status = '<div class="form-check form-switch" style="margin-left:40px; position: relative; width: 50px; height: 24px; background-color: ' . $backgroundColor . '; border-radius: 12px; transition: background-color 0.3s ease; cursor: pointer;">';
@@ -77,11 +65,15 @@ class PropertyController extends Controller
                                 </a>
                             </div>';
                 })
-                ->rawColumns(['category', 'subcategory', 'author', 'title', 'thumbnail', 'status', 'action'])
+                ->rawColumns(['attribute', 'status', 'action'])
                 ->make();
         }
 
-        return view($this->view . ".index", ['route' => $this->route]);
+        return view($this->view . ".index", [
+            'attribute_id' => $attribute_id,
+            'route' => $this->route,
+            'view' => $this->view
+        ]);
         
     }
 
@@ -90,10 +82,11 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', 'active')->get();
+        $attributes = Attribute::where('status', 1)->get();
         return view($this->view . ".create", [
-            'categories' => $categories,
-            'route' => $this->route
+            'attributes' => $attributes,
+            'route' => $this->route,
+            'view' => $this->view
         ]);
     }
 
@@ -103,13 +96,8 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'             => 'required|max:250',
-            'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'category_id'       => 'required|exists:categories,id',
-            'subcategory_id'    => 'required|exists:subcategories,id',
-            'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'name'             => 'required|max:50',
+            'attribute_id'     => 'required|exists:attributes,id',
         ]);
 
         if ($validator->fails()) {
@@ -118,68 +106,42 @@ class PropertyController extends Controller
 
         try {
             $data = $validator->validated();
-
-            $post = new Post();
-
-            $post->user_id = auth('web')->user()->id;
-
-            if ($request->hasFile('thumbnail')) {
-                $data['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
-            }
-
-            $post->slug = Helper::makeSlug(Post::class, $data['title']);
-
-            $post->title = $data['title'];
-            $post->thumbnail = $data['thumbnail'];
-            $post->content = $data['content'];
-            $post->category_id = $data['category_id'];
-            $post->subcategory_id = $data['subcategory_id'];
-            $post->save();
-
-            if (isset($request['images']) && count($request['images']) > 0 && count($request['images']) <= 3) {
-                foreach ($request['images'] as $image) {
-                    $imageName = 'images_' . Str::random(10);
-                    $image = Helper::fileUpload($image, 'post', $imageName);
-                    Image::create(['post_id' => $post->id, 'path' => $image]);
-                }
-            } else {
-                session()->put('t-error', 'Please select at least one image and maximum 3 images');
-            }
-
-            session()->put('t-success', 'post created successfully');
+            $property = new Property();
+            $property->name = $data['name'];
+            $property->attribute_id = $data['attribute_id'];
+            $property->save();
+            $message = 'post created successfully';
         } catch (Exception $e) {
-
-            session()->put('t-error', $e->getMessage());
+            $message = $e->getMessage();
         }
-
-        return redirect()->route($this->route . '.index')->with('t-success', 'post created successfully');
+        return redirect()->route($this->route . '.index')->with('t-success', $message);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post, $id)
+    public function show(Property $property, $id)
     {
-        $post = Post::with(['category', 'subcategory', 'user'])->where('id', $id)->first();
+        $property = Property::with(['attribute'])->where('id', $id)->first();
         return view($this->view . ".show", [
-            'post' => $post,
-            'route' => $this->route
+            'property' => $property,
+            'route' => $this->route,
+            'view' => $this->view
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post, $id)
+    public function edit(Property $property, $id)
     {
-        $post = Post::findOrFail($id);
-        $categories = Category::where('status', 'active')->get();
-        $subcategories = Subcategory::where('status', 'active')->get();
+        $property = Property::findOrFail($id);
+        $attributes = Attribute::where('status', 1)->get();
         return view($this->view . ".edit", [
-            'post' => $post,
-            'categories' => $categories,
-            'subcategories' => $subcategories,
-            'route' => $this->route
+            'property' => $property,
+            'attributes' => $attributes,
+            'route' => $this->route,
+            'view' => $this->view
         ]);
     }
 
@@ -189,13 +151,8 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'title'             => 'required|max:250',
-            'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'category_id'       => 'required|exists:categories,id',
-            'subcategory_id'    => 'required|exists:subcategories,id',
-            'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'name'             => 'required|max:50',
+            'attribute_id'     => 'required|exists:attributes,id',
         ]);
 
         if ($validator->fails()) {
@@ -204,43 +161,15 @@ class PropertyController extends Controller
 
         try {
             $data = $validator->validated();
-
-            $post = Post::findOrFail($id);
-
-            if ($request->hasFile('thumbnail')) {
-                $validate['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
-            }
-
-            $post->title = $data['title'];
-            $post->thumbnail = $data['thumbnail'] ?? $post->thumbnail;
-            $post->content = $data['content'];
-            $post->category_id = $data['category_id'];
-            $post->subcategory_id = $data['subcategory_id'];
-            $post->save();
-
-            //image insert
-            $image_count = Image::where('post_id', $post->id)->count();
-            $new_images_count = $request->has('images') ? count($request['images']) : 0;
-
-            if (($image_count + $new_images_count) > 3) {
-                session()->put('t-error', 'Please select at most 3 images');
-            } else {
-                if ($new_images_count > 0) {
-                    foreach ($request->file('images') as $image) {
-                        $imageName = 'images_' . Str::random(10);
-                        $uploadedImagePath = Helper::fileUpload($image, 'post', $imageName);
-                        Image::create(['post_id' => $post->id, 'path' => $uploadedImagePath]);
-                    }
-                }
-            }
-
-            session()->put('t-success', 'post updated successfully');
+            $property = Property::findOrFail($id);
+            $property->name = $data['name'];
+            $property->save();
+            $message = 'post updated successfully';
         } catch (Exception $e) {
-
-            session()->put('t-error', $e->getMessage());
+            $message = $e->getMessage();
         }
 
-        return redirect()->route($this->route . '.edit', $post->id)->with('t-success', 'post updated successfully');
+        return redirect()->route($this->route . '.edit', $property->id)->with('t-success', $message);
     }
 
     /**
@@ -249,22 +178,7 @@ class PropertyController extends Controller
     public function destroy(string $id)
     {
         try {
-
-            $data = Post::findOrFail($id);
-
-            if ($data->thumbnail && file_exists(public_path($data->thumbnail))) {
-                Helper::fileDelete(public_path($data->thumbnail));
-            }
-
-            $images = Image::where('post_id', $data->id)->get();
-            if (count($images) > 0) {
-                foreach ($images as $image) {
-                    if ($image->path && file_exists(public_path($image->path))) {
-                        Helper::fileDelete(public_path($image->path));
-                    }
-                    $image->delete();
-                }
-            }
+            $data = Property::findOrFail($id);
 
             $data->delete();
             return response()->json([
@@ -281,14 +195,14 @@ class PropertyController extends Controller
 
     public function status(int $id): JsonResponse
     {
-        $data = Post::findOrFail($id);
+        $data = Property::findOrFail($id);
         if (!$data) {
             return response()->json([
                 'status' => 't-error',
                 'message' => 'Item not found.',
             ]);
         }
-        $data->status = $data->status === 'active' ? 'inactive' : 'active';
+        $data->status = $data->status === 1 ? 0 : 1;
         $data->save();
         return response()->json([
             'status' => 't-success',

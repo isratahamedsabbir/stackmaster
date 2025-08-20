@@ -1,4 +1,4 @@
-@extends('backend.app', ['title' => 'Show Post'])
+@extends('backend.app', ['title' => 'Show Property'])
 
 @section('content')
 
@@ -11,11 +11,11 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Post</h1>
+                    <h1 class="page-title">Property</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Post</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Property</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Show</li>
                     </ol>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="col-md-12">
                     <div class="card post-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">{{ Str::limit($post->title, 50) }}</h3>
+                            <h3 class="card-title mb-0">{{ Str::limit($property->title, 50) }}</h3>
                             <div class="card-options">
                                 <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
                             </div>
@@ -35,14 +35,14 @@
                                 <tr>
                                     <th>Thumbnail</th>
                                     <td>
-                                        <a href="{{ asset($post->thumb ?? 'default/logo.png') }}" target="_blank"><img src="{{ asset($post->thumb ?? 'default/logo.png') }}" alt="" width="50" height="50" class="img-fluid"></a>
+                                        <a href="{{ asset($property->thumb ?? 'default/logo.png') }}" target="_blank"><img src="{{ asset($property->thumb ?? 'default/logo.png') }}" alt="" width="50" height="50" class="img-fluid"></a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Images</th>
                                     <td>
-                                        @if($post->images)
-                                        @foreach ($post->images as $image)
+                                        @if($property->images)
+                                        @foreach ($property->images as $image)
                                         <a href="{{ asset($image->path ?? 'default/logo.png') }}" target="_blank"><img src="{{ asset($image->path ?? 'default/logo.png') }}" class="img-fluid" alt="post image" width="50" height="50"></a>
                                         @endforeach
                                         @endif
@@ -50,41 +50,41 @@
                                 </tr>
                                 <tr>
                                     <th>Title</th>
-                                    <td>{{ $post->title ?? 'N/A' }}</td>
+                                    <td>{{ $property->title ?? 'N/A' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Slug</th>
-                                    <td>{{ $post->slug ?? 'N/A' }}</td>
+                                    <td>{{ $property->slug ?? 'N/A' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Author</th>
-                                    <td><a href="{{ route('admin.users.show', $post->user->id) }}">{{ $post->user->name }}</a></td>
+                                    <td><a href="{{ route('admin.users.show', $property->user->id) }}">{{ $property->user->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Category</th>
-                                    <td> <a href="{{ route('admin.category.show', $post->category->id) }}">{{ $post->category->name }}</a></td>
+                                    <td> <a href="{{ route('admin.category.show', $property->category->id) }}">{{ $property->category->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Subcategory</th>
-                                    <td> <a href="{{ route('admin.subcategory.show', $post->subcategory->id) }}">{{ $post->subcategory->name }}</a></td>
+                                    <td> <a href="{{ route('admin.subcategory.show', $property->subcategory->id) }}">{{ $property->subcategory->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Content</th>
-                                    <td>{!! $post->content ?? 'N/A' !!}</td>
+                                    <td>{!! $property->content ?? 'N/A' !!}</td>
                                 </tr>
                                 <tr>
                                     <th>Created At</th>
-                                    <td>{{ $post->created_at ? $post->created_at : 'N/A' }}</td>
+                                    <td>{{ $property->created_at ? $property->created_at : 'N/A' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Updated At</th>
-                                    <td>{{ $post->updated_at ? $post->updated_at : 'N/A' }}</td>
+                                    <td>{{ $property->updated_at ? $property->updated_at : 'N/A' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Action</th>
                                     <td>
-                                        <button class="btn btn-sm btn-danger" onclick="showDeleteConfirm(`{{ $post->id }}`)">Delete</button>
-                                        <button class="btn btn-sm btn-primary" onclick="goToEdit(`{{ $post->id }}`)">Edit</button>
+                                        <button class="btn btn-sm btn-danger" onclick="showDeleteConfirm(`{{ $property->id }}`)">Delete</button>
+                                        <button class="btn btn-sm btn-primary" onclick="goToEdit(`{{ $property->id }}`)">Edit</button>
                                     </td>
                                 </tr>
                             </table>

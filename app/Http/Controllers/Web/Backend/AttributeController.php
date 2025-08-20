@@ -47,6 +47,10 @@ class AttributeController extends Controller
                                     <i class="fe fe-edit"></i>
                                 </a>
 
+                                <a href="#" type="button" onclick="goToProperty(' . $data->id . ')" class="btn btn-info fs-14 text-white delete-icn" title="Property">
+                                    <i class="fe fe-sliders"></i>
+                                </a>
+
                                 <a href="#" type="button" onclick="goToOpen(' . $data->id . ')" class="btn btn-success fs-14 text-white delete-icn" title="Delete">
                                     <i class="fe fe-eye"></i>
                                 </a>
