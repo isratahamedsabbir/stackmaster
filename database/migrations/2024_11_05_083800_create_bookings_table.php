@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->float('price');
             $table->string('currency')->default('USD');
             $table->enum('gateway', ['stripe', 'paypal', 'manual']);
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
             $table->timestamps();
         });
