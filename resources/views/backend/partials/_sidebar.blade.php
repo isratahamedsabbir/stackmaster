@@ -1,5 +1,5 @@
 @php
-    use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;
 @endphp
 
 <!--APP-SIDEBAR-->
@@ -23,9 +23,18 @@
                 </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('dashboard') ? 'has-link active' : '' }}" href="{{ route('admin.dashboard') }}">
-                        <i class="fa-solid fa-house side-menu__icon""></i>
+                        <i class="fa-solid fa-house side-menu__icon"></i>
                         <span class=" side-menu__label">Dashboard</span>
                     </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.setting.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                        <i class="fa-solid fa-chart-simple side-menu__icon"></i>
+                        <span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.setting.general.index') }}" class="slide-item">General Settings</a></li>
+                    </ul>
                 </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
