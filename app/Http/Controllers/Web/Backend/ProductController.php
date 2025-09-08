@@ -232,4 +232,84 @@ class ProductController extends Controller
             'message' => 'Your action was successful!',
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'q' => 'required|string|max:191',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $products = Product::query()
+            ->select('id', 'name', 'description')
+            ->where('name', 'like', '%' . $request->q . '%')
+            ->orWhere('description', 'like', '%' . $request->q . '%')
+            ->limit(10)
+            ->get();
+
+        return response()->json($products);
+    }
+
+    public function filter(Request $request)
+    {
+        $sort_by = $request->sort_key;
+        $name = $request->name;
+        $min = $request->min;
+        $max = $request->max;
+
+        $products = Product::query();
+        $products->where('status', 'active');
+
+        if ($request->brands != null && $request->brands != "") {
+            $brand_ids = explode(',', $request->brands);
+            $products->whereIn('brand_id', $brand_ids);
+        }
+
+        if ($request->has('made_in') && $request->made_in != "") {
+            $made_in = explode(',', $request->made_in);
+            $products->whereIn('made_in', $made_in);
+        }
+
+        if ($name != null && $name != "") {
+            $products->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($min != null && $min != "" && is_numeric($min)) {
+            $products->where('unit_price', '>=', $min);
+        }
+
+        if ($max != null && $max != "" && is_numeric($max)) {
+            $products->where('unit_price', '<=', $max);
+        }
+
+        /* switch ($sort_by) {
+            case 'price_low_to_high':
+                $products->orderBy('unit_price', 'asc');
+                break;
+
+            case 'price_high_to_low':
+                $products->orderBy('unit_price', 'desc');
+                break;
+
+            case 'new_arrival':
+                $products->orderBy('created_at', 'desc');
+                break;
+
+            case 'popularity':
+                $products->orderBy('num_of_sale', 'desc');
+                break;
+
+            case 'top_rated':
+                $products->orderBy('rating', 'desc');
+                break;
+
+            default:
+                $products->orderBy('created_at', 'desc');
+                break;
+        } */
+
+        $products = $products->paginate(15);
+        return response()->json($products);
+    }
 }
