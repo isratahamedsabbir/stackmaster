@@ -1,13 +1,15 @@
 <?php
+
 use App\Models\CMS;
 use App\Enums\PageEnum;
 use App\Enums\SectionEnum;
 use App\Models\Setting;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 function getFileName($file): string
 {
-    return time().'_'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+    return time() . '_' . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 }
 function getEmailName($email): string
 {
@@ -19,7 +21,7 @@ function getCommonData()
     $common = CMS::where('page', PageEnum::COMMON)->where('status', 'active');
     foreach (SectionEnum::getCommon() as $key => $section) {
         $cms[$key] = (clone $common)->where('section', $key)->latest()->take($section['item'])->{$section['type']}();
-    } 
+    }
     return $cms;
 }
 
@@ -69,15 +71,14 @@ if (!function_exists('is_url')) {
 if (!function_exists('settings')) {
     function settings(?string $key = null)
     {
-        $settings = Setting::first();
-        if ($key) {
-            return $settings->{$key} ?? null;
+        static $settings = null;
+
+        if ($settings === null) {
+            $settings = Cache::rememberForever('settings', function () {
+                return Setting::first()?->toArray() ?? [];
+            });
         }
-        return $settings;
+
+        return $key ? ($settings[$key] ?? null) : $settings;
     }
 }
-
-
-
-
-

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\CmsRequest;
 use App\Services\CmsService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class HomeExampleController extends Controller
@@ -141,6 +142,13 @@ class HomeExampleController extends Controller
             // Create or update the CMS entry
             CMS::create($validatedData);
 
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
+
+
             return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Created successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('t-error', $e->getMessage());
@@ -203,6 +211,12 @@ class HomeExampleController extends Controller
             // Update the CMS entry with the validated data
             $section->update($validatedData);
 
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
+
             return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Updated successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('t-error', $e->getMessage());
@@ -217,6 +231,12 @@ class HomeExampleController extends Controller
     {
         try {
             $this->cmsService->destroy($id);
+
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
 
             return response()->json([
                 't-success' => true,
@@ -234,6 +254,13 @@ class HomeExampleController extends Controller
     {
         try {
             $this->cmsService->status($id);
+
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
+
             return response()->json([
                 't-success' => true,
                 'message' => 'Updated successfully.',
@@ -284,6 +311,12 @@ class HomeExampleController extends Controller
 
                 CMS::create($validatedData);
             }
+
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
 
             return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Updated successfully');
         } catch (Exception $e) {

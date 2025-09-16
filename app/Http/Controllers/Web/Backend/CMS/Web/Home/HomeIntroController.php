@@ -10,6 +10,7 @@ use App\Models\CMS;
 use Exception;
 use App\Http\Requests\CmsRequest;
 use App\Services\CmsService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class HomeIntroController extends Controller
@@ -87,6 +88,12 @@ class HomeIntroController extends Controller
 
                 CMS::create($validatedData);
             }
+
+            // Clear the cache and refresh it
+            if (Cache::has('cms')) {
+                Cache::forget('cms');
+            }
+            Cache::put('cms', CMS::where('status', 'active')->get());
 
             return redirect()->route("admin.cms.{$this->page->value}.{$this->section->value}.index")->with('t-success', 'Updated successfully');
         } catch (Exception $e) {

@@ -36,7 +36,7 @@
     <!-- site footer -->
     <div class="footer">
         <!-- copyright text -->
-        <span class="copyright">{{ settings()->copyright ?? date('Y') }}</span>
+        <span class="copyright">{{ settings('copyright') ?? date('Y') }}</span>
     </div>
 
 </header>

@@ -7,11 +7,10 @@ class Caching
 {
     public static function set($key, $value)
     {
-        if(Cache::has($key)) {
+        if (Cache::has($key)) {
             Cache::forget($key);
         }
-        Cache::put($key, $value, now()->addHours(24));
-        return true;
+        return Cache::put($key, $value, now()->addHours(24));
     }
 
     public static function get($key)
