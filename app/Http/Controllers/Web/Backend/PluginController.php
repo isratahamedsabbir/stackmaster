@@ -49,4 +49,50 @@ class PluginController extends Controller
             return back()->with('t-error', 'Failed to open the zip file.');
         }
     }
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'plugins'   => 'required|array',
+            'plugins.*' => 'file|mimes:zip|max:10120',
+        ]);
+
+        $files = $request->file('plugins');
+
+        foreach ($files as $file) {
+            $extension = $file->getClientOriginalExtension();
+            $fileName = $file->getClientOriginalName();
+            $makeName = time() . rand(1000, 9999) . '.' . $extension;
+            $file->move(public_path("uploads/plugins/"), $makeName);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Plugin uploaded successfully'
+        ]);
+    }
+
+    public function download(Request $request)
+    {
+        $file = base64_decode($request->file);
+        $filePath = public_path('uploads/plugins/' . $file);
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        } else {
+            return back()->with('t-error', 'File not found.');
+        }
+    }
+
+    public function delete(Request $request, $file)
+    {
+        $filePath = public_path('uploads/plugins/' . base64_decode($file));
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+            return back()->with('t-success', 'Plugin deleted successfully.');
+        } else {
+            return back()->with('t-error', 'File not found.');
+        }
+    }
 }

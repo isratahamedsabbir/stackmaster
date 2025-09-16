@@ -76,6 +76,18 @@ foreach ($files as $file) {
             </div>
             <!-- PAGE-HEADER END -->
 
+            <div class="row" id="user-profile">
+                <div class="col-lg-12">
+                    <div class="card post-sales-main">
+                        <div class="card-body border-0">
+                            <div class="form-group">
+                                <input type="file" class="dropify form-control" name="plugins[]" id="plugins" multiple />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ROW-4 -->
             <div class="row">
                 <div class="col-12 col-sm-12">
@@ -106,7 +118,9 @@ foreach ($files as $file) {
                                             <td>{{ $plugin['size_md'] ?? '' }}</td>
                                             <td>{{ $plugin['extension'] ?? '' }}</td>
                                             <td>
-                                                <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
+                                                <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></a>
+                                                <a href="{{ Route('plugins.delete', base64_encode($plugin['name'])) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                                <a href="{{ Route('plugins.download', base64_encode($plugin['name'])) }}" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -127,5 +141,40 @@ foreach ($files as $file) {
 @endsection
 
 @push('scripts')
+<script>
+    $('#plugins').change(function() {
+        let data = new FormData();
+        let files = $(this)[0].files;
 
+        for (let i = 0; i < files.length; i++) {
+            data.append('plugins[]', files[i]);
+        }
+
+        NProgress.start();
+
+        $.ajax({
+            url: `{{ route('plugins.upload') }}`,
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(resp) {
+                NProgress.done();
+                $('.dropify-clear').click();
+                toastr.success(resp.message);
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+            },
+            error: function(xhr) {
+                NProgress.done();
+                let errorMsg = xhr.responseJSON?.message || 'Upload failed';
+                toastr.error(errorMsg);
+            }
+        });
+    });
+</script>
 @endpush

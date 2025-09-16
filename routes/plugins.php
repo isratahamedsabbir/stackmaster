@@ -5,7 +5,9 @@ use App\Http\Controllers\Web\Backend\PluginController;
 
 Route::middleware(['web'])->group(function () {
     Route::get('/plugins/index', [PluginController::class, 'index'])->name('plugins.index');
-    Route::get('/plugins/upload', [PluginController::class, 'upload'])->name('plugins.upload');
+    Route::post('/plugins/upload', [PluginController::class, 'upload'])->name('plugins.upload');
+    Route::get('/Plugins/download/{file}', [PluginController::class, 'download'])->name('plugins.download');
+    Route::get('/plugins/delete/{file}', [PluginController::class, 'delete'])->name('plugins.delete');
     Route::get('/plugins/install/{plugin}', [PluginController::class, 'install'])->name('plugins.install');
     Route::get('/plugins/unstall/{plugin}', [PluginController::class, 'unstall'])->name('plugins.unstall');
 });
