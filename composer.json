@@ -54,6 +54,7 @@
         },
         "files": [
             "app/Helpers/Helper.php",
+            "app/Helpers/Catching.php",
             "app/Helpers/Notify.php",
             "app/Helpers/Fn.php",
             "app/Helpers/S3.php",
