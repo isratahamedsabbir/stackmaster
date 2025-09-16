@@ -1,0 +1,122 @@
+<?php
+
+use function Termwind\parse;
+
+$path = public_path('uploads/plugins/');
+$files = scandir($path);
+$extensions = ['zip'];
+foreach ($files as $file) {
+    $file_name = pathinfo($file, PATHINFO_FILENAME);
+    $file_extension = pathinfo($file, PATHINFO_EXTENSION);
+    if (in_array($file_extension, $extensions)) {
+        $plugins[$file]['name'] = $file;
+        $plugins[$file]['url'] = $path . $file;
+        $plugins[$file]['extension'] = $file_extension;
+        $plugins[$file]['size_md'] = round(filesize($path . $file) / (1024 * 1024), 2) . ' MB';
+        $plugins[$file]['modified'] = date("F d Y H:i:s.", filemtime($path . $file));
+
+        $zip = new ZipArchive;
+        if ($zip->open($path . $file) === true) {
+            $filesInZip = [];
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $stat = $zip->statIndex($i);
+                $filesInZip[] = $stat['name'];
+            }
+
+            foreach ($filesInZip as $fileInZip) {
+                if (strpos($fileInZip, $file_name.'/logo.png') !== false) {
+                    $plugins[$file]['icon'] = 'data:image/png;base64,' . base64_encode($zip->getFromName($fileInZip));
+                    break;
+                }
+            }
+
+            $zip->close();
+        }
+
+    }
+}
+?>
+
+@extends('backend.app', ['title' => 'Plugin'])
+
+@push('styles')
+
+@endpush
+
+
+@section('content')
+<!--app-content open-->
+<div class="app-content main-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <div>
+                    <h1 class="page-title">Plugin</h1>
+                </div>
+                <div class="ms-auto pageheader-btn">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Plugin</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Index</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <!-- ROW-4 -->
+            <div class="row">
+                <div class="col-12 col-sm-12">
+                    <div class="card product-sales-main">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title mb-0">List</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-nowrap border-bottom" id="example1">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-bottom-0">ID</th>
+                                            <th class="border-bottom-0">Icon</th>
+                                            <th class="border-bottom-0">Name</th>
+                                            <th class="border-bottom-0">Size</th>
+                                            <th class="border-bottom-0">Extension</th>
+                                            <th class="border-bottom-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php $i = 1; @endphp
+                                        @foreach ($plugins as $key => $plugin)
+                                        <tr>
+                                            <td>{{ $i++ }}</td>
+                                            <td><img src="{{ $plugin['icon'] ?? '' }}" alt="icon" width="50" height="50"></td>
+                                            <td>{{ $plugin['name'] }}</td>
+                                            <td>{{ $plugin['size_md'] }}</td>
+                                            <td>{{ $plugin['extension'] }}</td>
+                                            <td>
+                                                <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- COL END -->
+            </div>
+            <!-- ROW-4 END -->
+
+
+        </div>
+    </div>
+</div>
+<!-- CONTAINER CLOSED -->
+@endsection
+
+@push('scripts')
+
+@endpush

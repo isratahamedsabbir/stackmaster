@@ -55,6 +55,7 @@
         "files": [
             "app/Helpers/Helper.php",
             "app/Helpers/Caching.php",
+            "app/Helpers/Plugins.php",
             "app/Helpers/Notify.php",
             "app/Helpers/Fn.php",
             "app/Helpers/S3.php",

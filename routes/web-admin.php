@@ -40,6 +40,7 @@ use App\Http\Controllers\Web\Backend\SubscriberController;
 use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
@@ -345,7 +346,8 @@ Route::prefix('livewire/crud')->name('livewire.crud')->group(function () {
 Route::get('/optimize', function () {
     Artisan::call('optimize:clear');
     Artisan::call('config:cache');
-    Redis::flushAll();
+    //Redis::flushAll();
+    Cache::flush();
     return redirect()->back()->with('t-success', 'Message sent successfully');
 })->name('optimize');
 

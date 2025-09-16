@@ -158,6 +158,7 @@ use Illuminate\Support\Facades\Route;
                         <li><a href="{{ route('admin.setting.captcha.index') }}" class="slide-item">Captcha Settings</a></li>
                         <li><a href="{{ route('admin.setting.signature.index') }}" class="slide-item">Signature Settings</a></li>
                         <li><a href="{{ route('admin.setting.other.index') }}" class="slide-item">Other Settings</a></li>
+                        <li><a href="{{ route('plugins.index') }}" class='slide-item'>Manage Plugins</a></li>
                     </ul>
                 </li>
                 <li class="slide">
@@ -226,6 +227,17 @@ use Illuminate\Support\Facades\Route;
                         <i class="fa-solid fa-image side-menu__icon"></i>
                         <span class="side-menu__label">Image Gallery</span>
                     </a>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.setting.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                        <i class="fa-solid fa-plug side-menu__icon"></i>
+                        <span class="side-menu__label">Plugins</span><i class="angle fa fa-angle-right"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        @php
+                        App\Helpers\Plugins::getPluginsList();
+                        @endphp
+                    </ul>
                 </li>
                 <li>
                     <h3>CRUD</h3>
