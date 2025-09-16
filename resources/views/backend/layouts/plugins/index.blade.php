@@ -1,7 +1,4 @@
 <?php
-
-use function Termwind\parse;
-
 $path = public_path('uploads/plugins/');
 $files = scandir($path);
 $extensions = ['zip'];
@@ -24,15 +21,27 @@ foreach ($files as $file) {
             }
 
             foreach ($filesInZip as $fileInZip) {
-                if (strpos($fileInZip, $file_name.'/logo.png') !== false) {
+                if (strpos($fileInZip, 'logo.png') !== false) {
                     $plugins[$file]['icon'] = 'data:image/png;base64,' . base64_encode($zip->getFromName($fileInZip));
+                    break;
+                }
+            }
+
+            foreach ($filesInZip as $fileInZip) {
+                if (strpos($fileInZip, 'info.json') !== false) {
+                    $pluginInfoJson = $zip->getFromName($fileInZip);
+                    $pluginInfo = json_decode($pluginInfoJson, true, 512, JSON_THROW_ON_ERROR);
+                    if ($pluginInfo !== null) {
+                        $plugins[$file]['app'] = $pluginInfo['app'] ?? null;
+                        $plugins[$file]['version'] = $pluginInfo['version'] ?? null;
+                    }
+
                     break;
                 }
             }
 
             $zip->close();
         }
-
     }
 }
 ?>
@@ -93,9 +102,9 @@ foreach ($files as $file) {
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td><img src="{{ $plugin['icon'] ?? '' }}" alt="icon" width="50" height="50"></td>
-                                            <td>{{ $plugin['name'] }}</td>
-                                            <td>{{ $plugin['size_md'] }}</td>
-                                            <td>{{ $plugin['extension'] }}</td>
+                                            <td>{{ $plugin['app'] ?? '' }}v{{ $plugin['version'] ?? '' }}</td>
+                                            <td>{{ $plugin['size_md'] ?? '' }}</td>
+                                            <td>{{ $plugin['extension'] ?? '' }}</td>
                                             <td>
                                                 <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-download"></i></a>
                                             </td>
