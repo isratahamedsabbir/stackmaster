@@ -3,7 +3,7 @@
 namespace App\Helpers;
 use Illuminate\Support\Facades\Cache;
 
-class Catching
+class Caching
 {
     public static function set($key, $value)
     {
