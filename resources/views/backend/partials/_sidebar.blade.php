@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
                         <span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i>
                     </a>
                     <ul class="slide-menu">
-                        <li><a href="{{ route('admin.setting.general.index') }}" class="slide-item">General Settings</a></li>
+                        <li><a href="#" class="slide-item">General Report</a></li>
                     </ul>
                 </li>
                 <li class="slide">
