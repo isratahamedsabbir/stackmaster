@@ -9,7 +9,7 @@ Route::middleware(['web'])->group(function () {
     Route::get('/Plugins/download/{file}', [PluginController::class, 'download'])->name('plugins.download');
     Route::get('/plugins/delete/{file}', [PluginController::class, 'delete'])->name('plugins.delete');
     Route::get('/plugins/install/{plugin}', [PluginController::class, 'install'])->name('plugins.install');
-    Route::get('/plugins/unstall/{plugin}', [PluginController::class, 'unstall'])->name('plugins.unstall');
+    Route::get('/plugins/uninstall/{plugin}', [PluginController::class, 'uninstall'])->name('plugins.uninstall');
 });
 
 $folders = scandir(__DIR__ . '/../plugins/');

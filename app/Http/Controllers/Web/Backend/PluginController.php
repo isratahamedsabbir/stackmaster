@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Web\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\PluginService;
 
 class PluginController extends Controller
 {
+    protected $pluginService;
+    public function __construct(PluginService $pluginService)
+    {
+        $this->pluginService = $pluginService;
+    }
 
     public function index()
     {
@@ -51,6 +57,21 @@ class PluginController extends Controller
             return back()->with('t-success', 'Plugin installed successfully.');
         } else {
             return back()->with('t-error', 'Failed to open the zip file.');
+        }
+    }
+
+    public function uninstall(Request $request)
+    {
+        $plugin = base64_decode($request->plugin);
+        $pluginPath = base_path('Plugins/' . $plugin);
+
+        if (is_dir($pluginPath) && file_exists($pluginPath)) {
+
+            $this->pluginService->deleteDirectory($pluginPath);
+
+            return back()->with('t-success', 'Plugin uninstalled successfully.');
+        } else {
+            return back()->with('t-error', 'Plugin not found.');
         }
     }
 

@@ -42,6 +42,10 @@ foreach ($files as $file) {
 
             $zip->close();
         }
+
+        if (file_exists(base_path('Plugins/' . $plugins[$file]['app'] . 'v' . $plugins[$file]['version'] . '/'))) {
+            $plugins[$file]['installed'] = true;
+        }
     }
 }
 ?>
@@ -111,7 +115,7 @@ foreach ($files as $file) {
                                     <tbody>
                                         @php $i = 1; @endphp
                                         @foreach ($plugins as $key => $plugin)
-                                        <tr>
+                                        <tr class="@if(isset($plugin['installed']) && $plugin['installed'] === true) table-success @endif">
                                             <td>{{ $i++ }}</td>
                                             <td><img src="{{ $plugin['icon'] ?? '' }}" alt="icon" width="50" height="50"></td>
                                             <td>{{ $plugin['app'] ?? '' }}v{{ $plugin['version'] ?? '' }}</td>
@@ -119,7 +123,11 @@ foreach ($files as $file) {
                                             <td>{{ $plugin['extension'] ?? '' }}</td>
                                             <td>
                                                 <a href="/plugins/{{ $plugin['app'].'v'.$plugin['version'] }}/index" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                                <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></a>
+                                                @if(isset($plugin['installed']) && $plugin['installed'] === true)
+                                                <a href="{{ Route('plugins.uninstall', base64_encode($plugin['app'].'v'.$plugin['version'])) }}" class="btn btn-primary"><i class="fa-solid fa-minus"></i></a>
+                                                @else
+                                                <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+                                                @endif
                                                 <a href="{{ Route('plugins.delete', base64_encode($plugin['name'])) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                                 <a href="{{ Route('plugins.download', base64_encode($plugin['name'])) }}" class="btn btn-success"><i class="fa-solid fa-download"></i></a>
                                             </td>
