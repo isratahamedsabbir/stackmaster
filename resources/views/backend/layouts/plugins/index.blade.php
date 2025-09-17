@@ -93,7 +93,7 @@ foreach ($files as $file) {
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">List</h3>
+                            <h3 class="card-title mb-0">Plugins</h3>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -118,6 +118,7 @@ foreach ($files as $file) {
                                             <td>{{ $plugin['size_md'] ?? '' }}</td>
                                             <td>{{ $plugin['extension'] ?? '' }}</td>
                                             <td>
+                                                <a href="/plugins/{{ $plugin['app'].'v'.$plugin['version'] }}/index" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                                 <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></a>
                                                 <a href="{{ Route('plugins.delete', base64_encode($plugin['name'])) }}" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
                                                 <a href="{{ Route('plugins.download', base64_encode($plugin['name'])) }}" class="btn btn-success"><i class="fa-solid fa-download"></i></a>

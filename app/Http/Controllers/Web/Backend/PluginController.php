@@ -42,7 +42,11 @@ class PluginController extends Controller
                 }
             }
 
-            $zip->extractTo(base_path('plugins/'.$app.'v'.$version.'/'));
+            if (file_exists(base_path('Plugins/'.$app.'v'.$version.'/'))) {
+                return back()->with('t-error', 'Plugin already installed.');
+            }
+
+            $zip->extractTo(base_path('Plugins/'.$app.'v'.$version.'/'));
             $zip->close();
             return back()->with('t-success', 'Plugin installed successfully.');
         } else {
