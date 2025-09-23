@@ -40,7 +40,7 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['api'])->group(base_path('routes/api-stripe.php'));
             foreach (scandir(__DIR__ . '/../routes/plugins') as $file) {
                 if (ends_with($file, '.php')) {
-                    require __DIR__ . '/../routes/plugins/' . $file;
+                    require __DIR__ . '/routes/plugins/' . $file;
                 }
             }
         }
