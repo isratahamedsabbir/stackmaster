@@ -12,13 +12,13 @@ Route::middleware(['web'])->group(function () {
     Route::get('/plugins/uninstall/{plugin}', [PluginController::class, 'uninstall'])->name('plugins.uninstall');
 });
 
-$folders = scandir(__DIR__ . '/../plugins/');
+$folders = scandir(__DIR__ . '/../Plugins/');
 foreach ($folders as $folder) {
     if ($folder === '.' || $folder === '..') {
         continue;
     }
 
-    $pluginRoutesPath = base_path('plugins/' . $folder . '/routes/route.php');
+    $pluginRoutesPath = base_path('Plugins/' . $folder . '/routes/route.php');
     if (file_exists($pluginRoutesPath) && is_readable($pluginRoutesPath)) {
         require $pluginRoutesPath;
     } else {
