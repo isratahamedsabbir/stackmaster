@@ -38,11 +38,7 @@ return Application::configure(basePath: dirname(__DIR__))
             Route::middleware(['api', 'api-retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/api-retailer.php'));
             Route::middleware(['api', 'otp', 'api-customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/api-customer.php'));
             Route::middleware(['api'])->group(base_path('routes/api-stripe.php'));
-            foreach (scandir(__DIR__ . '/../routes/plugins') as $file) {
-                if (ends_with($file, '.php')) {
-                    require __DIR__ . '/routes/plugins/' . $file;
-                }
-            }
+            //require base_path('routes/plugins.php');
         }
     )
     ->withBroadcasting(
