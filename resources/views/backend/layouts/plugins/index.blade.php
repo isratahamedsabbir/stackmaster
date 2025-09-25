@@ -124,7 +124,7 @@ foreach ($files as $file) {
                                             <td>
                                                 <a href="/plugins/{{ $plugin['app'].'v'.$plugin['version'] }}/index" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                                 @if(isset($plugin['installed']) && $plugin['installed'] === true)
-                                                <a href="{{ Route('plugins.uninstall', base64_encode($plugin['app'].'v'.$plugin['version'])) }}" class="btn btn-primary"><i class="fa-solid fa-minus"></i></a>
+                                                <a href="{{ Route('Plugins.uninstall', base64_encode($plugin['app'].'v'.$plugin['version'])) }}" class="btn btn-primary"><i class="fa-solid fa-minus"></i></a>
                                                 @else
                                                 <a href="{{ Route('plugins.install', base64_encode($plugin['name'])) }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
                                                 @endif
