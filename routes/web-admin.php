@@ -11,6 +11,7 @@ use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeAboutController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeExampleController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeIntroController;
 use App\Http\Controllers\Web\Backend\ContactController;
+use App\Http\Controllers\Web\Backend\CountryController;
 use App\Http\Controllers\Web\Backend\Settings\FirebaseController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
@@ -373,4 +374,20 @@ Route::controller(PropertyController::class)->prefix('property')->name('property
     Route::post('/update/{id}', 'update')->name('update');
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
+});
+
+//address
+Route::controller(CountryController::class)->prefix('country')->name('country.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+
+    Route::get('/status/{id}', 'status')->name('status');
+
+    Route::get('/import', 'import')->name('import');
+    Route::get('/export', 'export')->name('export');
 });

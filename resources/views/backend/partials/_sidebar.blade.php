@@ -240,6 +240,15 @@ use Illuminate\Support\Facades\Route;
                     </ul>
                 </li>
                 <li>
+                    <h3>Location</h3>
+                </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.country.*') ? 'has-link active' : '' }}" href="{{ route('admin.country.index') }}">
+                        <i class="fa-solid fa-earth-americas side-menu__icon"></i>
+                        <span class="side-menu__label">Country</span>
+                    </a>
+                </li>
+                <li>
                     <h3>CRUD</h3>
                 </li>
                 <li class="slide">
