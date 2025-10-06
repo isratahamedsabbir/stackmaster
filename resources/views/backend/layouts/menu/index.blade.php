@@ -10,7 +10,7 @@ function adminMenu($menus, $groupedMenus)
             $name = substr($name, 0, 17) . '...';
         }
 
-        echo '<li onclick="openEditor(' . $menuJson . ')" class="list-group-item d-flex justify-content-between align-items-center mb-3 bg-success text-white ui-state-default" style="border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">';
+        echo '<li onclick="openEditor(' . $menuJson . ')" class="list-group-item d-flex justify-content-between align-items-center mb-3 bg-success" style="border-radius: 5px; cursor: pointer;">';
 
         // Flex row: title on left, delete icon on right
         echo '<div class="d-flex justify-content-between w-100 align-items-center">';
@@ -98,7 +98,7 @@ function adminMenu($menus, $groupedMenus)
                                     <h3 class="card-title mb-0" id="formTitle">Create Menu</h3>
                                 </div>
                                 <div class="card-body border-0">
-                                    <form id="form" name="form" class="form form-horizontal" method="post" action="{{ route('admin.social.store') }}" enctype="multipart/form-data">
+                                    <form id="form" name="form" class="form form-horizontal" method="post" action="{{ route('admin.menu.store') }}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row mb-4">
 
@@ -119,6 +119,14 @@ function adminMenu($menus, $groupedMenus)
                                                     @endforeach
                                                 </select>
                                                 @error('parent_id')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="order" class="form-label">Order:</label>
+                                                <input type="number" class="form-control @error('order') is-invalid @enderror" name="order" placeholder="order" id="order" value="{{ old('order') }}">
+                                                @error('order')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -147,7 +155,6 @@ function adminMenu($menus, $groupedMenus)
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <script>
     function openCreate() {
         $('#formTitle').text('Create Menu');
@@ -160,21 +167,9 @@ function adminMenu($menus, $groupedMenus)
         $('#formTitle').text('Edit Menu');
         $('#form').attr('action', "{{ route('admin.menu.update', ':id') }}".replace(':id', menu.id));
         $('#name').val(menu.name);
+        $('#order').val(menu.order);
         $('#parent_id').val(menu.parent_id);
         $('#parent_id option[value="' + menu.id + '"]').remove();
     }
-</script>
-<script>
-    $(function () {
-        $("#sortable").sortable({
-            placeholder: "ui-state-highlight",
-            update: function (event, ui) {
-                let sortedIDs = $(this).sortable("toArray", { attribute: 'data-id' });
-                console.log(sortedIDs); // You can send this to server via AJAX
-            }
-        });
-
-        $("#sortable").disableSelection();
-    });
 </script>
 @endpush

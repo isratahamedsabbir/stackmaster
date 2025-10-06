@@ -6,20 +6,13 @@ use App\Helpers\Helper;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Image;
-use App\Models\Subcategory;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 
 class MenuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $menus = Menu::query()->latest()->get();
@@ -27,28 +20,11 @@ class MenuController extends Controller
         return view("backend.layouts.menu.index", compact('menus', 'groupedMenus'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.menu.create', compact('categories'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'             => 'required|max:250',
-            'content'           => 'required|string',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-            'category_id'       => 'required|exists:categories,id',
-            'subcategory_id'    => 'required|exists:subcategories,id',
-            'images'            => 'nullable|array|max:3',
-            'images.*'          => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'name'             => 'required|max:250',
+            'parent_id'        => 'nullable|exists:menus,id',
         ]);
 
         if ($validator->fails()) {
@@ -58,40 +34,21 @@ class MenuController extends Controller
         try {
             $data = $validator->validated();
 
-            $post = new Menu();
+            $menu = new Menu();
 
-            $post->user_id = auth('web')->user()->id;
+            $menu->slug = Helper::makeSlug(Menu::class, $data['name']);
 
-            if ($request->hasFile('thumbnail')) {
-                $data['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
-            }
+            $menu->name = $data['name'];
+            $menu->parent_id = $data['parent_id'];
+            $menu->save();
 
-            $post->slug = Helper::makeSlug(Menu::class, $data['title']);
-
-            $post->title = $data['title'];
-            $post->thumbnail = $data['thumbnail'];
-            $post->content = $data['content'];
-            $post->category_id = $data['category_id'];
-            $post->subcategory_id = $data['subcategory_id'];
-            $post->save();
-
-            if (isset($request['images']) && count($request['images']) > 0 && count($request['images']) <= 3) {
-                foreach ($request['images'] as $image) {
-                    $imageName = 'images_' . Str::random(10);
-                    $image = Helper::fileUpload($image, 'post', $imageName);
-                    Image::create(['post_id' => $post->id, 'path' => $image]);
-                }
-            } else {
-                session()->put('t-error', 'Please select at least one image and maximum 3 images');
-            }
-
-            session()->put('t-success', 'post created successfully');
+            session()->put('t-success', 'Created Successfully.');
         } catch (Exception $e) {
 
             session()->put('t-error', $e->getMessage());
         }
 
-        return redirect()->route('admin.menu.index')->with('t-success', 'post created successfully');
+        return redirect()->route('admin.menu.index')->with('t-success', 'Created Successfully.');
     }
 
     public function update(Request $request, $id)
@@ -108,15 +65,11 @@ class MenuController extends Controller
         try {
             $data = $validator->validated();
 
-            $post = Menu::findOrFail($id);
+            $menu = Menu::findOrFail($id);
 
-            if ($request->hasFile('thumbnail')) {
-                $validate['thumbnail'] = Helper::fileUpload($request->file('thumbnail'), 'post', time() . '_' . getFileName($request->file('thumbnail')));
-            }
-
-            $post->name = $data['name'];
-            $post->parent_id = $data['parent_id'] ?? null;
-            $post->save();
+            $menu->name = $data['name'];
+            $menu->parent_id = $data['parent_id'] ?? null;
+            $menu->save();
 
             session()->put('t-success', 'updated successfully');
 
