@@ -19,7 +19,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Frontend\SettingsController;
 use App\Http\Controllers\Api\Frontend\SocialLinksController;
 use App\Http\Controllers\Api\Frontend\SubscriberController;
-
+use App\Http\Controllers\Api\PrayerTimesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -130,4 +130,15 @@ Route::middleware(['auth:api'])->controller(ChatController::class)->prefix('auth
 
 Route::prefix('cms')->name('cms.')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
+});
+
+/*
+# prayer time
+# http:://127.0.0.1:8000/api/prayer-times?date=2025-12-25&lat=23.7018&lng=90.3742&timezone=6&method=1
+# http:://127.0.0.1:8000/api/prayer-times/today?lat=23.7018&lng=90.3742&timezone=6&method=1
+*/
+Route::prefix('prayer-times')->group(function () {
+    Route::get('/', [PrayerTimesController::class, 'index']);
+    Route::get('/today', [PrayerTimesController::class, 'today']);
+    Route::get('/methods', [PrayerTimesController::class, 'methods']);
 });
