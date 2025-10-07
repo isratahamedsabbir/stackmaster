@@ -19,8 +19,17 @@ use Illuminate\Support\Facades\Validator;
 class PostController extends Controller
 {
 
-    public $route = 'admin.post';
-    public $view = 'backend.layouts.post';
+    public $part;
+    public $route;
+    public $view;
+
+    public function __construct()
+    {
+        $this->part = 'post';
+        $this->route = 'admin.' . $this->part;
+        $this->view = 'backend.layouts.' . $this->part;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -81,8 +90,10 @@ class PostController extends Controller
                 ->make();
         }
 
-        return view($this->view . ".index", ['route' => $this->route]);
-        
+        return view($this->view . ".index", [
+            'part' => $this->part,
+            'route' => $this->route
+        ]);
     }
 
     /**
