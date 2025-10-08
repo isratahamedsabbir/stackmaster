@@ -40,6 +40,7 @@ use App\Http\Controllers\Web\Backend\SubcategoryController;
 use App\Http\Controllers\Web\Backend\SubscriberController;
 use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
+use App\Http\Controllers\Web\Backend\QuizController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
