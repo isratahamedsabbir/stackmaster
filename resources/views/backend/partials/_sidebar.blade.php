@@ -54,6 +54,12 @@ use Illuminate\Support\Facades\Route;
                         <span class="side-menu__label">Post</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.quiz.*') ? 'has-link active' : '' }}" href="{{ route('admin.quiz.index') }}">
+                        <i class="fa-solid fa-feather side-menu__icon"></i>
+                        <span class="side-menu__label">Quiz</span>
+                    </a>
+                </li>
                 <li>
                     <h3>Ecommerce</h3>
                 </li>

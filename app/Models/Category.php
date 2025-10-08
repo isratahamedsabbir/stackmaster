@@ -32,4 +32,8 @@ class Category extends Model
     public function products() {
         return $this->hasMany(Product::class);
     }
+
+    public function quizzes() {
+        return $this->hasMany(Quiz::class);
+    }
 }
