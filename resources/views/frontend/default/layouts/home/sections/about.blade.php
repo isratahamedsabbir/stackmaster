@@ -82,7 +82,7 @@
         <!-- row end -->
         <div class="spacer" data-height="70"></div>
 
-        @include('frontend.layouts.home.sections.marquee')
+        @include('frontend.default.layouts.home.sections.marquee')
 
         <div class="spacer" data-height="60"></div>
 

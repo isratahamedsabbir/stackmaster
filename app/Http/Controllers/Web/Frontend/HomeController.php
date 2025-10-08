@@ -18,6 +18,14 @@ use App\Traits\CMSData;
 class HomeController extends Controller
 {
     use CMSData;
+    
+    public $theme;
+
+    public function __construct()
+    {
+        $this->theme = env('THEME');
+    }
+    
     public function index()
     {
         //CMS Data
@@ -39,7 +47,7 @@ class HomeController extends Controller
 
         $products = Product::with(['category', 'user'])->where('status', 'active')->get();
 
-        return view('frontend.layouts.home.index', compact('cms', 'posts', 'types', 'projects', 'products', 'socials'));
+        return view("frontend.{$this->theme}.layouts.home.index", compact('cms', 'posts', 'types', 'projects', 'products', 'socials'));
     }
 
     public function post($slug){
@@ -48,6 +56,6 @@ class HomeController extends Controller
             'common' => CMS::where('page', PageEnum::COMMON)->where('status', 'active')->get(),
         ];
         $post = Post::where('slug', base64_decode($slug))->where('status', 'active')->firstOrFail();
-        return view('frontend.layouts.post', compact('cms', 'post'));
+        return view('frontend.default.layouts.post', compact('cms', 'post'));
     }
 }
