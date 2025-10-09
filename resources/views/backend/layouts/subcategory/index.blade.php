@@ -44,8 +44,8 @@
                                     <thead>
                                         <tr>
                                             <th class="bg-transparent border-bottom-0 wp-15">ID</th>
-                                            <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0 wp-15">Category</th>
+                                            <th class="bg-transparent border-bottom-0 wp-15">Name</th>
                                             <th class="bg-transparent border-bottom-0">Image</th>
                                             <th class="bg-transparent border-bottom-0">Status</th>
                                             <th class="bg-transparent border-bottom-0">Action</th>
@@ -113,14 +113,14 @@
                         searchable: false
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'category',
+                        name: 'category',
                         orderable: true,
                         searchable: true
                     },
                     {
-                        data: 'category',
-                        name: 'category',
+                        data: 'name',
+                        name: 'name',
                         orderable: true,
                         searchable: true
                     },

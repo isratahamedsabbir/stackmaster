@@ -31,7 +31,7 @@ class SubcategoryController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('category', function ($data) {
-                    return $data->category->name;
+                    return "<a href='" . route('admin.category.show', $data->category_id) . "'>" . $data->category->name . "</a>";
                 })
                 ->addColumn('image', function ($data) {
                     if ($data->image) {

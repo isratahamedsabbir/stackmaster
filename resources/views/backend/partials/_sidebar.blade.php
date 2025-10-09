@@ -36,6 +36,9 @@ use Illuminate\Support\Facades\Route;
                         <li><a href="#" class="slide-item">General Report</a></li>
                     </ul>
                 </li>
+                <li>
+                    <h3>Basic</h3>
+                </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
                         <i class="fa-solid fa-layer-group side-menu__icon"></i>
@@ -47,6 +50,9 @@ use Illuminate\Support\Facades\Route;
                         <i class="fa-solid fa-list-check side-menu__icon"></i>
                         <span class="side-menu__label">Sub Category</span>
                     </a>
+                </li>
+                <li>
+                    <h3>Product</h3>
                 </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.post.*') ? 'has-link active' : '' }}" href="{{ route('admin.post.index') }}">
