@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeExampleController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeIntroController;
 use App\Http\Controllers\Web\Backend\ContactController;
 use App\Http\Controllers\Web\Backend\CountryController;
+use App\Http\Controllers\Web\Backend\CurdController;
 use App\Http\Controllers\Web\Backend\Settings\FirebaseController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
@@ -406,4 +407,12 @@ Route::controller(QuizController::class)->prefix('quiz')->name('quiz.')->group(f
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
 });
+
+/*
+# CRUD
+*/
+Route::controller(CurdController::class)->prefix('curd')->name('curd.')->group(function () {
+    Route::get('/', 'index')->name('index');
+});
+
 

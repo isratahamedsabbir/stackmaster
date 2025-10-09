@@ -251,6 +251,12 @@ use Illuminate\Support\Facades\Route;
                         @endphp
                     </ul>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{  Request::routeIs('admin.curd.*') ? 'has-link active' : '' }}" href="{{ route('admin.curd.index') }}">
+                        <i class="fa-solid fa-database side-menu__icon"></i>
+                        <span class="side-menu__label">CURD Generator</span>
+                    </a>
+                </li>
                 <li>
                     <h3>Location</h3>
                 </li>
