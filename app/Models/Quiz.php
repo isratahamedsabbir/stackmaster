@@ -12,4 +12,10 @@ class Quiz extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
 }

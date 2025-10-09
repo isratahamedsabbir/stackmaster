@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Web\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\Quiz;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -30,11 +31,11 @@ class QuizController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Quiz::with(['category'])->orderBy('id', 'desc')->get();
+            $data = Quiz::with(['subcategory'])->orderBy('id', 'desc')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('category', function ($data) {
-                    return "<a href='" . route('admin.category.show', $data->category_id) . "'>" . $data->category->name . "</a>";
+                ->addColumn('subcategory', function ($data) {
+                    return "<a href='" . route('admin.subcategory.show', $data->subcategory_id) . "'>" . $data->subcategory->name . "</a>";
                 })
                 ->addColumn('question', function ($data) {
                     return Str::limit($data->question, 20);
@@ -71,7 +72,7 @@ class QuizController extends Controller
 
                             </div>';
                 })
-                ->rawColumns(['category', 'question', 'status', 'action'])
+                ->rawColumns(['subcategory', 'question', 'status', 'action'])
                 ->make();
         }
 
@@ -87,9 +88,14 @@ class QuizController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', 'active')->get();
+        $category = Category::where('slug', 'quiz')->first();
+        if($category){
+            $subcategories = Subcategory::where('status', 'active')->where('category_id', $category->id)->get();
+        }else{
+            $subcategories = Subcategory::where('status', 'active')->get();
+        }
         return view($this->view . ".create", [
-            'categories' => $categories,
+            'subcategories' => $subcategories,
             'route'      => $this->route,
         ]);
     }
@@ -100,9 +106,9 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'question'    => 'required|string|max:1000',
-            'category_id' => 'required|exists:categories,id',
-            'option.*'    => 'required|string|max:255',
+            'question'          => 'required|string|max:1000',
+            'subcategory_id'    => 'required|exists:subcategories,id',
+            'option.*'          => 'required|string|max:255',
             'answer'      => [
                 'required',
                 function ($attribute, $value, $fail) use ($request) {
@@ -122,10 +128,11 @@ class QuizController extends Controller
 
             $quiz = new Quiz();
 
-            $quiz->question    = $data['question'];
-            $quiz->category_id = $data['category_id'];
-            $quiz->answer      = $data['answer'];
-            $quiz->options     = json_encode($data['option']);
+            $quiz->question         = $data['question'];
+            $quiz->category_id      = 1;
+            $quiz->subcategory_id   = $data['subcategory_id'];
+            $quiz->answer           = $data['answer'];
+            $quiz->options          = json_encode($data['option']);
             $quiz->save();
 
             session()->put('t-success', 'created successfully');
@@ -142,7 +149,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz, $id)
     {
-        $quiz = Quiz::with(['category'])->where('id', $id)->first();
+        $quiz = Quiz::with(['category', 'subcategory'])->where('id', $id)->first();
         return view($this->view . ".show", [
             'quiz'  => $quiz,
             'route' => $this->route,
@@ -155,10 +162,17 @@ class QuizController extends Controller
     public function edit(Quiz $quiz, $id)
     {
         $quiz       = Quiz::findOrFail($id);
-        $categories = Category::where('status', 'active')->get();
+        $category   = Category::where('slug', 'quiz')->first();
+
+        if($category){
+            $subcategories = Subcategory::where('status', 'active')->where('category_id', $category->id)->get();
+        }else{
+            $subcategories = Subcategory::where('status', 'active')->get();
+        }
+        
         return view($this->view . ".edit", [
             'quiz'       => $quiz,
-            'categories' => $categories,
+            'subcategories' => $subcategories,
             'route'      => $this->route,
         ]);
     }
@@ -170,7 +184,7 @@ class QuizController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'question'    => 'required|string|max:1000',
-            'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'required|exists:subcategories,id',
             'option.*'    => 'required|string|max:255',
             'answer'      => [
                 'required',
@@ -192,7 +206,7 @@ class QuizController extends Controller
             $quiz = Quiz::findOrFail($id);
 
             $quiz->question    = $data['question'];
-            $quiz->category_id = $data['category_id'];
+            $quiz->subcategory_id = $data['subcategory_id'];
             $quiz->answer      = $data['answer'];
             $quiz->options     = json_encode($data['option']);
             $quiz->save();

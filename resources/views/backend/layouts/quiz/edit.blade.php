@@ -50,16 +50,16 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label for="category_id" class="form-label">Category:</label>
-                                                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
-                                                    <option value="">Select a Category ID</option>
-                                                    @if(!empty($categories) && $categories->count() > 0)
-                                                    @foreach($categories as $category)
-                                                    <option value="{{ $category->id }}" {{ $quiz->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                                <label for="subcategory_id" class="form-label">Sub Category:</label>
+                                                <select class="form-control @error('subcategory_id') is-invalid @enderror" name="subcategory_id" id="subcategory_id">
+                                                    <option value="">Select a Sub Category</option>
+                                                    @if(!empty($subcategories) && $subcategories->count() > 0)
+                                                    @foreach($subcategories as $subcategory)
+                                                    <option value="{{ $subcategory->id }}" {{ $quiz->subcategory_id == $subcategory->id ? 'selected' : '' }}>{{ $subcategory->name }}</option>
                                                     @endforeach
                                                     @endif
                                                 </select>
-                                                @error('category_id')
+                                                @error('subcategory_id')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

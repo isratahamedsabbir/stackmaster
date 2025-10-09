@@ -33,8 +33,8 @@
                         <div class="card-body">
                             <table class="table table-bordered table-striped">
                                 <tr>
-                                    <th>Category</th>
-                                    <td> <a href="{{ route('admin.category.show', $quiz->category->id) }}">{{ $quiz->category->name }}</a></td>
+                                    <th>Sub Category</th>
+                                    <td> <a href="{{ route('admin.subcategory.show', $quiz->subcategory->id) }}">{{ $quiz->subcategory->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <th>Question</th>

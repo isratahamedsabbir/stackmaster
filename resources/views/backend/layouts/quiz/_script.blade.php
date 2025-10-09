@@ -40,8 +40,8 @@
                         searchable: false
                     },
                     {
-                        data: 'category',
-                        name: 'category',
+                        data: 'subcategory',
+                        name: 'subcategory',
                         orderable: true,
                         searchable: true
                     },
