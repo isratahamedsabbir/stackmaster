@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\Gallery\app\Http\Controllers;
+namespace Modules\Gallery\App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Modules\Gallery\Models\File;
 
-class GalleryController extends Controller
+class ModulerGalleryController extends Controller
 {
 
     public function index()
