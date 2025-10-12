@@ -129,7 +129,7 @@ class QuizController extends Controller
             $quiz = new Quiz();
 
             $quiz->question         = $data['question'];
-            $quiz->category_id      = 1;
+            $dua->category_id       = Category::where('slug', 'dua')->first()->id ?? null;
             $quiz->subcategory_id   = $data['subcategory_id'];
             $quiz->answer           = $data['answer'];
             $quiz->options          = json_encode($data['option']);
