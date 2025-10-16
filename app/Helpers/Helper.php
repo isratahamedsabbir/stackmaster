@@ -116,4 +116,12 @@ class Helper
         }
         return;
     }
+
+    /* public static function Translate($model, $str){
+        $data = $model::where('key', $str)->first();
+        if($data){
+            return $data->value;
+        }
+        return $str;
+    } */
 }
