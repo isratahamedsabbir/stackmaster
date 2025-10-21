@@ -59,7 +59,3 @@ Route::get('/run-queue-restart', function () {
         'output' => nl2br($output)
     ]);
 });
-
-
-
-require __DIR__.'/auth.php';

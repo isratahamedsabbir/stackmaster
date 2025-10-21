@@ -55,6 +55,12 @@ use Illuminate\Support\Facades\Route;
                     <h3>Product</h3>
                 </li>
                 <li class="slide">
+                    <a class="side-menu__item {{  request()->routeIs('admin.blog.*') ? 'has-link active' : '' }}" href="{{ route('admin.blog.index') }}">
+                        <i class="fa-solid fa-book side-menu__icon"></i>
+                        <span class="side-menu__label">Blog</span>
+                    </a>
+                </li>
+                <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.post.*') ? 'has-link active' : '' }}" href="{{ route('admin.post.index') }}">
                         <i class="fa-solid fa-blog side-menu__icon"></i>
                         <span class="side-menu__label">Post</span>

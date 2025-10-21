@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Backend\Access\PermissionController;
 use App\Http\Controllers\Web\Backend\Access\RoleController;
 use App\Http\Controllers\Web\Backend\Access\UserController;
 use App\Http\Controllers\Web\Backend\AttributeController;
+use App\Http\Controllers\Web\Backend\BlogController;
 use App\Http\Controllers\Web\Backend\BookingController;
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\ChatController;
@@ -414,5 +415,20 @@ Route::controller(QuizController::class)->prefix('quiz')->name('quiz.')->group(f
 Route::controller(CurdController::class)->prefix('curd')->name('curd.')->group(function () {
     Route::get('/', 'index')->name('index');
 });
+
+/*
+# Blog
+**/
+Route::controller(BlogController::class)->prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/show/{id}', 'show')->name('show');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::get('/status/{id}', 'status')->name('status');
+});
+
 
 
