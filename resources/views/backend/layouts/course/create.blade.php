@@ -11,7 +11,7 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">{{ $part }}</h1>'blog'$blog
+                    <h1 class="page-title">{{ $part }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
