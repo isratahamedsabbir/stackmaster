@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
             </a>
         </div>
         <div class="main-sidemenu">
-            <input class="form-control form-control-dark w-100 mt-3" id="menuSearching" type="text" placeholder="Search" aria-label="Search">
-            <ul id="customMenulist" class="side-menu mt-2"></ul>
+            <input class="form-control form-control-dark w-100 border-0" id="menuSearching" type="text" placeholder="Search" aria-label="Search">
+            <ul id="customMenulist" class="side-menu"></ul>
         </div>
         <div class="main-sidemenu">
             <ul class="side-menu mt-2">
