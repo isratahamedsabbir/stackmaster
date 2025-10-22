@@ -70,10 +70,14 @@
                 </div>
             </div>
 
+            
+            @include('backend.layouts.'.$part.'._curriculum')
+
         </div>
     </div>
 </div>
 <!-- CONTAINER CLOSED -->
+
 @endsection
 
 @push('scripts')

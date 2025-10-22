@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                     <div class="card post-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">Create Blog</h3>
+                            <h3 class="card-title mb-0">Create {{ ucFirst($part) }}</h3>
                             <div class="card-options">
                                 <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
                             </div>
