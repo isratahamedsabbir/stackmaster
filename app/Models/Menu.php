@@ -18,6 +18,15 @@ class Menu extends Model
         'status'
     ];
 
+    protected $appends = [
+        'sn'
+    ];
+
+    public function getSnAttribute()
+    {
+        return $this->id + $this->parent_id ?? 0;
+    }
+
     public function parent()
     {
         return $this->belongsTo(Menu::class, 'parent_id');

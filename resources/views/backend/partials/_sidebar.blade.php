@@ -294,23 +294,27 @@ use Illuminate\Support\Facades\Route;
 <script>
     const menuSearchInput = document.getElementById('menuSearching');
     const customMenuList = document.getElementById('customMenulist');
-    const users = @json(App\Models\User::all());
+    const menus = @json(App\Models\Menu::where('status', 1)->orderBy('id', 'DESC')->get());
+
+    function sideMenu() {
+        menus.forEach(menu => {
+            if (menu.name.toLowerCase().includes(menuSearchInput.value.toLowerCase())) {
+                customMenuList.innerHTML += `
+                    <li class="slide">
+                        <a class="side-menu__item" href="#">
+                            <i class="fa-solid fa-bars side-menu__icon"></i>
+                            <span class="side-menu__label">${menu.name}</span>
+                        </a>
+                    </li>
+                `;
+            }
+        });
+    }
+
     menuSearchInput.addEventListener('input', function() {
-        if (menuSearchInput.value.trim() === '') {
-            customMenuList.innerHTML = '';
-        } else {
-            users.forEach(user => {
-                if (user.name.toLowerCase().includes(menuSearchInput.value.toLowerCase())) {
-                    customMenuList.innerHTML += `
-                        <li class="slide">
-                            <a class="side-menu__item" href="#">
-                                <i class="fa-solid fa-user side-menu__icon"></i>
-                                <span class="side-menu__label">${user.name}</span>
-                            </a>
-                        </li>
-                    `;
-                }
-            });
-        }
+        customMenuList.innerHTML = '';
+        sideMenu();
     });
+
+    sideMenu();
 </script>
