@@ -74,6 +74,7 @@
     </div>
 </div>
 <!-- CONTAINER CLOSED -->
+
 @endsection
 
 @push('scripts')

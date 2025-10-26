@@ -8,15 +8,14 @@ use Illuminate\Support\Facades\Route;
     <div class="app-sidebar" style="overflow: scroll">
         <div class="side-header">
             <a class="header-brand1" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset(settings('logo') ?? 'default/logo.svg') }}" id="header-brand-logo" alt="logo" width="{{ settings('logo_width') ?? 100 }}" height="{{ settings('logo_height') ?? 100 }}">
+                <img src="{{ asset(settings('logo') ?? 'default/logo.svg') }}" id="header-brand-logo" alt="logo" width="{{ settings('logo_width') ?? 67 }}" height="{{ settings('logo_height') ?? 67 }}">
             </a>
         </div>
         <div class="main-sidemenu">
-            <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg"
-                    fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
-                </svg>
-            </div>
+            <input class="form-control form-control-dark w-100 border-0" id="menuSearching" type="text" placeholder="Search" aria-label="Search">
+            <ul id="customMenulist" class="side-menu"></ul>
+        </div>
+        <div class="main-sidemenu">
             <ul class="side-menu mt-2">
                 <li>
                     <h3>Menu</h3>
@@ -297,3 +296,31 @@ use Illuminate\Support\Facades\Route;
     </div>
 </div>
 <!--/APP-SIDEBAR-->
+
+<script>
+    const menuSearchInput = document.getElementById('menuSearching');
+    const customMenuList = document.getElementById('customMenulist');
+    const menus = @json(App\Models\Menu::where('status', 1)->orderBy('id', 'DESC')->get());
+
+    function sideMenu() {
+        menus.forEach(menu => {
+            if (menu.name.toLowerCase().includes(menuSearchInput.value.toLowerCase())) {
+                customMenuList.innerHTML += `
+                    <li class="slide">
+                        <a class="side-menu__item" href="#">
+                            <i class="fa-solid fa-bars side-menu__icon"></i>
+                            <span class="side-menu__label">${menu.name}</span>
+                        </a>
+                    </li>
+                `;
+            }
+        });
+    }
+
+    menuSearchInput.addEventListener('input', function() {
+        customMenuList.innerHTML = '';
+        sideMenu();
+    });
+
+    sideMenu();
+</script>
