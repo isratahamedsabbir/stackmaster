@@ -15,6 +15,7 @@ use App\Http\Controllers\Web\Backend\ContactController;
 use App\Http\Controllers\Web\Backend\CountryController;
 use App\Http\Controllers\Web\Backend\CourseController;
 use App\Http\Controllers\Web\Backend\CurdController;
+use App\Http\Controllers\Web\Backend\CurriculumController;
 use App\Http\Controllers\Web\Backend\Settings\FirebaseController;
 use App\Http\Controllers\Web\Backend\Settings\ProfileController;
 use App\Http\Controllers\Web\Backend\Settings\MailSettingController;
@@ -444,6 +445,13 @@ Route::controller(CourseController::class)->prefix('course')->name('course.')->g
     Route::delete('/delete/{id}', 'destroy')->name('destroy');
     Route::get('/status/{id}', 'status')->name('status');
 });
+
+Route::controller(CurriculumController::class)->prefix('course')->name('course.')->group(function () {
+    Route::post('/store', 'store')->name('store');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+});
+
 
 
 

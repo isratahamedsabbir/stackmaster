@@ -17,12 +17,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach(App\Models\User::all() as $user)
+                  @foreach(App\Models\Curriculum::all() as $curricula)
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $user->name }}</td>
+                    <td>{{ $curricula->title ?? "" }}</td>
                     <td>
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="{{ $user->name }}" data-id="{{ $user->id }}">Edit</button>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="{{ $curricula->name }}" data-id="{{ $curricula->id }}">Edit</button>
                       <a href="#" class="btn btn-sm btn-danger">Delete</a>
                     </td>
                   </tr>
@@ -38,22 +38,27 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Curriculum</h1>
       </div>
-      <form id="curriculum-form" action="" method="POST">
+      <form id="curriculum-form" action="{{ route('admin.course.store') }}" method="POST">
       @csrf
+
+        <input type="text" class="form-control d-none" id="recipient-id" name="course_id" value="{{ $course->id }}">
+
         <div class="modal-body">
             <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Recipient:</label>
-              <input type="text" class="form-control" id="recipient-name">
+              <label for="recipient-name" class="col-form-label">Title:</label>
+              <input type="text" class="form-control" id="recipient-name" name="title">
             </div>
         </div>
+
+      
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
       </form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Send message</button>
-      </div>
     </div>
   </div>
 </div>
@@ -62,9 +67,7 @@
 const exampleModal = document.getElementById('exampleModal')
 if (exampleModal) {
   exampleModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
     const button = event.relatedTarget
-    // Extract info from data-bs-* attributes
     const recipient = button.getAttribute('data-bs-whatever')
     const id = button.getAttribute('data-id')
     if(id){

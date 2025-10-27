@@ -70,7 +70,7 @@
                 </div>
             </div>
 
-            @include('backend.layouts.'.$part.'._curriculum')
+            @include('backend.layouts.'.$part.'._curriculum', [$course])
 
         </div>
     </div>
