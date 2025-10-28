@@ -41,7 +41,7 @@ class CurriculumController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'course_id'   => 'required|exists:courses, id',
+            'course_id'   => 'required|exists:courses,id',
             'title'       => 'required|max:250'
         ]);
 

@@ -446,10 +446,10 @@ Route::controller(CourseController::class)->prefix('course')->name('course.')->g
     Route::get('/status/{id}', 'status')->name('status');
 });
 
-Route::controller(CurriculumController::class)->prefix('course')->name('course.')->group(function () {
+Route::controller(CurriculumController::class)->prefix('curriculum')->name('curriculum.')->group(function () {
     Route::post('/store', 'store')->name('store');
     Route::post('/update/{id}', 'update')->name('update');
-    Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    Route::get('/delete/{id}', 'destroy')->name('destroy');
 });
 
 
