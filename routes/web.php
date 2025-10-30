@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\SocialLoginController;
 use App\Http\Controllers\Web\Frontend\AffiliateController;
 use App\Http\Controllers\Web\Frontend\ContactController;
 use App\Http\Controllers\Web\Frontend\HomeController;
+use App\Http\Controllers\Web\Frontend\PageController;
 use App\Http\Controllers\Web\Frontend\SubscriberController;
 use App\Http\Controllers\Web\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -28,5 +29,7 @@ Route::controller(NotificationController::class)->prefix('notification')->name('
     Route::post('read/single/{id}', 'readSingle')->name('read.single');
     Route::POST('read/all', 'readAll')->name('read.all');
 })->middleware('auth');
+
+Route::get('/page/{slug}',[PageController::class, 'index']);
 
 require __DIR__.'/auth.php';

@@ -265,7 +265,7 @@ use Illuminate\Support\Facades\Route;
                 <li class="slide">
                     <a class="side-menu__item {{  Request::routeIs('admin.curd.*') ? 'has-link active' : '' }}" href="{{ route('admin.curd.index') }}">
                         <i class="fa-solid fa-database side-menu__icon"></i>
-                        <span class="side-menu__label">CURD Generator</span>
+                        <span class="side-menu__label">CURD</span>
                     </a>
                 </li>
                 <li>
@@ -319,8 +319,10 @@ use Illuminate\Support\Facades\Route;
 
     menuSearchInput.addEventListener('input', function() {
         customMenuList.innerHTML = '';
-        sideMenu();
+        if (menuSearchInput.value.trim() === '') {
+            customMenuList.innerHTML = '';
+        } else {
+            sideMenu();
+        }
     });
-
-    sideMenu();
 </script>
