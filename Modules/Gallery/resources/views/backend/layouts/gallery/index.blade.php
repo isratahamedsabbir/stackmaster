@@ -6,6 +6,27 @@
         transform: scale(1.1);
         transition: all 0.2s ease-in-out;
     }
+
+    #galleryBox {
+        display: none; 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        z-index: 999; 
+        width: 50%;
+        height: 70%;
+        overflow: auto;
+        background-color: #f1f1f1;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    #galleryHeader {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
 </style>
 @section('content')
 
@@ -32,35 +53,68 @@
                 <div class="col-lg-12">
                     <div class="card post-sales-main">
                         <div class="card-body border-0">
-                            <div class="form-group">
-                                <input type="file" class="dropify form-control" name="images[]" id="images" multiple />
-                                <p class="textTransform">Image Size Less than 5MB and Image Type must be jpeg,jpg,png.</p>
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control gallery" id="inlineFormInputGroup" placeholder="Username">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row" id="user-profile">
-                <div class="col-lg-12" style="text-align: center">
-                    <div id="image_load"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12 mb-2" id="pagenation" style="text-align: center">
-                    <!-- Pagination will be dynamically generated here -->
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
+
+
+
+<div id="galleryBox">
+    <div class="row" id="galleryHeader">
+        <div class="col-lg-12 bg-black">
+            <button style="float: right; font-size: 20px; color: white" onclick="closeGallery()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="images" style="cursor: pointer; font-size: 20px;"><i class="fa-solid fa-upload"></i></label>
+                            <input type="file" class="form-control d-none" name="images[]" id="images" multiple />
+                            <small class="textTransform">Image Size Less than 5MB and Image Type must be jpeg, jpg, png.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12" style="text-align: center">
+            <div id="image_load"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-2" id="pagenation" style="text-align: center">
+            <!-- Pagination will be dynamically generated here -->
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 <!-- CONTAINER CLOSED -->
 @endsection
 @push('scripts')
 <script>
     let global_page = 1;
+    const galleryClass = document.querySelector('.gallery');
+    galleryClass.style = 'cursor: pointer';
 
     function imagesLoad(page = 1) {
         NProgress.start();
@@ -81,13 +135,13 @@
                 $.each(resp.files.data, function(key, image) {
                     imagehtml += `<div style="height: 150px; width: 150px; object-fit: cover; display: inline-block; margin: 5px">
                                 <div class="position-relative">
-                                    <img onclick="alert('` + image.id + `')" data-src="` + image.path + `" src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover; cursor: pointer;">
+                                    <img onclick="submitImage('` + image.id + `')" data-src="` + image.path + `" src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover; cursor: pointer;">
 
                                     <!-- Trash Icon -->
                                     <i class="fa fa-trash position-absolute top-0 start-0 d-flex align-items-center justify-content-center bg-white text-danger p-1 rounded-circle icon-btn"
                                     style="cursor: pointer; width: 30px; height: 30px;"
                                     data-id="` + image.id + `"
-                                    title="Delete Image"
+                                    title="Delete Image" 
                                     onclick="deleteImage(event, this)">
                                     </i>
 
@@ -154,7 +208,18 @@
         });
     }
 
-    imagesLoad();
+    galleryClass.addEventListener('click', function(e) {
+        e.preventDefault();
+        imagesLoad();
+        const galleryBox = document.querySelector('#galleryBox');
+        galleryBox.style.display == 'block' ? galleryBox.style.display = 'none' : galleryBox.style.display = 'block';
+        galleryClass.classList.add('active-gallery');
+    });
+
+    function closeGallery() {
+        const galleryBox = document.querySelector('#galleryBox');
+        galleryBox.style.display = 'none';
+    }
 
     function deleteImage(event) {
         event.preventDefault();
@@ -213,5 +278,10 @@
             }
         });
     });
+
+    function submitImage(id) {
+        document.querySelector('.active-gallery').value = id;
+        closeGallery();
+    }
 </script>
 @endpush
