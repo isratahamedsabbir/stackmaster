@@ -54,8 +54,9 @@
                     <div class="card post-sales-main">
                         <div class="card-body border-0">
                             <div class="input-group mb-2">
-                                <input type="text" class="form-control gallery" id="inlineFormInputGroup" placeholder="Username">
-                                <?php echo Modules\Gallery\Helpers\Resource::getFile(1); ?>
+                                <input type="text" class="form-control gallery" id="" placeholder="avatar">
+                                <input type="text" class="form-control gallery" id="" placeholder="icon">
+                                <?php /* echo Modules\Gallery\Helpers\Resource::getFile(1); */ ?>
                                 {{-- @foreach(Modules\Gallery\Helpers\Resource::getFile([1,2]) as $item) 
                                 {{ $item }}
                                 @endforeach --}}
@@ -106,11 +107,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 
 <!-- CONTAINER CLOSED -->
 @endsection
@@ -269,7 +265,6 @@
             },
             success: function(resp) {
                 NProgress.done();
-                $('.dropify-clear').click();
                 $('#image_load').empty();
                 $('#pagenation').empty();
                 imagesLoad();
@@ -285,6 +280,7 @@
 
     function submitImage(id) {
         document.querySelector('.active-gallery').value = id;
+        document.querySelector('.active-gallery').classList.remove('active-gallery');
         closeGallery();
     }
 </script>
