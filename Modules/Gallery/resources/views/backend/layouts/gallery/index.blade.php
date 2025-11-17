@@ -53,13 +53,13 @@
                 <div class="col-lg-12">
                     <div class="card post-sales-main">
                         <div class="card-body border-0">
-                            <div class="input-group mb-2">
-                                <input type="text" class="form-control gallery" id="" placeholder="avatar">
-                                <input type="text" class="form-control gallery" id="" placeholder="icon">
-                                <?php /* echo Modules\Gallery\Helpers\Resource::getFile(1); */ ?>
-                                {{-- @foreach(Modules\Gallery\Helpers\Resource::getFile([1,2]) as $item) 
-                                {{ $item }}
-                                @endforeach --}}
+                            <div class="input-group mb-3">
+                                <input type="text" name="avatar" class="form-control gallery" aria-label="Default" id="avatar" placeholder="Upload Image">
+                            </div>
+                            <?php /* echo Modules\Gallery\Helpers\Resource::getFile(1); */ ?>
+                            {{-- @foreach(Modules\Gallery\Helpers\Resource::getFile([1,2]) as $item) 
+                            {{ $item }}
+                            @endforeach --}}
                             </div>
                         </div>
                     </div>
@@ -113,9 +113,6 @@
 @push('scripts')
 <script>
     let global_page = 1;
-    const galleryClass = document.querySelector('.gallery');
-    galleryClass.style = 'cursor: pointer';
-
     function imagesLoad(page = 1) {
         NProgress.start();
         $('#image_load').empty();
@@ -135,7 +132,7 @@
                 $.each(resp.files.data, function(key, image) {
                     imagehtml += `<div style="height: 150px; width: 150px; object-fit: cover; display: inline-block; margin: 5px">
                                 <div class="position-relative">
-                                    <img onclick="submitImage('` + image.id + `')" data-src="` + image.path + `" src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover; cursor: pointer;">
+                                    <img onclick="submitImage('`+ image.id +`', '`+ image.path +`')" data-src="`+ image.path +`" src="` + image.path + `" alt="post image" class="img-fluid img-thumbnail" style="height: 150px; width: 150px; object-fit: cover; cursor: pointer;">
 
                                     <!-- Trash Icon -->
                                     <i class="fa fa-trash position-absolute top-0 start-0 d-flex align-items-center justify-content-center bg-white text-danger p-1 rounded-circle icon-btn"
@@ -208,13 +205,19 @@
         });
     }
 
-    galleryClass.addEventListener('click', function(e) {
-        e.preventDefault();
-        imagesLoad();
-        const galleryBox = document.querySelector('#galleryBox');
-        galleryBox.style.display == 'block' ? galleryBox.style.display = 'none' : galleryBox.style.display = 'block';
-        galleryClass.classList.add('active-gallery');
+    const galleryInputs = document.querySelectorAll('.gallery');
+    galleryInputs.forEach(input => {
+        input.style.cursor = 'pointer';
+        input.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.gallery').forEach(x => x.classList.remove('active-gallery'));
+            this.classList.add('active-gallery');
+            imagesLoad();
+            const galleryBox = document.querySelector('#galleryBox');
+            galleryBox.style.display = galleryBox.style.display === 'block' ? 'none' : 'block';
+        });
     });
+
 
     function closeGallery() {
         const galleryBox = document.querySelector('#galleryBox');
@@ -278,10 +281,34 @@
         });
     });
 
-    function submitImage(id) {
-        document.querySelector('.active-gallery').value = id;
-        document.querySelector('.active-gallery').classList.remove('active-gallery');
+    function submitImage(id, path) {
+        const galleryInput = document.querySelector('.active-gallery');
+        if (!galleryInput) return;   // Prevent error if no active input found
+
+        // Set value
+        galleryInput.value = id;
+
+        // Remove old preview image if exists
+        const existingImg = galleryInput.parentNode.querySelector('.gallery-preview');
+        if (existingImg) existingImg.remove();
+
+        // Add new preview image
+        const img = document.createElement('img');
+        img.src = path;
+        img.style.width = '35';
+        img.style.height = '35';
+        img.style.borderTopLeftRadius = '10%';
+        img.style.borderBottomLeftRadius = '10%';
+        img.classList.add('gallery-preview');
+
+        galleryInput.parentNode.insertBefore(img, galleryInput);
+
+        // Remove active state
+        galleryInput.classList.remove('active-gallery');
+
+        // Close popup
         closeGallery();
     }
+
 </script>
 @endpush
