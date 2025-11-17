@@ -55,6 +55,10 @@
                         <div class="card-body border-0">
                             <div class="input-group mb-2">
                                 <input type="text" class="form-control gallery" id="inlineFormInputGroup" placeholder="Username">
+                                <?php echo Modules\Gallery\Helpers\Resource::getFile(1); ?>
+                                {{-- @foreach(Modules\Gallery\Helpers\Resource::getFile([1,2]) as $item) 
+                                {{ $item }}
+                                @endforeach --}}
                             </div>
                         </div>
                     </div>
