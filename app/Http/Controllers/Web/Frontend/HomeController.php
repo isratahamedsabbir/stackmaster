@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Web\Frontend;
 
 use App\Enums\CacheEnum;
 use App\Enums\PageEnum;
-use App\Helpers\Caching;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 use App\Models\CMS;
@@ -29,7 +28,8 @@ class HomeController extends Controller
     public function index()
     {
         //CMS Data
-        $cmsData = CMSData::all();
+        $cmsData = CMSData::all()->makeHidden(['created_at', 'updated_at']);
+
         $cms = [
             'home' => $cmsData->where('page', PageEnum::HOME),
             'common' => $cmsData->where('page', PageEnum::COMMON),
@@ -51,10 +51,13 @@ class HomeController extends Controller
     }
 
     public function post($slug){
+        //CMS Data
+        $cmsData = CMSData::all()->makeHidden(['created_at', 'updated_at']);
         $cms = [
-            'home' => CMS::where('page', PageEnum::HOME)->where('status', 'active')->get(),
-            'common' => CMS::where('page', PageEnum::COMMON)->where('status', 'active')->get(),
+            'home' => $cmsData->where('page', PageEnum::HOME)->where('status', 'active')->get(),
+            'common' => $cmsData->where('page', PageEnum::COMMON)->where('status', 'active')->get(),
         ];
+        
         $post = Post::where('slug', base64_decode($slug))->where('status', 'active')->firstOrFail();
         return view('frontend.default.layouts.post', compact('cms', 'post'));
     }
