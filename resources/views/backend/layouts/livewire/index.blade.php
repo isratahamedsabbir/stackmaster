@@ -16,11 +16,11 @@
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Post</h1>
+                    <h1 class="page-title">Users</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Post</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Users</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Index</li>
                     </ol>
                 </div>
@@ -30,18 +30,7 @@
             <!-- ROW-4 -->
             <div class="row">
                 <div class="col-12 col-sm-12">
-                    <div class="card product-sales-main">
-                        <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">List</h3>
-                            <div class="card-options ms-auto">
-                                <a href="#" class="btn btn-primary btn-sm">Add</a>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            @livewire('crud')
-                        </div>
-
-                    </div>
+                    <livewire:crud />
                 </div><!-- COL END -->
             </div>
             <!-- ROW-4 END -->

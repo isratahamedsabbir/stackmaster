@@ -342,12 +342,6 @@ Route::prefix('setting/other')->name('setting.other')->group(function () {
     Route::get('/access', [OtherController::class, 'access'])->name('.access');
 });
 
-//livewire
-Route::prefix('livewire/crud')->name('livewire.crud')->group(function () {
-    Route::get('/', [LivewireController::class, 'index'])->name('.index');
-});
-
-
 // Run artisan commands for optimization and cache clearing
 Route::get('/optimize', function () {
     Artisan::call('optimize:clear');
@@ -451,6 +445,11 @@ Route::controller(CurriculumController::class)->prefix('curriculum')->name('curr
     Route::post('/update/{id}', 'update')->name('update');
     Route::get('/delete/{id}', 'destroy')->name('destroy');
 });
+
+//livewire
+Route::get('livewire/crud', function () {
+    return view('backend.layouts.livewire.index');
+})->name('livewire.crud.index');
 
 
 
