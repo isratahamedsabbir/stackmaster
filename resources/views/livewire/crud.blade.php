@@ -8,11 +8,11 @@
     @endif
 
     <div class="row">
-        <div class="col-6">
+        <div class="col-5">
             <div class="card product-sales-main">
                 <div class="card-header border-bottom">
                     <div class="card-body">
-                         <form wire:submit.prevent="store">
+                         <form wire:submit.prevent="store" enctype="multipart/form-data">
 
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
@@ -24,6 +24,15 @@
                                 <label class="form-label">Email</label>
                                 <input type="email" wire:model.defer="email" class="form-control">
                                 @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Avatar</label>
+                                <input type="file" wire:model.defer="avatar" class="form-control">
+                                @if('avatar')
+                                    <img src="{{ isset($avatar) ? $avatar->temporaryUrl() : asset($avatar) }}" width="50" alt="">
+                                @endif
+                                @error('avatar') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             <div class="mb-3">
@@ -47,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-7">
             <div class="card product-sales-main">
                 <div class="card-header border-bottom">
                     <div class="btn-group" role="group" aria-label="Basic example">
@@ -77,6 +86,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
+                                    <th scope="col">Avatar</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col" class="text-center">Action</th>
@@ -86,8 +96,11 @@
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->id }}</td>
+                                    <th>
+                                        <img wire:click="download('{{ $user->avatar }}')" src="{{ Storage::url($user->avatar) }}" width="50" alt="avatar">
+                                    </th>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ Str::limit($user->email, 10, '...') }}</td>
                                     <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-primary">Edit</a>
                                         <a href="#" class="btn btn-sm btn-danger">Delete</a>

@@ -7,10 +7,13 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
+use Str;
 
 class Crud extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -19,7 +22,7 @@ class Crud extends Component
 
     public $perPage = 10;
 
-    public $name, $email, $password, $password_confirmation;
+    public $name, $email, $password, $password_confirmation, $avatar;
 
     public function mount()
     {
@@ -59,21 +62,31 @@ class Crud extends Component
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed',
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         try{
+            $filepath = $this->avatar->store('avatars', 'public');
             User::create([
                 'name' => $this->name,
                 'slug' => str()->slug($this->name),
                 'email' => $this->email,
                 'password' => bcrypt($this->password),
+                'avatar' => $filepath
             ]);
+
             session()->put('success', 'User created successfully');
-            $this->reset(['name', 'email', 'password', 'password_confirmation']);
+            $this->reset(['name', 'email', 'password', 'password_confirmation', 'avatar']);
+
         } catch (Exception $e) {
            session()->put('error', $e->getMessage());
            return;
         }
+    }
+
+    public function download($filepath)
+    {
+        return Storage::download($filepath);
     }
 }
 
