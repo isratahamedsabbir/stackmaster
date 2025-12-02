@@ -16,13 +16,13 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Name</label>
-                                <input type="text" wire:model.defer="name" class="form-control">
+                                <input type="text" wire:model="name" class="form-control">
                                 @error('name') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
-                                <input type="email" wire:model.defer="email" class="form-control">
+                                <input type="email" wire:model="email" class="form-control">
                                 @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
@@ -42,7 +42,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" wire:model.defer="password" class="form-control">
+                                <input type="password" wire:model="password" class="form-control">
                                 @error('password') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
@@ -52,10 +52,24 @@
                                 @error('password_confirmation') <small class="text-danger">{{ $message }}</small> @enderror
                             </div>
 
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" wire:model.live="agree" id="agreeCheck">
+                                <label class="form-check-label" for="agreeCheck">
+                                    I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">terms and conditions</a>
+                                </label>
+                                @error('agree') <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                            @if($agree)
+                                <p wire:tarnsition class="text-success">You have agreed to the terms and conditions.</p>
+                            @endif
+
                             <button class="btn btn-primary" type="submit" wire:loading.attr="disabled" wire:target="store">
                                 <span wire:loading.remove wire:target="store">Create User</span>
                                 <span wire:loading wire:target="store">Creating...</span>
                             </button>
+
+                            <button class="btn btn-secondary" type="reset" wire:loading.attr="disabled" wire:click="resetForm">Reset</button>
 
                         </form>
                     </div>
@@ -119,7 +133,9 @@
                                 <td class="text-center">
                                     <a href="#" class="btn btn-sm btn-primary">Edit</a>
                                     <a href="#" class="btn btn-sm btn-danger" 
-                                       onclick="return confirm('Are you sure?')">Delete</a>
+                                    wire:click="delete({{ $user->id }})" 
+                                    wire:loading.attr="disabled" 
+                                    wire:confirm="confirmDelete({{ $user->id }})">Delete</a>
                                 </td>
                             </tr>
                             @empty

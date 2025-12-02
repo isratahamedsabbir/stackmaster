@@ -7,6 +7,7 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use App\Models\User;
 use Exception;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Str;
@@ -23,6 +24,8 @@ class Crud extends Component
     public $perPage = 10;
 
     public $name, $email, $password, $password_confirmation, $avatar;
+
+    public $agree = false;
 
     public function mount()
     {
@@ -82,6 +85,18 @@ class Crud extends Component
            session()->put('error', $e->getMessage());
            return;
         }
+    }
+
+    public function resetForm()
+    {
+        session()->put('success', 'User created successfully');
+        $this->reset(['name', 'email', 'password', 'password_confirmation', 'avatar']);
+    }
+
+    public function delete(User $user)
+    {
+        $user->delete();
+        session()->put('success', 'User deleted successfully');
     }
 
     public function download($filepath)
