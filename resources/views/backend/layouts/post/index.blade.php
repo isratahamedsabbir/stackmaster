@@ -33,7 +33,10 @@
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">List</h3>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-danger"><a href="#">Import</a></button>
+                                <button type="button" class="btn btn-warning"><a href="#">Export</a></button>
+                            </div>
                             <div class="card-options ms-auto">
                                 <a href="{{ route($route . '.create') }}" class="btn btn-primary btn-sm">Add</a>
                             </div>

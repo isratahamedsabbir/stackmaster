@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('stripe_subscription_id')->nullable();
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('is_owner', ['1', '0'])->default(0);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

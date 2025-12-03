@@ -12,7 +12,7 @@ class WebAuthCheckMiddleware
         if (Auth::guard('web')->check() && Auth::guard('web')->user()->status == 'active') {
             if(Auth::guard('web')->user()->hasRole('developer')) {
                 return redirect()->route('developer.dashboard');
-            }elseif(Auth::guard('web')->user()->hasRole('admin')) {
+            }elseif(Auth::guard('web')->user()->hasRole(['admin', 'staff'])) {
                 return redirect()->route('admin.dashboard');
             }else{
                 Auth::logout();

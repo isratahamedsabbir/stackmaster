@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
                 ['id' => 6, 'name' => 'api_update', 'guard_name' => 'api'],
                 ['id' => 7, 'name' => 'api_delete', 'guard_name' => 'api'],
                 ['id' => 8, 'name' => 'api_view', 'guard_name' => 'api'],
+                ['id' => 9, 'name' => 'dev', 'guard_name' => 'web']
             ]);
 
             DB::table('roles')->insert([
@@ -31,20 +32,23 @@ class UserSeeder extends Seeder
                 ['id' => 2, 'name' => 'admin', 'guard_name' => 'web'],
                 ['id' => 3, 'name' => 'retailer', 'guard_name' => 'api'],
                 ['id' => 4, 'name' => 'customer', 'guard_name' => 'api'],
+                ['id' => 5, 'name' => 'staff', 'guard_name' => 'web'],
             ]);
 
             DB::table('users')->insert([
-                ['id' => 1, 'name' => 'developer', 'slug' => 'developer', 'email' => 'developer@developer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now()],
-                ['id' => 2, 'name' => 'Admin', 'slug' => 'admin', 'email' => 'admin@admin.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now()],
-                ['id' => 3, 'name' => 'Retailer', 'slug' => 'retailer', 'email' => 'retailer@retailer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now()],
-                ['id' => 4, 'name' => 'Customer', 'slug' => 'customer', 'email' => 'customer@customer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now()]
+                ['id' => 1, 'name' => 'developer', 'slug' => 'developer', 'email' => 'developer@developer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now(), 'is_owner' => '0'],
+                ['id' => 2, 'name' => 'Admin', 'slug' => 'admin', 'email' => 'admin@admin.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now(), 'is_owner' => '1'],
+                ['id' => 3, 'name' => 'Retailer', 'slug' => 'retailer', 'email' => 'retailer@retailer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now(), 'is_owner' => '0'],
+                ['id' => 4, 'name' => 'Customer', 'slug' => 'customer', 'email' => 'customer@customer.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now(), 'is_owner' => '0'],
+                ['id' => 5, 'name' => 'Staff', 'slug' => 'staff', 'email' => 'staff@staff.com', 'password' => Hash::make('12345678'), 'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv', 'otp_verified_at' => now(), 'is_owner' => '0'],
             ]);
 
             DB::table('profiles')->insert([
                 ['id' => 1, 'user_id' => 1, 'dob' => '2019-01-01', 'gender' => 'male'],
                 ['id' => 2, 'user_id' => 2, 'dob' => '2019-01-01', 'gender' => 'male'],
                 ['id' => 3, 'user_id' => 3, 'dob' => '2019-01-01', 'gender' => 'male'],
-                ['id' => 4, 'user_id' => 4, 'dob' => '2019-01-01', 'gender' => 'male']
+                ['id' => 4, 'user_id' => 4, 'dob' => '2019-01-01', 'gender' => 'male'],
+                ['id' => 5, 'user_id' => 5, 'dob' => '2019-01-01', 'gender' => 'male'],
             ]);
 
             DB::table('role_has_permissions')->insert([
@@ -63,7 +67,7 @@ class UserSeeder extends Seeder
                 ['permission_id' => 5, 'role_id' => 4],
                 ['permission_id' => 6, 'role_id' => 4],
                 ['permission_id' => 7, 'role_id' => 4],
-                ['permission_id' => 8, 'role_id' => 4],
+                ['permission_id' => 8, 'role_id' => 4]
             ]);
 
             DB::table('model_has_roles')->insert([
@@ -90,9 +94,8 @@ class UserSeeder extends Seeder
                 ['permission_id' => 5, 'model_id' => 4, 'model_type' => 'App\Models\User'],
                 ['permission_id' => 6, 'model_id' => 4, 'model_type' => 'App\Models\User'],
                 ['permission_id' => 7, 'model_id' => 4, 'model_type' => 'App\Models\User'],
-                ['permission_id' => 8, 'model_id' => 4, 'model_type' => 'App\Models\User'],
+                ['permission_id' => 8, 'model_id' => 4, 'model_type' => 'App\Models\User']
             ]);
-
 
             for ($i = 5; $i <= 100; $i++) {
                 DB::table('users')->insert([
@@ -102,6 +105,12 @@ class UserSeeder extends Seeder
                     'password' => Hash::make('12345678'),
                     'stripe_account_id' => 'acct_1RHGjbQPESrwz7hv',
                     'otp_verified_at' => now()
+                ]);
+
+                DB::table('profiles')->insert([
+                    'user_id' => $i,
+                    'dob' => '1990-01-01',
+                    'gender' => 'male'
                 ]);
 
                 DB::table('model_has_roles')->insert([

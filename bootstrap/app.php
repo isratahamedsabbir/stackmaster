@@ -9,6 +9,7 @@ use App\Http\Middleware\WebDeveloperMiddleware;
 use App\Http\Middleware\ApiOtpVerifiedMiddleware;
 use App\Http\Middleware\WebOtpVerifiedMiddleware;
 use App\Http\Middleware\ApiRetailerMiddleware;
+use App\Http\Middleware\WebStaffMiddleware;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -33,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         then: function () {
             Route::middleware(['web'])->prefix('ajax')->name('ajax.')->group(base_path('routes/ajax.php'));
             Route::middleware(['web', 'web-developer'])->prefix('developer')->name('developer.')->group(base_path('routes/web-developer.php'));
-            Route::middleware(['web', 'web-admin'])->prefix('admin')->name('admin.')->group(base_path('routes/web-admin.php'));
+            Route::middleware(['web'])->prefix('admin')->name('admin.')->group(base_path('routes/web-admin.php'));
             Route::middleware(['api', 'api-admin'])->prefix('api.admin')->name('api.admin.')->group(base_path('routes/api-admin.php'));
             Route::middleware(['api', 'api-retailer'])->prefix('api/retailer')->name('api.retailer.')->group(base_path('routes/api-retailer.php'));
             Route::middleware(['api', 'otp', 'api-customer'])->prefix('api/customer')->name('api.customer.')->group(base_path('routes/api-customer.php'));
@@ -50,6 +51,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'web-developer'         => WebDeveloperMiddleware::class,
             'web-admin'             => WebAdminMiddleware::class,
+            'web-staff'             => WebStaffMiddleware::class,
             'api-admin'             => ApiAdminMiddleware::class,
             'api-customer'          => ApiCustomerMiddleware::class,
             'api-retailer'          => ApiRetailerMiddleware::class,
