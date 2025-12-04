@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MenuSeeder::class);
         $this->call(AttributeSeeder::class);
         $this->call(PropertySeeder::class);
+        $this->call(TemplateSeeder::class);
     }
 }

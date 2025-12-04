@@ -203,19 +203,22 @@ $url = 'admin.cms.'.$page.'.'.$section;
                         data: 'image',
                         name: 'image',
                         orderable: true,
-                        searchable: true
+                        searchable: true,
+                        className: 'dt-center text-center'
                     },
                     {
                         data: 'status',
                         name: 'status',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        className: 'dt-center text-center'
                     },
                     {
                         data: 'action',
                         name: 'action',
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        className: 'dt-center text-center'
                     },
                 ],
             });

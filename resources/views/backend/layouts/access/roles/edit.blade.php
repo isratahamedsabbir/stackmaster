@@ -53,12 +53,11 @@
 
                                         <div class="mb-3">
                                             <label for="permissions" class="form-label">Permissions</label>
+                                            <hr />
                                             @foreach ($permissions as $permission)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->name }}" id="permission-{{ $permission->id }}" @if($role->hasPermissionTo($permission->name, $permission->guard_name)) checked @endif />
-                                                <label class="form-check-label" for="permission-{{ $permission->id }}">
-                                                    {{ $permission->name }}
-                                                </label>
+                                                <label class="form-check-label" for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
                                             </div>
                                             @endforeach
                                         </div>

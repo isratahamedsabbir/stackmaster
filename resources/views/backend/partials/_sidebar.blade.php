@@ -59,7 +59,7 @@ use Illuminate\Support\Facades\Route;
                 </li>
                 <li class="slide">
                     <a class="side-menu__item {{  request()->routeIs('admin.course.*') ? 'has-link active' : '' }}" href="{{ route('admin.course.index') }}">
-                        <i class="fa-solid fa-book side-menu__icon"></i>
+                        <i class="fa-solid fa-graduation-cap side-menu__icon"></i>
                         <span class="side-menu__label">Course</span>
                     </a>
                 </li>

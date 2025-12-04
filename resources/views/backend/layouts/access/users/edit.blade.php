@@ -49,14 +49,13 @@
 
                                         <div class="mb-3">
                                             <label for="roles" class="form-label">User Roles</label>
+                                            <hr />
+                                            @foreach ($roles as $role)
                                             <div class="form-check">
-                                                @foreach ($roles as $role)
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input @error('roles') is-invalid @enderror" type="checkbox" id="role-{{ $role->id }}" name="roles[]" value="{{ $role->id }}" {{ in_array($role->name, $user->roles->pluck('name')->toArray()) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="role-{{ $role->id }}">{{ $role->name }}</label>
-                                                </div>
-                                                @endforeach
+                                                <input class="form-check-input @error('roles') is-invalid @enderror" type="checkbox" id="role-{{ $role->id }}" name="roles[]" value="{{ $role->id }}" {{ in_array($role->name, $user->roles->pluck('name')->toArray()) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="role-{{ $role->id }}">{{ $role->name }}</label>
                                             </div>
+                                            @endforeach
                                             @error('roles')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror

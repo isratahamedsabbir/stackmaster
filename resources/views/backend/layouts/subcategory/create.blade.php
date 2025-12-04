@@ -27,6 +27,12 @@
                     <div class="tab-content">
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h3 class="card-title mb-0">Sub Category</h3>
+                                    <div class="card-options">
+                                        <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                                    </div>
+                                </div>
                                 <div class="card-body border-0">
                                     <form class="form form-horizontal" method="post" action="{{ route('admin.subcategory.store') }}" enctype="multipart/form-data">
                                         @csrf

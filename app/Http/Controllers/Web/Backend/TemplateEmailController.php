@@ -121,8 +121,8 @@ class TemplateEmailController extends Controller
             'id' => $template->id,
             'name' => $template->name ? $template->name : 'N/A',
             'slug' => $template->slug ? $template->slug : 'N/A',
-            'subject' => $template->subject ? $template->subject : 'N/A',
-            'body' => $template->body ? str_replace('{{name}}', "jon Doe", $template->body) : 'N/A',
+            'subject' => $template->subject ? str_replace('{{name}}', "jon Doe", $template->subject) : 'N/A',
+            'body' => $template->body ? str_replace(['{{name}}', '{{age}}'], ["jon Doe", 25], $template->body) : 'N/A',
         ];
         
         return view($this->view . ".show", [
