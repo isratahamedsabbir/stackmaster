@@ -14,7 +14,7 @@
                     <h1 class="page-title">Captcha Settings <i class="fa-solid fa-triangle-exclamation text-danger" title="Warning"></i></h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
-                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Settings</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Captcha</li>
                     </ol>

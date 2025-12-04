@@ -19,6 +19,7 @@ $url = 'admin.cms.'.$page.'.'.$section;
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
                         <li class="breadcrumb-item">CMS</li>
                         <li class="breadcrumb-item">{{ ucwords(str_replace('_', ' ', $page ?? '')) }}</li>
                         <li class="breadcrumb-item">{{ ucwords(str_replace('_', ' ', $section ?? '')) }}</li>

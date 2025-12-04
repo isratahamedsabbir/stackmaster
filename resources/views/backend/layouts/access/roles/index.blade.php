@@ -21,6 +21,7 @@
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
                         <li class="breadcrumb-item">Access</li>
                         <li class="breadcrumb-item">Role</li>
                     </ol>
