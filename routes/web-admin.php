@@ -52,10 +52,6 @@ use Illuminate\Support\Facades\Redis;
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:admin|staff']);
 
 Route::group(['middleware' => ['web-admin']], function () {
-    
-    /*
-    * CRUD
-    */
 
     Route::controller(MenuController::class)->prefix('menu')->name('menu.')->group(function () {
         Route::get('/', 'index')->name('index');
@@ -176,10 +172,6 @@ Route::group(['middleware' => ['web-admin']], function () {
         Route::get('/', 'index')->name('index');
         Route::get('/status/{id}', 'status')->name('status');
     });
-
-    /*
-    * Transaction
-    */
 
     Route::controller(TransactionController::class)->prefix('transaction')->name('transaction.')->group(function () {
         Route::get('/{user_id?}', 'index')->name('index');
@@ -351,7 +343,6 @@ Route::group(['middleware' => ['web-admin']], function () {
         Cache::flush();
         return redirect()->back()->with('t-success', 'Message sent successfully');
     })->name('optimize');
-
 
     //Filer
     Route::controller(AttributeController::class)->prefix('attribute')->name('attribute.')->group(function () {

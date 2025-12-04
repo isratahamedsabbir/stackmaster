@@ -11,10 +11,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'profile_settings');
+    }
+
     public function index(Request $request)
     {
         $user = User::find($request->id);

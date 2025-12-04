@@ -17,7 +17,7 @@
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Subscriber</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -34,7 +34,13 @@
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">List</h3>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-danger"><a href="#">Import</a></button>
+                                <button type="button" class="btn btn-warning"><a href="#">Export</a></button>
+                            </div>
+                            <div class="card-options">
+                                <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="">

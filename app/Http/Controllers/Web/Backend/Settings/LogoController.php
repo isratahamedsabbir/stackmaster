@@ -8,16 +8,16 @@ use App\Models\Setting;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 class LogoController extends Controller
 {
-    /**
-     * Display the system settings page.
-     *
-     * @return View
-     */
-    public function index(): View
+    public function __construct()
+    {
+        View::share('crud', 'logo_settings');
+    }
+
+    public function index()
     {
         $setting = Setting::latest('id')->first();
         return view('backend.layouts.settings.logo_settings', compact('setting'));

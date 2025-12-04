@@ -10,13 +10,18 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\View;
 
 class TemplateEmailController extends Controller
 {
 
     public $route = 'admin.template.email';
     public $view = 'backend.layouts.template.email';
+
+    public function __construct()
+    {
+        View::share('crud', 'email_template');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'order');
+    }
     /**
      * Display a listing of the resource.
      */

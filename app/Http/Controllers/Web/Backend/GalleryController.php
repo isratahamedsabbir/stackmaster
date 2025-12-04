@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Web\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\File;
+use Illuminate\Support\Facades\View;
 
 class GalleryController extends Controller
 {
+
+    public function __construct()
+    {
+        View::share('crud', 'gallery');
+    }
 
     public function index()
     {

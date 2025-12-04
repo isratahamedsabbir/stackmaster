@@ -7,10 +7,16 @@ use App\Models\Subscriber;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubscriberController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'subscriber');
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {

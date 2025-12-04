@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 
 use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class SocialController extends Controller {
-    /**
-     * Display mail settings page.
-     *
-     * @return View
-     */
-    public function index(): View {
+    public function __construct()
+    {
+        View::share('crud', 'social_settings');
+    }
+
+    public function index() {
         $settings = [
             'google_client_id'    => env('GOOGLE_CLIENT_ID', ''),
             'google_client_secret'=> env('GOOGLE_CLIENT_SECRET', ''),

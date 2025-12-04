@@ -11,7 +11,7 @@
             {{-- PAGE-HEADER --}}
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Stripe Settings <i class="fa-solid fa-triangle-exclamation text-danger" title="Warning"></i></h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }} <i class="fa-solid fa-triangle-exclamation text-danger" title="Warning"></i></h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -27,6 +27,12 @@
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card box-shadow-0">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title mb-0">Show</h3>
+                            <div class="card-options">
+                                <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <form class="form form-horizontal" method="post" action="{{ route('admin.setting.stripe.update') }}" enctype="multipart/form-data">
                                 @csrf

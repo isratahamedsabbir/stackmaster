@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class SignatureController extends Controller {
-    /**
-     * Display mail settings page.
-     *
-     * @return View
-     */
-    public function index(): View {
+    public function __construct()
+    {
+        View::share('crud', 'signature_settings');
+    }
+
+    public function index() 
+    {
         $signature = Setting::latest('id')->first()->signature;
         return view('backend.layouts.settings.signature_settings', compact('signature'));
     }

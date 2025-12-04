@@ -18,13 +18,13 @@
             {{-- PAGE-HEADER --}}
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Google Map Settings</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
                         <li class="breadcrumb-item"><a href="javascript:void(0);">Settings</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Google Map</li>
+                        <li class="breadcrumb-item active" aria-current="page">Google-Map</li>
                     </ol>
                 </div>
             </div>
@@ -34,6 +34,12 @@
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card box-shadow-0">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title mb-0">Show</h3>
+                            <div class="card-options">
+                                <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <form class="form form-horizontal" method="post" action="{{ route('admin.setting.google.map.update') }}" enctype="multipart/form-data">
                                 @csrf

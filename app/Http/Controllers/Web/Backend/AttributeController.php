@@ -9,13 +9,18 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\View;
 
 class AttributeController extends Controller
 {
 
     public $route = 'admin.attribute';
     public $view = 'backend.layouts.attribute';
+
+    public function __construct()
+    {
+        View::share('crud', 'attribute');
+    }
     /**
      * Display a listing of the resource.
      */

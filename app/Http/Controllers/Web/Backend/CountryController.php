@@ -9,10 +9,14 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\View;
 
 class CountryController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'country');
+    }
     /**
      * Display a listing of the resource.
      */

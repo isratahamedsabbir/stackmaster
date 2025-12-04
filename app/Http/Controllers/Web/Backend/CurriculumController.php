@@ -6,9 +6,14 @@ use App\Models\Curriculum;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class CurriculumController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'curriculum');
+    }
 
     public function store(Request $request)
     {

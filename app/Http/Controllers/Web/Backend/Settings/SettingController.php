@@ -8,17 +8,16 @@ use App\Models\Setting;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 class SettingController extends Controller
 {
-    /**
-     * Display the system settings page.
-     *
-     * @return View
-     */
-    public function index(): View
+    public function __construct()
+    {
+        View::share('crud', 'general_settings');
+    }
+
+    public function index()
     {
         $setting = Setting::latest('id')->first();
         return view('backend.layouts.settings.general_settings', compact('setting'));

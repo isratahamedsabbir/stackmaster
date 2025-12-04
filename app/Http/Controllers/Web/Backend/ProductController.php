@@ -12,10 +12,14 @@ use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\View;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'product');
+    }
     /**
      * Display a listing of the resource.
      */

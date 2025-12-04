@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -23,6 +24,7 @@ class QuizController extends Controller
         $this->part  = 'quiz';
         $this->route = 'admin.' . $this->part;
         $this->view  = 'backend.layouts.' . $this->part;
+        View ::share('crud', 'quiz');
     }
 
     /**

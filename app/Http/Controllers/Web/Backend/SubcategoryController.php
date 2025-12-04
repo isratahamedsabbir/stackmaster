@@ -10,6 +10,7 @@ use App\Http\Requests\SubCategoryRequest;
 use App\Repositories\Interfaces\SubCategoryRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubcategoryController extends Controller
@@ -20,6 +21,7 @@ class SubcategoryController extends Controller
     public function __construct(SubCategoryRepositoryInterface $subCategoryRepository)
     {
         $this->subCategoryRepository = $subCategoryRepository;
+        View::share('crud', 'sub_category');
     }
     /**
      * Display a listing of the resource.

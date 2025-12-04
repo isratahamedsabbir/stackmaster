@@ -11,7 +11,7 @@
             {{-- PAGE-HEADER --}}
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Firebase Settings</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -26,6 +26,12 @@
             <div class="row">
                 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
                     <div class="card box-shadow-0">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title mb-0">Show</h3>
+                            <div class="card-options">
+                                <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <form class="form form-horizontal" method="post" action="{{ route('admin.setting.firebase.update') }}" enctype="multipart/form-data">
                                 @csrf

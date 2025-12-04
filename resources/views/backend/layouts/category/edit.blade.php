@@ -11,7 +11,7 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Category</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -28,7 +28,7 @@
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h3 class="card-title mb-0">Category</h3>
+                                    <h3 class="card-title mb-0">Update</h3>
                                     <div class="card-options">
                                         <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
                                     </div>

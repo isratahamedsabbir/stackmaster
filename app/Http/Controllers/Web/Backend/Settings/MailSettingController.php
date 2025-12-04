@@ -4,22 +4,22 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 
 use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use Illuminate\Support\Facades\View;
 
 class MailSettingController extends Controller
 {
-    /**
-     * Display mail settings page.
-     *
-     * @return View
-     */
-    public function index(): View
+    public function __construct()
+    {
+        View::share('crud', 'mail_settings');
+    }
+
+    public function index()
     {
         $settings = [
             'mail_mailer'       => env('MAIL_MAILER', ''),

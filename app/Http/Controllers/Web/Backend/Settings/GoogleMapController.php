@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 
 use App\Http\Controllers\Controller;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class GoogleMapController extends Controller {
-    /**
-     * Display mail settings page.
-     *
-     * @return View
-     */
-    public function index(): View {
+
+    public function __construct()
+    {
+        View::share('crud', 'google_map_settings');
+    }
+
+    public function index() {
         $settings = [
             'google_maps_api_key' => env('GOOGLE_MAPS_API_KEY', '')
         ];

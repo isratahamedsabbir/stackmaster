@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Web\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 
 
 class BookingController extends Controller
 {
+
+    public function __construct()
+    {
+        View::share('crud', 'booking');
+    }
     /**
      * Display a listing of the resource.
      */

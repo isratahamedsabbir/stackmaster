@@ -6,11 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'transaction');
+    }
+
     public function index(Request $request, $user_id = null)
     {
         $user_id = $user_id ?? auth('web')->user()->id;

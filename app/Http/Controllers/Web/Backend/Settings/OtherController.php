@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Web\Backend\Settings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\View;
 
 class OtherController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'other_settings');
+    }
+
     public function index(){
         $settings = [
             'mail'       => env('MAIL', ''),

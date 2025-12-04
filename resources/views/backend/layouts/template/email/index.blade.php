@@ -12,17 +12,15 @@
 
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
-
-
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Email Template</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email Template</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email-Template</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Index</li>
                     </ol>
                 </div>
@@ -34,7 +32,10 @@
                 <div class="col-12 col-sm-12">
                     <div class="card product-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">List</h3>
+                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                <button type="button" class="btn btn-danger"><a href="#">Import</a></button>
+                                <button type="button" class="btn btn-warning"><a href="#">Export</a></button>
+                            </div>
                             <div class="card-options ms-auto">
                                 <a href="{{ route($route . '.create') }}" class="btn btn-primary btn-sm">Add</a>
                             </div>

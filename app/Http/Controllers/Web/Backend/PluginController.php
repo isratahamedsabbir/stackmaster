@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PluginService;
+use Illuminate\Support\Facades\View;
 
 class PluginController extends Controller
 {
@@ -12,6 +13,7 @@ class PluginController extends Controller
     public function __construct(PluginService $pluginService)
     {
         $this->pluginService = $pluginService;
+        View::share('crud', 'package');
     }
 
     public function index()

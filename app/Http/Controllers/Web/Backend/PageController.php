@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class PageController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'page');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -11,12 +11,12 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Email Template</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url("admin/dashboard") }}"><i class="fe fe-home me-2 fs-14"></i>Home</a></li>
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email Template</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Email-Template</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Show</li>
                     </ol>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="card post-sales-main">
                         <div class="card-header border-bottom">
-                            <h3 class="card-title mb-0">{{ Str::limit($template['name'], 50) }}</h3>
+                            <h3 class="card-title mb-0">Show</h3>
                             <div class="card-options">
                                 <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
                             </div>

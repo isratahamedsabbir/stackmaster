@@ -5,10 +5,16 @@ namespace App\Http\Controllers\Web\Backend\Access;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'permission');
+    }
+
     public function index()
     {
         $permissions = Permission::orderBy('id', 'desc')->paginate(25);

@@ -11,7 +11,7 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Transaction</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -25,6 +25,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card transaction-sales-main">
+                        <div class="card-header border-bottom">
+                            <h3 class="card-title mb-0">Show</h3>
+                            <div class="card-options">
+                                <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                            </div>
+                        </div>
                         <div class="card-header border-bottom">
                             <h3 class="card-title mb-0">{{ Str::limit($transaction->title, 50) }}</h3>
                         </div>

@@ -9,10 +9,15 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\View;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'menu');
+    }
+
     public function index(Request $request)
     {
         $menus = Menu::query()->latest()->get();

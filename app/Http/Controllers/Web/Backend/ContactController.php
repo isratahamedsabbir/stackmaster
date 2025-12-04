@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Web\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\View;
 use Yajra\DataTables\Facades\DataTables;
 
 class ContactController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'booking');
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {

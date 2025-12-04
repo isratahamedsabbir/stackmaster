@@ -11,7 +11,7 @@
 
             <div class="page-header">
                 <div>
-                    <h1 class="page-title">Role</h1>
+                    <h1 class="page-title">{{ $crud ? ucwords(str_replace('_', ' ', $crud)) : 'N/A' }}</h1>
                 </div>
                 <div class="ms-auto pageheader-btn">
                     <ol class="breadcrumb">
@@ -29,6 +29,12 @@
                     <div class="tab-content">
                         <div class="tab-pane active show" id="editProfile">
                             <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h3 class="card-title mb-0">Create</h3>
+                                    <div class="card-options">
+                                        <a href="javascript:window.history.back()" class="btn btn-sm btn-primary">Back</a>
+                                    </div>
+                                </div>
                                 <div class="card-body border-0">
                                     <form class="form form-horizontal" action="{{ route('admin.roles.store') }}" method="POST">
                                         @csrf

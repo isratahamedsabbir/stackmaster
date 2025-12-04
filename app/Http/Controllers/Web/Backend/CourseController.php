@@ -25,7 +25,7 @@ class CourseController extends Controller
         $this->part = 'course';
         $this->route = 'admin.' . $this->part;
         $this->view = 'backend.layouts.' . $this->part;
-        View::share('crud', 'category');
+        View::share('crud', 'course');
     }
 
     /**

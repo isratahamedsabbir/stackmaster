@@ -12,9 +12,15 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class ChatController extends Controller
 {
+    public function __construct()
+    {
+        View::share('crud', 'chat');
+    }
+
     public function index() {
         return view('backend.layouts.chat.index');
     }
