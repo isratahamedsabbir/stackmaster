@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 
 class CourseController extends Controller
@@ -24,6 +25,7 @@ class CourseController extends Controller
         $this->part = 'course';
         $this->route = 'admin.' . $this->part;
         $this->view = 'backend.layouts.' . $this->part;
+        View::share('crud', 'category');
     }
 
     /**

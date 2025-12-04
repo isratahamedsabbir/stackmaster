@@ -10,6 +10,7 @@ use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\View;
 
 class CategoryController extends Controller
 {
@@ -18,6 +19,7 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
+        View::share('crud', 'category');
         $this->categoryRepository = $categoryRepository;
     }
     /**
