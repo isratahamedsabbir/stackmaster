@@ -272,7 +272,7 @@
                                     </svg>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="{{ route('admin.users.new.index') }}">
+                                {{-- <a class="dropdown-item" href="{{ route('admin.users.new.index') }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn"
                                         enable-background="new 0 0 24 24" viewBox="0 0 24 24">
                                         <path
@@ -280,7 +280,7 @@
                                     </svg>
                                     New Users
                                     <span class="badge bg-secondary float-end" id="userCount"></span>
-                                </a>
+                                </a> --}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-inner-icn" enable-background="new 0 0 24 24" viewBox="0 0 24 24">
