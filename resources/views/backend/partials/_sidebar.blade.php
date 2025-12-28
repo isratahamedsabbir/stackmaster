@@ -269,16 +269,20 @@ use Illuminate\Support\Facades\Route;
                 </li>
                 @endrole
                 @role('admin')
-                <li>
-                    <h3>Location</h3>
-                </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.country.*') ? 'has-link active' : '' }}" href="{{ route('admin.country.index') }}">
+                    <a class="side-menu__item {{  request()->routeIs('admin.location.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <i class="fa-solid fa-earth-americas side-menu__icon"></i>
-                        <span class="side-menu__label">Country</span>
+                        <span class="side-menu__label">Location</span><i class="angle fa fa-angle-right"></i>
                     </a>
+                    <ul class="slide-menu">
+                        <li><a href="{{ route('admin.location.country.index') }}" class="slide-item">Country</a></li>
+                        <li><a href="#" class="slide-item">State</a></li>
+                        <li><a href="#" class="slide-item">City</a></li>
+                        <li><a href="#" class="slide-item">Area</a></li>
+                    </ul>
                 </li>
                 @endrole
+                
                 @can('dev')
                 <li class="{{ env('APP_ENV') == 'production' ? 'd-none' : '' }}">
                     <h3>Dev Tools</h3>
@@ -302,6 +306,7 @@ use Illuminate\Support\Facades\Route;
                     </a>
                 </li>
                 @endcan
+
                 <li class="slide">
                     <hr />
                 </li>

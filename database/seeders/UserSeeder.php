@@ -16,23 +16,23 @@ class UserSeeder extends Seeder
     {
         if (app()->environment('local')) {
             DB::table('permissions')->insert([
-                ['id' => 1, 'name' => 'web_insert', 'guard_name' => 'web'],
-                ['id' => 2, 'name' => 'web_update', 'guard_name' => 'web'],
-                ['id' => 3, 'name' => 'web_delete', 'guard_name' => 'web'],
-                ['id' => 4, 'name' => 'web_view', 'guard_name' => 'web'],
-                ['id' => 5, 'name' => 'api_insert', 'guard_name' => 'api'],
-                ['id' => 6, 'name' => 'api_update', 'guard_name' => 'api'],
-                ['id' => 7, 'name' => 'api_delete', 'guard_name' => 'api'],
-                ['id' => 8, 'name' => 'api_view', 'guard_name' => 'api'],
-                ['id' => 9, 'name' => 'dev', 'guard_name' => 'web']
+                ['id' => 1, 'name' => 'web insert', 'slug' => 'web_insert', 'guard_name' => 'web'],
+                ['id' => 2, 'name' => 'web update', 'slug' => 'web_update', 'guard_name' => 'web'],
+                ['id' => 3, 'name' => 'web delete', 'slug' => 'web_delete', 'guard_name' => 'web'],
+                ['id' => 4, 'name' => 'web view', 'slug' => 'web_view', 'guard_name' => 'web'],
+                ['id' => 5, 'name' => 'api insert', 'slug' => 'api_insert', 'guard_name' => 'api'],
+                ['id' => 6, 'name' => 'api update', 'slug' => 'api_update', 'guard_name' => 'api'],
+                ['id' => 7, 'name' => 'api delete', 'slug' => 'api_delete', 'guard_name' => 'api'],
+                ['id' => 8, 'name' => 'api view', 'slug' => 'api_view', 'guard_name' => 'api'],
+                ['id' => 9, 'name' => 'dev', 'slug' => 'dev', 'guard_name' => 'web']
             ]);
 
             DB::table('roles')->insert([
-                ['id' => 1, 'name' => 'developer', 'guard_name' => 'web'],
-                ['id' => 2, 'name' => 'admin', 'guard_name' => 'web'],
-                ['id' => 3, 'name' => 'retailer', 'guard_name' => 'api'],
-                ['id' => 4, 'name' => 'customer', 'guard_name' => 'api'],
-                ['id' => 5, 'name' => 'staff', 'guard_name' => 'web'],
+                ['id' => 1, 'name' => 'developer', 'slug' => 'developer', 'guard_name' => 'web'],
+                ['id' => 2, 'name' => 'admin', 'slug' => 'admin', 'guard_name' => 'web'],
+                ['id' => 3, 'name' => 'retailer', 'slug' => 'retailer', 'guard_name' => 'api'],
+                ['id' => 4, 'name' => 'customer', 'slug' => 'customer', 'guard_name' => 'api'],
+                ['id' => 5, 'name' => 'staff', 'slug' => 'staff', 'guard_name' => 'web'],
             ]);
 
             DB::table('users')->insert([

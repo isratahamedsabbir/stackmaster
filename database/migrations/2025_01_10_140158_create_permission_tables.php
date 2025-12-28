@@ -27,6 +27,7 @@ return new class extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('guard_name');
             $table->timestamps();
 
@@ -40,6 +41,7 @@ return new class extends Migration
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('guard_name'); 
             $table->timestamps();
             if ($teams || config('permission.testing')) {

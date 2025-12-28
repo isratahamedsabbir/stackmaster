@@ -59,7 +59,7 @@
                             <div class="input-group mb-3">
                                 <input type="text" name="avatar" class="form-control gallery" aria-label="Default" id="avatar" placeholder="Upload Image">
                             </div>
-                            <?php /* echo Modules\Gallery\Helpers\Resource::getFile(1); */ ?>
+                            {{-- <img src="<?= //Modules\Gallery\Helpers\Resource::getFile(1); ?>" class="gallery-preview" alt=""> --}}
                             {{-- @foreach(Modules\Gallery\Helpers\Resource::getFile([1,2]) as $item) 
                             {{ $item }}
                             @endforeach --}}

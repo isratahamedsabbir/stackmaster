@@ -49,6 +49,7 @@
                                         <tr>
                                             <th>SN</th>
                                             <th>Name</th>
+                                            <th>Slug</th>
                                             <th>Guard</th>
                                             <th>Created</th>
                                             <th>Action</th>
@@ -60,7 +61,8 @@
                                         @forelse ($permissions as $permission)
                                         <tr>
                                             <td>{{ $sn++ }}</td>
-                                            <td>{{ $permission->name }}</td>
+                                            <td>{{ Str::limit($permission->name, 20) }}</td>
+                                            <td>{{ Str::limit($permission->slug, 20) }}</td>
                                             <td>{{ $permission->guard_name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($permission->created_at)->format('d-m-Y') }}</td>
                                             <td>

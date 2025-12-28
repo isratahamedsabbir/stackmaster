@@ -368,7 +368,7 @@ Route::group(['middleware' => ['web-admin']], function () {
     });
 
     //address
-    Route::controller(CountryController::class)->prefix('country')->name('country.')->group(function () {
+    Route::controller(CountryController::class)->prefix('location.country')->name('location.country.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');

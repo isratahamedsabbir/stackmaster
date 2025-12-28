@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Backend\Access;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -35,10 +36,10 @@ class PermissionController extends Controller
         try{
             $permission = new Permission();
             $permission->name = $request->name;
+            $permission->slug = Helper::makeSlug(Permission::class, $request->name);
             $permission->guard_name = $request->guard_name;
-
             $permission->save();
-
+            
             return redirect()->route('admin.permissions.index')->with('t-success', 'Permission created t-successfully');
         }catch (\Exception $e){
             return redirect()->back()->with('t-error', $e->getMessage());

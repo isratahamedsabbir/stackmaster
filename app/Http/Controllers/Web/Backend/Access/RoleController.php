@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Backend\Access;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -39,7 +40,11 @@ class RoleController extends Controller
             'guard_name' => 'required|in:web,api'
         ]);
         try {
-            $role = Role::create(['name' => $request->name, 'guard_name' => $request->guard_name]);
+            $role = Role::create([
+                'name' => $request->name, 
+                'slug' => Helper::makeSlug(Role::class, $request->name),
+                'guard_name' => $request->guard_name
+            ]);
             $role->syncPermissions($request->permissions);
             return redirect()->route('admin.roles.index')->with('t-success', 'Role created t-successfully');
         } catch (Exception $exception) {

@@ -49,6 +49,7 @@
                                         <tr>
                                             <th>SN</th>
                                             <th>Name</th>
+                                            <th>Slug</th>
                                             <th>Guard</th>
                                             <th>Created</th>
                                             <th>Action</th>
@@ -60,7 +61,8 @@
                                         @forelse ($roles as $role)
                                         <tr>
                                             <td>{{ $sn++ }}</td>
-                                            <td>{{ $role->name }}</td>
+                                            <td>{{ Str::limit($role->name, 20) }}</td>
+                                            <td>{{ Str::limit($role->slug, 20) }}</td>
                                             <td>{{ $role->guard_name }}</td>
                                             <td>{{ \Carbon\Carbon::parse($role->created_at)->format('d-m-Y') }}</td>
                                             <td>
