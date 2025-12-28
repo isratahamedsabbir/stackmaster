@@ -27,12 +27,13 @@ use Illuminate\Support\Facades\Route;
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.setting.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                    <a class="side-menu__item {{  request()->routeIs('admin.report.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <i class="fa-solid fa-chart-simple side-menu__icon"></i>
                         <span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i>
                     </a>
                     <ul class="slide-menu">
-                        <li><a href="#" class="slide-item">General Report</a></li>
+                        <li><a href="{{ route('admin.report.users') }}" class="slide-item">User</a></li>
+                        <li><a href="#" class="slide-item">Orders</a></li>
                     </ul>
                 </li>
                 <li>

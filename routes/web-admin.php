@@ -46,6 +46,7 @@ use App\Http\Controllers\Web\Backend\SubscriberController;
 use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
 use App\Http\Controllers\Web\Backend\QuizController;
+use App\Http\Controllers\Web\Backend\ReportController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
@@ -449,6 +450,11 @@ Route::get('livewire/crud', function () {
 Route::get('file-manager', [FileManagerController::class, 'index'])->name('file-manager');
 Route::post('file-upload', [FileManagerController::class, 'upload']);
 Route::delete('file-delete/{file}', [FileManagerController::class, 'delete']);
+
+
+Route::controller(ReportController::class)->prefix('report')->name('report.')->group(function () {
+    Route::get('/users', 'users')->name('users');
+});
 
 
 

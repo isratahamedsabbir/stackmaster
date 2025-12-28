@@ -46,7 +46,7 @@ class ReportController extends Controller
         }
         $monthly_order_amount = $monthly_order_amount->sum('paid_total');
 
-        return view('backend.layouts.report.index');
+        return view('backend.layouts.reports.users');
     }
 
     public function analytics($start, $end)
@@ -91,5 +91,10 @@ class ReportController extends Controller
         $data['totals'] = array_values($result);
 
         return response()->json($result);
+    }
+
+    public function users()
+    {
+        return view('backend.layouts.reports.users');
     }
 }
