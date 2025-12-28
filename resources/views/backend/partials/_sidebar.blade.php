@@ -299,6 +299,12 @@ use Illuminate\Support\Facades\Route;
                         <span class="side-menu__label">Image Gallery</span>
                     </a>
                 </li>
+                <li class="slide">
+                    <a class="side-menu__item {{ Request::routeIs('admin.file-manager.*') ? 'has-link active' : '' }}" href="{{ route('admin.file-manager') }}">
+                        <i class="fa-solid fa-folder side-menu__icon"></i>
+                        <span class="side-menu__label">File Manager</span>
+                    </a>
+                </li>
                 <li class="slide {{ env('APP_ENV') == 'production' ? 'd-none' : '' }}">
                     <a class="side-menu__item {{  Request::routeIs('admin.livewire.crud.*') ? 'has-link active' : '' }}" href="{{ route('admin.livewire.crud.index') }}">
                         <i class="fa-solid fa-image side-menu__icon"></i>

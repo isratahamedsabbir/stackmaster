@@ -26,6 +26,7 @@ use App\Http\Controllers\Web\Backend\Settings\GoogleMapController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\Backend\DashboardController;
 use App\Http\Controllers\Web\Backend\FaqController;
+use App\Http\Controllers\Web\Backend\FileManagerController;
 use App\Http\Controllers\Web\Backend\ImageController;
 use App\Http\Controllers\Web\Backend\LivewireController;
 use App\Http\Controllers\Web\Backend\MenuController;
@@ -443,6 +444,11 @@ Route::group(['middleware' => ['web-admin']], function () {
 Route::get('livewire/crud', function () {
     return view('backend.layouts.livewire.index');
 })->name('livewire.crud.index');
+
+//File-Manager
+Route::get('file-manager', [FileManagerController::class, 'index'])->name('file-manager');
+Route::post('file-upload', [FileManagerController::class, 'upload']);
+Route::delete('file-delete/{file}', [FileManagerController::class, 'delete']);
 
 
 
