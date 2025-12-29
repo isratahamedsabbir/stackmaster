@@ -71,5 +71,5 @@
 @endsection
 
 @push('scripts')
-@include('backend.layouts.post._script')
+@include('backend.layouts.property._script')
 @endpush

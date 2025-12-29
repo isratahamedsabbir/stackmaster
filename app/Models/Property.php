@@ -8,7 +8,7 @@ class Property extends Model
 {
     protected $guarded = [];
 
-    public function attributes()
+    public function attribute()
     {
         return $this->belongsTo(Attribute::class);
     }

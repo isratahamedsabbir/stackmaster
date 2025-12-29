@@ -27,7 +27,6 @@ class PropertyController extends Controller
      */
     public function index(Request $request, $attribute_id)
     {
-        
         if ($request->ajax()) {
             $data = Property::query()
             ->where('attribute_id', $attribute_id)

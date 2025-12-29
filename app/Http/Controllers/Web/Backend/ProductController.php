@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Yajra\DataTables\Facades\DataTables;
@@ -83,7 +84,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'active')->get();
-        return view('backend.layouts.product.create', compact('categories'));
+        $brands = Brand::where('status', 'active')->get();
+        return view('backend.layouts.product.create', compact('categories', 'brands'));
     }
 
     /**
@@ -96,6 +98,7 @@ class ProductController extends Controller
             'price'             => 'required|numeric|min:0',
             'description'       => 'required|string',
             'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'brand_id'          => 'nullable|exists:brands,id',
             'category_id'       => 'required|exists:categories,id',
         ]);
 
@@ -120,6 +123,7 @@ class ProductController extends Controller
             $product->price = $data['price'];
             $product->thumbnail = $data['thumbnail'];
             $product->description = $data['description'];
+            $product->brand_id = $data['brand_id'];
             $product->category_id = $data['category_id'];
             $product->save();
 

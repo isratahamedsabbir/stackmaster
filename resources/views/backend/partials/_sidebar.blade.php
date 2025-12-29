@@ -41,15 +41,23 @@ use Illuminate\Support\Facades\Route;
                 </li>
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
-                        <i class="fa-solid fa-layer-group side-menu__icon"></i>
+                    <a class="side-menu__item {{ request()->routeIs('admin.brand.*') ? 'has-link active' : '' }}" href="{{ route('admin.brand.index') }}">
+                        <i class="fa-brands fa-slack side-menu__icon"></i>
+                        <span class="side-menu__label">Brand</span>
+                    </a>
+                </li>
+                @endrole
+                @role('admin')
+                <li class="slide">
+                    <a class="side-menu__item {{ request()->routeIs('admin.category.*') ? 'has-link active' : '' }}" href="{{ route('admin.category.index') }}">
+                        <i class="fa-solid fa-list  side-menu__icon"></i>
                         <span class="side-menu__label">Category</span>
                     </a>
                 </li>
                 @endrole
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.subcategory.*') ? 'has-link active' : '' }}" href="{{ route('admin.subcategory.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.subcategory.*') ? 'has-link active' : '' }}" href="{{ route('admin.subcategory.index') }}">
                         <i class="fa-solid fa-list-check side-menu__icon"></i>
                         <span class="side-menu__label">Sub Category</span>
                     </a>
@@ -59,25 +67,25 @@ use Illuminate\Support\Facades\Route;
                     <h3>Product</h3>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.course.*') ? 'has-link active' : '' }}" href="{{ route('admin.course.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.course.*') ? 'has-link active' : '' }}" href="{{ route('admin.course.index') }}">
                         <i class="fa-solid fa-graduation-cap side-menu__icon"></i>
                         <span class="side-menu__label">Course</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.blog.*') ? 'has-link active' : '' }}" href="{{ route('admin.blog.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.blog.*') ? 'has-link active' : '' }}" href="{{ route('admin.blog.index') }}">
                         <i class="fa-solid fa-book side-menu__icon"></i>
                         <span class="side-menu__label">Blog</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.post.*') ? 'has-link active' : '' }}" href="{{ route('admin.post.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.post.*') ? 'has-link active' : '' }}" href="{{ route('admin.post.index') }}">
                         <i class="fa-solid fa-blog side-menu__icon"></i>
                         <span class="side-menu__label">Post</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.quiz.*') ? 'has-link active' : '' }}" href="{{ route('admin.quiz.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.quiz.*') ? 'has-link active' : '' }}" href="{{ route('admin.quiz.index') }}">
                         <i class="fa-solid fa-feather side-menu__icon"></i>
                         <span class="side-menu__label">Quiz</span>
                     </a>
@@ -86,31 +94,31 @@ use Illuminate\Support\Facades\Route;
                     <h3>Ecommerce</h3>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.product.*') ? 'has-link active' : '' }}" href="{{ route('admin.product.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.product.*') ? 'has-link active' : '' }}" href="{{ route('admin.product.index') }}">
                         <i class="fa-solid fa-shop side-menu__icon"></i>
                         <span class="side-menu__label">Product</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.attribute.*') ? 'has-link active' : '' }}" href="{{ route('admin.attribute.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.attribute.*') ? 'has-link active' : '' }}" href="{{ route('admin.attribute.index') }}">
                         <i class="fa-solid fa-eye side-menu__icon"></i>
                         <span class="side-menu__label">Attribute</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.order.*') ? 'has-link active' : '' }}" href="{{ route('admin.order.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.order.*') ? 'has-link active' : '' }}" href="{{ route('admin.order.index') }}">
                         <i class="fa-solid fa-truck side-menu__icon"></i>
                         <span class="side-menu__label">Order</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.booking.*') ? 'has-link active' : '' }}" href="{{ route('admin.booking.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.booking.*') ? 'has-link active' : '' }}" href="{{ route('admin.booking.index') }}">
                         <i class="fa-solid fa-book side-menu__icon"></i>
                         <span class="side-menu__label">Booking</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.transaction.*') ? 'has-link active' : '' }}" href="{{ route('admin.transaction.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.transaction.*') ? 'has-link active' : '' }}" href="{{ route('admin.transaction.index') }}">
                         <i class="fa-solid fa-money-bill-transfer side-menu__icon"></i>
                         <span class="side-menu__label">Transaction</span>
                     </a>
@@ -120,14 +128,14 @@ use Illuminate\Support\Facades\Route;
                 </li>
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.type.*') ? 'has-link active' : '' }}" href="{{ route('admin.type.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.type.*') ? 'has-link active' : '' }}" href="{{ route('admin.type.index') }}">
                         <i class="fa-solid fa-list side-menu__icon"></i>
                         <span class="side-menu__label">Type</span>
                     </a>
                 </li>
                 @endrole
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.project.*') ? 'has-link active' : '' }}" href="{{ route('admin.project.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.project.*') ? 'has-link active' : '' }}" href="{{ route('admin.project.index') }}">
                         <i class="fa-solid fa-file side-menu__icon"></i>
                         <span class="side-menu__label">Project</span>
                     </a>
@@ -136,19 +144,19 @@ use Illuminate\Support\Facades\Route;
                     <h3>Components</h3>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.contact.*') ? 'has-link active' : '' }}" href="{{ route('admin.contact.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.contact.*') ? 'has-link active' : '' }}" href="{{ route('admin.contact.index') }}">
                         <i class="fa-solid fa-address-card side-menu__icon"></i>
                         <span class="side-menu__label">Contact</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('acmin.subscriber.*') ? 'has-link active' : '' }}" href="{{ route('admin.subscriber.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('acmin.subscriber.*') ? 'has-link active' : '' }}" href="{{ route('admin.subscriber.index') }}">
                         <i class="fa-solid fa-people-group side-menu__icon"></i>
                         <span class="side-menu__label">Subscriber</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.chat.*') ? 'has-link active' : '' }}" href="{{ route('admin.chat.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.chat.*') ? 'has-link active' : '' }}" href="{{ route('admin.chat.index') }}">
                         <i class="fa-brands fa-rocketchat side-menu__icon"></i>
                         <span class="side-menu__label">Chat</span>
                     </a>
@@ -172,7 +180,7 @@ use Illuminate\Support\Facades\Route;
                 @endrole
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.setting.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                    <a class="side-menu__item {{ request()->routeIs('admin.setting.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" viewBox="0 0 512 512">
                             <path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z" />
                         </svg>
@@ -197,7 +205,7 @@ use Illuminate\Support\Facades\Route;
                 @endrole
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.template.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                    <a class="side-menu__item {{ request()->routeIs('admin.template.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <i class="fa-solid fa-synagogue side-menu__icon"></i>
                         <span class="side-menu__label">Template</span><i class="angle fa fa-angle-right"></i>
                     </a>
@@ -211,7 +219,7 @@ use Illuminate\Support\Facades\Route;
                     <h3>CMS</h3>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.page.*') ? 'has-link active' : '' }}" href="{{ route('admin.page.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.page.*') ? 'has-link active' : '' }}" href="{{ route('admin.page.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="side-menu__icon" viewBox="0 0 16 16">
                             <path d="M15 14l-5-5-5 5v-3l10 -10z" />
                         </svg>
@@ -219,13 +227,13 @@ use Illuminate\Support\Facades\Route;
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.social.*') ? 'has-link active' : '' }}" href="{{ route('admin.social.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.social.*') ? 'has-link active' : '' }}" href="{{ route('admin.social.index') }}">
                         <i class="fa-solid fa-link side-menu__icon"></i>
                         <span class="side-menu__label">Social Link</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.faq.*') ? 'has-link active' : '' }}" href="{{ route('admin.faq.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.faq.*') ? 'has-link active' : '' }}" href="{{ route('admin.faq.index') }}">
                         <i class="fa-solid fa-clipboard-question side-menu__icon"></i>
                         <span class="side-menu__label">FAQ</span>
                     </a>
@@ -252,7 +260,7 @@ use Illuminate\Support\Facades\Route;
                     </ul>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.menu.*') ? 'has-link active' : '' }}" href="{{ route('admin.menu.index') }}">
+                    <a class="side-menu__item {{ request()->routeIs('admin.menu.*') ? 'has-link active' : '' }}" href="{{ route('admin.menu.index') }}">
                         <i class="fa-solid fa-bars-staggered side-menu__icon"></i>
                         <span class="side-menu__label">Menu</span>
                     </a>
@@ -271,7 +279,7 @@ use Illuminate\Support\Facades\Route;
                 @endrole
                 @role('admin')
                 <li class="slide">
-                    <a class="side-menu__item {{  request()->routeIs('admin.location.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
+                    <a class="side-menu__item {{ request()->routeIs('admin.location.*') ? 'has-link active' : '' }}" data-bs-toggle="slide" href="#">
                         <i class="fa-solid fa-earth-americas side-menu__icon"></i>
                         <span class="side-menu__label">Location</span><i class="angle fa fa-angle-right"></i>
                     </a>
@@ -289,13 +297,13 @@ use Illuminate\Support\Facades\Route;
                     <h3>Dev Tools</h3>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  Request::routeIs('admin.curd.*') ? 'has-link active' : '' }}" href="{{ route('admin.curd.index') }}">
+                    <a class="side-menu__item {{ Request::routeIs('admin.curd.*') ? 'has-link active' : '' }}" href="{{ route('admin.curd.index') }}">
                         <i class="fa-solid fa-database side-menu__icon"></i>
                         <span class="side-menu__label">CURD</span>
                     </a>
                 </li>
                 <li class="slide">
-                    <a class="side-menu__item {{  Request::routeIs('ajax.gallery.*') ? 'has-link active' : '' }}" href="{{ route('ajax.gallery.index') }}">
+                    <a class="side-menu__item {{ Request::routeIs('ajax.gallery.*') ? 'has-link active' : '' }}" href="{{ route('ajax.gallery.index') }}">
                         <i class="fa-solid fa-image side-menu__icon"></i>
                         <span class="side-menu__label">Image Gallery</span>
                     </a>
@@ -307,7 +315,7 @@ use Illuminate\Support\Facades\Route;
                     </a>
                 </li>
                 <li class="slide {{ env('APP_ENV') == 'production' ? 'd-none' : '' }}">
-                    <a class="side-menu__item {{  Request::routeIs('admin.livewire.crud.*') ? 'has-link active' : '' }}" href="{{ route('admin.livewire.crud.index') }}">
+                    <a class="side-menu__item {{ Request::routeIs('admin.livewire.crud.*') ? 'has-link active' : '' }}" href="{{ route('admin.livewire.crud.index') }}">
                         <i class="fa-solid fa-image side-menu__icon"></i>
                         <span class="side-menu__label">Livewire</span>
                     </a>

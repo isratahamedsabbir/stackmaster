@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\Backend\Access\UserController;
 use App\Http\Controllers\Web\Backend\AttributeController;
 use App\Http\Controllers\Web\Backend\BlogController;
 use App\Http\Controllers\Web\Backend\BookingController;
+use App\Http\Controllers\Web\Backend\BrandController;
 use App\Http\Controllers\Web\Backend\CategoryController;
 use App\Http\Controllers\Web\Backend\ChatController;
 use App\Http\Controllers\Web\Backend\CMS\Web\Home\HomeAboutController;
@@ -48,8 +49,6 @@ use App\Http\Controllers\Web\Backend\TransactionController;
 use App\Http\Controllers\Web\Backend\QuizController;
 use App\Http\Controllers\Web\Backend\ReportController;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:admin|staff']);
 
@@ -67,6 +66,17 @@ Route::group(['middleware' => ['web-admin']], function () {
     });
 
     Route::controller(TemplateEmailController::class)->prefix('template/email')->name('template.email.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('/status/{id}', 'status')->name('status');
+    });
+
+    Route::controller(BrandController::class)->prefix('brand')->name('brand.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
@@ -339,14 +349,11 @@ Route::group(['middleware' => ['web-admin']], function () {
 
     // Run artisan commands for optimization and cache clearing
     Route::get('/optimize', function () {
-        Artisan::call('optimize:clear');
-        Artisan::call('config:cache');
-        //Redis::flushAll();
-        Cache::flush();
+        Artisan::call('system:clear-cache');
         return redirect()->back()->with('t-success', 'Message sent successfully');
     })->name('optimize');
 
-    //Filer
+    //Filter
     Route::controller(AttributeController::class)->prefix('attribute')->name('attribute.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');

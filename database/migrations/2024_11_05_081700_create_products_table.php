@@ -30,12 +30,12 @@ return new class extends Migration
             $table->float('shipping')->default(0);
 
             $table->float('discount')->default(0);
-            $table->enum('discount_type', ['percentage', 'fixed'])->default('fixed');
+            $table->enum('discount_type', ['percent', 'fixed'])->default('fixed');
             $table->datetime('discount_start')->nullable();
             $table->datetime('discount_end')->nullable();
             
             $table->string('thumbnail');
-            $table->string('images');
+            $table->string('images')->nullable();
 
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->boolean('is_featured')->default(false);
