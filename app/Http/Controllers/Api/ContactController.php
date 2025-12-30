@@ -22,14 +22,14 @@ class ContactController extends Controller
         try {
             Contact::create($request->only('name', 'email', 'phone', 'subject', 'message'));
         } catch (Exception $e) {
-            return redirect()->json([
+            return response()->json([
                 'code' => 500,
                 'status' => 'error',
                 'msg' => $e
             ]);
         }
 
-        return redirect()->json([
+        return response()->json([
             'code' => 200,
             'status' => 'success',
             'msg' => 'Message sent successfully'
