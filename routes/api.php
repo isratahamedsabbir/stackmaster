@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\Auth\SocialLoginController;
 use App\Http\Controllers\Api\ChatController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\FirebaseTokenController;
 use App\Http\Controllers\Api\Frontend\categoryController;
 use App\Http\Controllers\Api\Frontend\FaqController;
@@ -142,3 +143,5 @@ Route::prefix('prayer-times')->group(function () {
     Route::get('/today', [PrayerTimesController::class, 'today']);
     Route::get('/methods', [PrayerTimesController::class, 'methods']);
 });
+
+Route::post('contact/store',[ContactController::class, 'store'])->name('contact.store');
