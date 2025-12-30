@@ -366,7 +366,7 @@ Route::group(['middleware' => ['web-admin']], function () {
     });
 
     Route::controller(PropertyController::class)->prefix('property')->name('property.')->group(function () {
-        Route::get('/{attribute_id}', 'index')->name('index');
+        Route::get('index/{attribute_id?}', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/show/{id}', 'show')->name('show');

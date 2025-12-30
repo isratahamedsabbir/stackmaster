@@ -25,12 +25,14 @@ class PropertyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $attribute_id)
+    public function index(Request $request, $attribute_id = null)
     {
         if ($request->ajax()) {
-            $data = Property::query()
-            ->where('attribute_id', $attribute_id)
-            ->with(['attribute'])
+            $data = Property::query();
+            if ($attribute_id != null) {
+                $data = $data->where('attribute_id', $attribute_id);
+            }
+            $data = $data->with(['attribute'])
             ->orderBy('id', 'desc')
             ->get();
             return DataTables::of($data)
@@ -118,7 +120,7 @@ class PropertyController extends Controller
         } catch (Exception $e) {
             $message = $e->getMessage();
         }
-        return redirect()->route($this->route . '.index')->with('t-success', $message);
+        return redirect()->route($this->route . '.index', $data['attribute_id'])->with('t-success', $message);
     }
 
     /**
