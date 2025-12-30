@@ -48,6 +48,7 @@ use App\Http\Controllers\Web\Backend\TemplateEmailController;
 use App\Http\Controllers\Web\Backend\TransactionController;
 use App\Http\Controllers\Web\Backend\QuizController;
 use App\Http\Controllers\Web\Backend\ReportController;
+use App\Http\Controllers\Web\Backend\VariantController;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard')->middleware(['role:admin|staff']);
@@ -110,6 +111,17 @@ Route::group(['middleware' => ['web-admin']], function () {
     });
 
     Route::controller(ProductController::class)->prefix('product')->name('product.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/show/{id}', 'show')->name('show');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'destroy')->name('destroy');
+        Route::get('/status/{id}', 'status')->name('status');
+    });
+
+    Route::controller(VariantController::class)->prefix('variant')->name('variant.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
