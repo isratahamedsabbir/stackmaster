@@ -30,6 +30,6 @@ Route::controller(NotificationController::class)->prefix('notification')->name('
     Route::POST('read/all', 'readAll')->name('read.all');
 })->middleware('auth');
 
-Route::get('/page/{slug}',[PageController::class, 'index']);
-
 require __DIR__.'/auth.php';
+
+Route::get('/page/{slug}',[PageController::class, 'index']);
