@@ -16,7 +16,7 @@ class PageController extends Controller
     
     public function index($slug)
     {
-        $page = Page::where('slug', $slug)->first();
+        $page = Page::where('slug', $slug)->firstOrFail();
         return view("frontend.{$this->theme}.layouts.page", compact('page'));
     }
 }
