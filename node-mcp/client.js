@@ -23,6 +23,8 @@ async function run(a, b) {
     });
 
     console.log(JSON.stringify(result));
+    
+    await client.close();
 }
 
 const args = process.argv.slice(2);

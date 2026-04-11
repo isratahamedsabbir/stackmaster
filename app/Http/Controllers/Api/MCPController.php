@@ -4,39 +4,51 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class MCPController extends Controller
 {
     public function sum(Request $request)
     {
-        dd($request->all());
-        $a = $request->input('a', 5);
-        $b = $request->input('b', 7);
+        $a = (int) $request->input('a', 5);
+        $b = (int) $request->input('b', 7);
 
         $path = base_path('node-mcp');
+        $cmd = 'node client.js '.$a.' '.$b;
 
-        $process = new Process(['node', 'client.js', $a, $b]);
+        $descriptorspec = [
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'w'],
+        ];
 
-        $process->setWorkingDirectory($path);
+        $process = proc_open($cmd, $descriptorspec, $pipes, $path);
 
-        $process->setTimeout(10); // very important ⚡
-
-        $process->run();
-
-        if (!$process->isSuccessful()) {
+        if (! is_resource($process)) {
             return response()->json([
                 'status' => false,
-                'error' => $process->getErrorOutput()
+                'error' => 'Failed to start process',
             ]);
         }
 
-        $output = $process->getOutput();
+        fclose($pipes[0]);
+
+        $output = stream_get_contents($pipes[1]);
+        fclose($pipes[1]);
+        fclose($pipes[2]);
+
+        $exitCode = proc_close($process);
+
+        if ($exitCode !== 0) {
+            return response()->json([
+                'status' => false,
+                'error' => 'Process failed',
+                'exit_code' => $exitCode,
+            ]);
+        }
 
         return response()->json([
             'status' => true,
-            'data' => json_decode($output, true)
+            'data' => json_decode($output, true),
         ]);
     }
 }
