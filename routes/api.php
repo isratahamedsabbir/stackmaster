@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Frontend\SettingsController;
 use App\Http\Controllers\Api\Frontend\SocialLinksController;
 use App\Http\Controllers\Api\Frontend\SubscriberController;
+use App\Http\Controllers\Api\MCPController;
 use App\Http\Controllers\Api\PrayerTimesController;
 use Illuminate\Support\Facades\Route;
 
@@ -151,3 +152,6 @@ Route::get('telegram/messages', function () {
     $telegram = new TelegramService();
     $telegram->sendMessage("hi");
 });
+
+Route::get('/mcp-test', [MCPController::class, 'sum']);
+
