@@ -22,17 +22,9 @@ use App\Http\Controllers\Api\Frontend\SubscriberController;
 use App\Http\Controllers\Api\MCPController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PrayerTimesController;
-use App\Services\TelegramService;
 use Illuminate\Support\Facades\Route;
-
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Http;
 
-
-//page
-=======
-// page
->>>>>>> 33c8449385c4bf037cde44830e3509cf97430311
 Route::get('/page/home', [HomeController::class, 'index']);
 
 Route::get('/category', [categoryController::class, 'index']);
@@ -154,7 +146,7 @@ Route::prefix('prayer-times')->group(function () {
 Route::post('contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('telegram/messages', function () {
-<<<<<<< HEAD
+
     $token = config('services.telegram.token');
     $chatId = config('services.telegram.channel');
 
@@ -165,10 +157,6 @@ Route::get('telegram/messages', function () {
         'text' => "hello from laravel 123",
         'parse_mode' => 'HTML'
     ]);
-=======
-    $telegram = new TelegramService;
-    $telegram->sendMessage('hi');
->>>>>>> 33c8449385c4bf037cde44830e3509cf97430311
 });
 
 Route::get('/mcp-test', [MCPController::class, 'sum']);
