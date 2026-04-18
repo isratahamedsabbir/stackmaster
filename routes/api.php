@@ -23,7 +23,7 @@ use App\Http\Controllers\Api\Frontend\SubscriberController;
 use App\Http\Controllers\Api\PrayerTimesController;
 use Illuminate\Support\Facades\Route;
 
-use App\Services\TelegramService;
+use Illuminate\Support\Facades\Http;
 
 
 //page
@@ -148,6 +148,14 @@ Route::prefix('prayer-times')->group(function () {
 Route::post('contact/store',[ContactController::class, 'store'])->name('contact.store');
 
 Route::get('telegram/messages', function () {
-    $telegram = new TelegramService();
-    $telegram->sendMessage("hi");
+    $token = config('services.telegram.token');
+    $chatId = config('services.telegram.channel');
+
+    $url = "https://api.telegram.org/bot{$token}/sendMessage";
+
+    Http::post($url, [
+        'chat_id' => $chatId,
+        'text' => "hello from laravel 123",
+        'parse_mode' => 'HTML'
+    ]);
 });
