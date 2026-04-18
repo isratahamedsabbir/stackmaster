@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Frontend\SubscriberController;
 use App\Http\Controllers\Api\MCPController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PrayerTimesController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 
@@ -145,6 +146,12 @@ Route::prefix('prayer-times')->group(function () {
 
 Route::post('contact/store', [ContactController::class, 'store'])->name('contact.store');
 
+
+/*
+# test code
+*/
+Route::get('/users', [UserController::class, 'users']);
+
 Route::get('telegram/messages', function () {
 
     $token = config('services.telegram.token');
@@ -159,7 +166,35 @@ Route::get('telegram/messages', function () {
     ]);
 });
 
-Route::get('/mcp-test', [MCPController::class, 'sum']);
-Route::get('/mcp-sum', [MCPController::class, 'sum']);
+Route::get('/user-by-name', function (Request $request) {
+    $name = $request->input('name');
 
-Route::get('/users', [UserController::class, 'users']);
+    return \App\Models\User::where('name', 'LIKE', "%$name%")
+        ->select('name', 'email')
+        ->get();
+});
+
+Route::get('/user-email', function (Request $request) {
+
+    $name = $request->input('name');
+
+    $users = \App\Models\User::where('name', 'LIKE', "%$name%")
+        ->select('name', 'email')
+        ->get();
+
+    // Gemini API call
+    $response = Http::post('https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=gen-lang-client-0194670477', [
+        "contents" => [
+            [
+                "parts" => [
+                    [
+                        "text" => "User data: " . $users->toJson() . ". 
+                        Give a clean response with name and email."
+                    ]
+                ]
+            ]
+        ]
+    ]);
+
+    return $response->json();
+});

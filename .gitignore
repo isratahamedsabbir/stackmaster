@@ -4,7 +4,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
-/node-mcp/node_modules
+/mcp-server/node_modules
 /vendor
 .env
 .env.backup
