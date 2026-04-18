@@ -93,5 +93,18 @@ class UserController extends Controller
         $user->forceDelete();
         return Helper::jsonResponse(true, 'Profile deleted successfully', 200);
     }
+
+    public function users(){
+        $users = User::select(['id', 'name', 'email'])
+        ->get()
+        ->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ];
+        });
+        return Helper::jsonResponse(true, 'Users fetched successfully', 200, $users);
+    }
     
 }

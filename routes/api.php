@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\Auth\SocialLoginController;
+use App\Http\Controllers\Api\Auth\UserController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\FirebaseTokenController;
@@ -15,18 +15,24 @@ use App\Http\Controllers\Api\Frontend\HomeController;
 use App\Http\Controllers\Api\Frontend\ImageController;
 use App\Http\Controllers\Api\Frontend\PageController;
 use App\Http\Controllers\Api\Frontend\PostController;
-use App\Http\Controllers\Api\Frontend\SubcategoryController;
-use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\Frontend\SettingsController;
 use App\Http\Controllers\Api\Frontend\SocialLinksController;
+use App\Http\Controllers\Api\Frontend\SubcategoryController;
 use App\Http\Controllers\Api\Frontend\SubscriberController;
+use App\Http\Controllers\Api\MCPController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\PrayerTimesController;
+use App\Services\TelegramService;
 use Illuminate\Support\Facades\Route;
 
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Http;
 
 
 //page
+=======
+// page
+>>>>>>> 33c8449385c4bf037cde44830e3509cf97430311
 Route::get('/page/home', [HomeController::class, 'index']);
 
 Route::get('/category', [categoryController::class, 'index']);
@@ -36,7 +42,7 @@ Route::get('/social/links', [SocialLinksController::class, 'index']);
 Route::get('/settings', [SettingsController::class, 'index']);
 Route::get('/faq', [FaqController::class, 'index']);
 
-Route::post('subscriber/store',[SubscriberController::class, 'store'])->name('api.subscriber.store');
+Route::post('subscriber/store', [SubscriberController::class, 'store'])->name('api.subscriber.store');
 
 /*
 # Post
@@ -66,18 +72,18 @@ Route::get('dynamic/page/show/{slug}', [PageController::class, 'show']);
 */
 
 Route::group(['middleware' => 'guest:api'], function ($router) {
-    //register
+    // register
     Route::post('register', [RegisterController::class, 'register']);
     Route::post('/verify-email', [RegisterController::class, 'VerifyEmail']);
     Route::post('/resend-otp', [RegisterController::class, 'ResendOtp']);
     Route::post('/verify-otp', [RegisterController::class, 'VerifyEmail']);
-    //login
+    // login
     Route::post('login', [LoginController::class, 'login'])->name('api.login');
-    //forgot password
+    // forgot password
     Route::post('/forget-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/otp-token', [ResetPasswordController::class, 'MakeOtpToken']);
     Route::post('/reset-password', [ResetPasswordController::class, 'ResetPassword']);
-    //social login
+    // social login
     Route::post('/social-login', [SocialLoginController::class, 'SocialLogin']);
 });
 
@@ -96,10 +102,10 @@ Route::group(['middleware' => ['auth:api', 'api-otp']], function ($router) {
 */
 
 Route::middleware(['auth:api'])->controller(FirebaseTokenController::class)->prefix('firebase')->group(function () {
-    Route::get("test", "test");
-    Route::post("token/add", "store");
-    Route::post("token/get", "getToken");
-    Route::post("token/delete", "deleteToken");
+    Route::get('test', 'test');
+    Route::post('token/add', 'store');
+    Route::post('token/get', 'getToken');
+    Route::post('token/delete', 'deleteToken');
 });
 
 /*
@@ -145,9 +151,10 @@ Route::prefix('prayer-times')->group(function () {
     Route::get('/methods', [PrayerTimesController::class, 'methods']);
 });
 
-Route::post('contact/store',[ContactController::class, 'store'])->name('contact.store');
+Route::post('contact/store', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('telegram/messages', function () {
+<<<<<<< HEAD
     $token = config('services.telegram.token');
     $chatId = config('services.telegram.channel');
 
@@ -158,4 +165,13 @@ Route::get('telegram/messages', function () {
         'text' => "hello from laravel 123",
         'parse_mode' => 'HTML'
     ]);
+=======
+    $telegram = new TelegramService;
+    $telegram->sendMessage('hi');
+>>>>>>> 33c8449385c4bf037cde44830e3509cf97430311
 });
+
+Route::get('/mcp-test', [MCPController::class, 'sum']);
+Route::get('/mcp-sum', [MCPController::class, 'sum']);
+
+Route::get('/users', [UserController::class, 'users']);
