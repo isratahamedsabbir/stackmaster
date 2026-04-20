@@ -1,5 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\Auth\RegisterController;
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Frontend;
+namespace App\Http\Controllers\Api\V1\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Subscriber;

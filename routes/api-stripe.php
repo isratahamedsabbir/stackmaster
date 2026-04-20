@@ -1,18 +1,18 @@
 <?php
 
-use App\Http\Controllers\Api\Gateway\Stripe\StripeCallBackController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeOnBoardingController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeSubscriptionsController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookHoldController;
-use App\Http\Controllers\Api\Gateway\Stripe\StripeWebHookSpliteController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeCallBackController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeOnBoardingController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeSubscriptionsController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeWebHookController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeWebHookHoldController;
+use App\Http\Controllers\Api\V1\Gateway\Stripe\StripeWebHookSpliteController;
 use Illuminate\Support\Facades\Route;
 
 /*
 # Stripe routes
 */
 
-Route::prefix('api')->name('api.')->group(function () {
+Route::prefix('api/v1')->name('api.v1')->group(function () {
 
     //stripe callback
     Route::controller(StripeCallBackController::class)->prefix('payment/stripe')->name('payment.stripe.')->group(function () {
@@ -56,5 +56,9 @@ Route::prefix('api')->name('api.')->group(function () {
         Route::post('/capture', 'capturePayment')->name('capture');
         Route::post('/cancel', 'cancelPaymentHold')->name('cancel');
     });
+    
+});
+
+Route::prefix('api/v2')->name('api.v2')->group(function () {
     
 });

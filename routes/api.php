@@ -1,27 +1,27 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\LoginController;
-use App\Http\Controllers\Api\Auth\LogoutController;
-use App\Http\Controllers\Api\Auth\RegisterController;
-use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\Auth\SocialLoginController;
-use App\Http\Controllers\Api\Auth\UserController;
-use App\Http\Controllers\Api\ChatController;
-use App\Http\Controllers\Api\ContactController;
-use App\Http\Controllers\Api\FirebaseTokenController;
-use App\Http\Controllers\Api\Frontend\categoryController;
-use App\Http\Controllers\Api\Frontend\FaqController;
-use App\Http\Controllers\Api\Frontend\HomeController;
-use App\Http\Controllers\Api\Frontend\ImageController;
-use App\Http\Controllers\Api\Frontend\PageController;
-use App\Http\Controllers\Api\Frontend\PostController;
-use App\Http\Controllers\Api\Frontend\SettingsController;
-use App\Http\Controllers\Api\Frontend\SocialLinksController;
-use App\Http\Controllers\Api\Frontend\SubcategoryController;
-use App\Http\Controllers\Api\Frontend\SubscriberController;
-use App\Http\Controllers\Api\MCPController;
-use App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Api\PrayerTimesController;
+use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\Auth\LogoutController;
+use App\Http\Controllers\Api\V1\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\V1\Auth\SocialLoginController;
+use App\Http\Controllers\Api\V1\Auth\UserController;
+use App\Http\Controllers\Api\V1\ChatController;
+use App\Http\Controllers\Api\V1\ContactController;
+use App\Http\Controllers\Api\V1\FirebaseTokenController;
+use App\Http\Controllers\Api\V1\Frontend\categoryController;
+use App\Http\Controllers\Api\V1\Frontend\FaqController;
+use App\Http\Controllers\Api\V1\Frontend\HomeController;
+use App\Http\Controllers\Api\V1\Frontend\ImageController;
+use App\Http\Controllers\Api\V1\Frontend\PageController;
+use App\Http\Controllers\Api\V1\Frontend\PostController;
+use App\Http\Controllers\Api\V1\Frontend\SettingsController;
+use App\Http\Controllers\Api\V1\Frontend\SocialLinksController;
+use App\Http\Controllers\Api\V1\Frontend\SubcategoryController;
+use App\Http\Controllers\Api\V1\Frontend\SubscriberController;
+use App\Http\Controllers\Api\V1\MCPController;
+use App\Http\Controllers\Api\V1\NotificationController;
+use App\Http\Controllers\Api\V1\PrayerTimesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
@@ -197,4 +197,8 @@ Route::get('/user-email', function (Request $request) {
     ]);
 
     return $response->json();
+});
+
+Route::prefix('api/v1')->name('api.v1')->group(function () {
+    
 });

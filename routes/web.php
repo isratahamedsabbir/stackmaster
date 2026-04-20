@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\SocialLoginController;
+use App\Http\Controllers\Api\V1\Auth\SocialLoginController;
 use App\Http\Controllers\Web\Frontend\AffiliateController;
 use App\Http\Controllers\Web\Frontend\ContactController;
 use App\Http\Controllers\Web\Frontend\HomeController;
