@@ -125,4 +125,6 @@ return [
 
     'encryption_key' => env('APP_ENCRYPTION_KEY', 'base64:newencryptionkey1234567890abcdef'),
 
+    'frontend' => env('FRONTEND', 'http://localhost:3000'),
+
 ];

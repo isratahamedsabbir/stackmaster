@@ -22,7 +22,9 @@ use App\Http\Controllers\Api\V1\Frontend\SubscriberController;
 use App\Http\Controllers\Api\V1\MCPController;
 use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\PrayerTimesController;
-use App\Http\Controllers\Api\V2\Gateway\PaymentStatusController;
+use App\Http\Controllers\Api\V2\Gateway\PaymentCallbackController;
+use App\Http\Controllers\Api\V2\OrderController as APIOrderControllerV2;
+use App\Http\Controllers\Web\Backend\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
@@ -205,6 +207,7 @@ Route::prefix('v1')->name('v1')->group(function () {
 });
 
 Route::prefix('v2')->name('v2')->group(function () {
-    Route::get('/payment/success/{order_id}', [PaymentStatusController::class, 'success']);
-    Route::get('/payment/cancel/{order_id}', [PaymentStatusController::class, 'cancel']);
+    Route::get('/product/order/{order_id}', [APIOrderControllerV2::class, 'order']);
+    Route::get('/payment/success/{order_id}', [PaymentCallbackController::class, 'success']);
+    Route::get('/payment/cancel/{order_id}', [PaymentCallbackController::class, 'cancel']);
 });

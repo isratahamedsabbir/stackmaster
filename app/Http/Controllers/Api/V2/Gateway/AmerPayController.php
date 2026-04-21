@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V2\Gateway;
 
 use App\Http\Controllers\Controller;
 
-class PaymentStatusController extends Controller
+class AmerPayController extends Controller
 {
     
 }
