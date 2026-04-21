@@ -205,6 +205,6 @@ Route::prefix('v1')->name('v1')->group(function () {
 });
 
 Route::prefix('v2')->name('v2')->group(function () {
-    Route::get('/payment/success', [PaymentStatusController::class, 'success']);
-    Route::get('/payment/cancel', [PaymentStatusController::class, 'cancel']);
+    Route::get('/payment/success/{order_id}', [PaymentStatusController::class, 'success']);
+    Route::get('/payment/cancel/{order_id}', [PaymentStatusController::class, 'cancel']);
 });
