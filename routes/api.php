@@ -9,7 +9,7 @@ use App\Http\Controllers\Api\V1\Auth\UserController;
 use App\Http\Controllers\Api\V1\ChatController;
 use App\Http\Controllers\Api\V1\ContactController;
 use App\Http\Controllers\Api\V1\FirebaseTokenController;
-use App\Http\Controllers\Api\V1\Frontend\categoryController;
+use App\Http\Controllers\Api\V1\Frontend\CategoryController;
 use App\Http\Controllers\Api\V1\Frontend\FaqController;
 use App\Http\Controllers\Api\V1\Frontend\HomeController;
 use App\Http\Controllers\Api\V1\Frontend\ImageController;
