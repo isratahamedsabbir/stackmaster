@@ -45,7 +45,7 @@ class HomeController extends Controller
         $types = Type::where('status', 'active')->get();
         $projects = Project::where('status', 'active')->get();
 
-        $products = Product::with(['category', 'user'])->where('status', 'active')->get();
+        $products = Product::with(['category', 'user'])->where('status', 'active')->latest()->limit(12)->get();
 
         return view("frontend.{$this->theme}.layouts.home.index", compact('cms', 'posts', 'types', 'projects', 'products', 'socials'));
     }
